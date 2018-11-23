@@ -9,6 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="/css/app.css">
   <title>Baravel</title>
 
@@ -78,29 +79,45 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
-          {{-- <li class="nav-item has-treeview menu-open">
+          <li class="nav-item">
+            <a href="/developer" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+               Developer
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/notice" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+               Notice
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fa fa-dashboard"></i>
               <p>
-                Starter Pages
+               Events
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="/events" class="nav-link active">
                   <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Active Page</p>
+                  <p>All Events</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/addevent" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Inactive Page</p>
+                  <p>Add new</p>
                 </a>
               </li>
             </ul>
-          </li> --}}
+          </li>
           {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-th"></i>

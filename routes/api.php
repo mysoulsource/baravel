@@ -18,3 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResources(['user'=>'API\UserController']);
+Route::apiResources(['event'=>'API\EventController']);
+Route::apiResources(['notice'=>'API\NoticeController']);
+Route::put('event/image/{id}','API\EventController@image');
+Route::put('notice/image/{id}','API\NoticeController@image');
+Route::apiResources(['gallery'=>'API\GalleryController']);

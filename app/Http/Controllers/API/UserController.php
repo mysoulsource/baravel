@@ -13,6 +13,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth:api');
+    }
     public function index()
     {
         $users = User::all();
@@ -71,7 +74,32 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //search for user
+        $user = User::findOrFail($id);
+        //validating the request
+        $this->validate($request,[
+            'name' =>'required|string|max:191',
+            'email' =>'required|string|max:191|unique:users,email,'.$user->id,
+            'blood'=>'required|string|max:191',
+            'type'=>'required|string|max:191',
+            'country'=>'required|string|max:191',
+            'zone'=>'required|string|max:191',
+            'district'=>'required|string|max:191',
+            'area'=>'required|string|max:191',
+        ]);
+
+        //updating the user
+        $user->update([
+            'name' =>$request->input('name'),
+            'email' =>$request->input('email'),
+            'blood' =>$request->input('blood'),
+            'type' =>$request->input('type'),
+            'country' =>$request->input('country'),
+            'zone' =>$request->input('zone'),
+            'district' =>$request->input('district'),
+            'area' =>$request->input('area'),
+        ]);
+
     }
 
     /**
@@ -82,6 +110,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return ['message','Deleted Successfully'];
     }
 }

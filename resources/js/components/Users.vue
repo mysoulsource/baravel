@@ -1,3 +1,7 @@
+<style>
+
+</style>
+
 <template>
     <div class="col-12">
             <div class="card">
@@ -16,25 +20,27 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Type</th>
                     <th>Blood Type</th>
-                    <th>Country</th>
                     <th>Zone</th>
                     <th>District</th>
                     <th>Area</th>
+                    <th>Created</th>
                     <th>Options</th>
                   </tr>
                   <tr v-for="user in users" :key="user.id">
                     <td>{{user.id}}</td>
-                    <td>{{user.name}}</td>
+                    <td>{{user.name | capitalize}}</td>
                     <td>{{user.email}}</td>
+                    <td>{{user.type | capitalize}}</td>
                     <td>{{user.blood}}</td>
-                    <td>{{user.country}}</td>
-                    <td>{{user.zone}}</td>
-                    <td>{{user.district}}</td>
-                    <td>{{user.area}}</td>
+                    <td>{{user.zone | capitalize}}</td>
+                    <td>{{user.district | capitalize}}</td>
+                    <td>{{user.area | capitalize}}</td>
+                    <td>{{user.created_at | dateChange}}</td>
                     <td>
-                        <a href="#"><i class="fas fa-edit"></i></a>
-                        <a href="#"><i class="fas fa-trash text-red"></i></a>
+                        <a href="#" @click.prevent="editModal(user)"><i class="fas fa-edit"></i></a>
+                        <a href="#" @click.prevent="deleteUser(user.id)"><i class="fas fa-trash text-red"></i></a>
                     </td>
                   </tr>
 
@@ -49,12 +55,13 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" v-show="!editmode" id="exampleModalLabel">Add new</h5>
+                        <h5 class="modal-title" v-show="editmode" id="exampleModalLabel">Edit User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent="editmode ? addUser() : editUser()" @keydown="form.onKeydown($event)">
+                    <form @submit.prevent="editmode ? editUser() : addUser()" @keydown="form.onKeydown($event)">
                         <div class="modal-body">
                             <div class="row">
                                     <div class="col-md-6">
@@ -83,9 +90,9 @@
                                             <select v-model="form.blood" type="text" name="blood"
                                             class="form-control" :class="{ 'is-invalid': form.errors.has('blood') }">
                                                 <option class="hidden"  selected disabled>Please select your Blood Type</option>
-                                                    <option>A+</option>
-                                                    <option>A-</option>
-                                                    <option>B+</option>
+                                                    <option value="A+">A+</option>
+                                                    <option value="A-">A-</option>
+                                                    <option value="B+">B+</option>
                                             </select>
                                         <has-error :form="form" field="blood"></has-error>
                                     </div>
@@ -94,14 +101,14 @@
                                          <div class="form-group">
                                             <label>Blood</label>
 
-                                                <select v-model="form.blood" type="text" name="blood"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('blood') }">
-                                                    <option class="hidden"  selected disabled>Please select your Blood Type</option>
-                                                        <option>A+</option>
-                                                        <option>A-</option>
-                                                        <option>B+</option>
+                                                <select v-model="form.type" type="text" name="type"
+                                                class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                                                    <option class="hidden"  selected disabled>User Type</option>
+                                                        <option value="admin">Admin</option>
+                                                        <option value="user">Simple User</option>
+
                                                 </select>
-                                            <has-error :form="form" field="blood"></has-error>
+                                            <has-error :form="form" field="type"></has-error>
                                         </div>
                                 </div>
                             </div>
@@ -148,7 +155,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="submit" v-show="!editmode" class="btn btn-primary">Save changes</button>
+                            <button type="submit" v-show="editmode" class="btn btn-primary">Update changes</button>
                         </div>
                     </form>
                     </div>
@@ -173,10 +181,40 @@
                     zone : '',
                     district: '',
                     area:'',
+                    type:'',
+                    created_at:''
                 }),
            }
        },
        methods:{
+                deleteUser(id){
+                        swal({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                            }).then((result) => {
+
+                                if (result.value) {
+                                      //send ajax request to server
+                                    this.form.delete('api/user/' + id).then(()=>{
+                                        //fire the event trigger
+                                        Fire.$emit('datauploaded');
+                                            swal(
+                                                'Deleted!',
+                                                'Your file has been deleted.',
+                                                'success'
+                                                )
+                                    }).catch(()=>{
+                                        swal('Oops!!','Something went wrong','warning');
+                                    });
+                                }
+
+                            })
+           },
            getUsers(){
                 axios.get("api/user")
                .then(({ data }) => (this.users=data));
@@ -185,15 +223,37 @@
                this.editmode = false,
                $('#userModal').modal('show');
            },
+            editModal(user){
+               this.editmode = true,
+               $('#userModal').modal('show');
+               this.form.fill(user);
+           },
            addUser(){
 
            },
            editUser(){
+               this.$Progress.start();
+               this.form.put('api/user/' + this.form.id).then(()=>{
+                    this.$Progress.finish();
+                     $('#userModal').modal('hide');
+                     Fire.$emit('datauploaded');
+                      toast({
+                            type: 'success',
+                            title: 'Updated Successfully'
+                        })
 
+               }).catch(()=>{
+                   this.$Progress.fail();
+                   swal('Oops!!','Something went wrong','warning');
+               })
            }
        },
        created(){
            this.getUsers();
+           Fire.$on('datauploaded',()=>{
+               this.getUsers();
+           });
+
        }
     }
 </script>
