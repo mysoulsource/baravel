@@ -95,6 +95,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/demands" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+               Demands
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/bloods" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+               Bloods
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/gallery" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+               Gallery
+              </p>
+            </a>
+          </li>
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fa fa-dashboard"></i>

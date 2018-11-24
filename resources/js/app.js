@@ -47,6 +47,24 @@ Vue.filter('stringConv',function(text){
         return 'Inactive';
     }
 });
+Vue.filter('demandStatus',function(text){
+    if(text==0){
+        return 'Pending';
+    }else if(text=1){
+        return 'Accepted';
+    }else{
+        return 'Declined';
+    }
+});
+Vue.filter('urgencyStatus',function(text){
+    if(text==1){
+        return 'High';
+    }else if(text=2){
+        return 'Medium';
+    }else{
+        return 'Low';
+    }
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -76,6 +94,8 @@ let routes = [
     { path: '/notice', component: require('./components/Notice.vue') },
     { path: '/developer', component: require('./components/Developer.vue') },
     { path: '/gallery', component: require('./components/Gallery.vue') },
+    { path: '/demands', component: require('./components/Demands.vue') },
+    { path: '/bloods', component: require('./components/Bloods.vue') },
   ]
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
