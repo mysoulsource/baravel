@@ -39,6 +39,7 @@
                     <td>{{user.area | capitalize}}</td>
                     <td>{{user.created_at | dateChange}}</td>
                     <td>
+                        <a href="#" @click.prevent="requestblood(user.id)"><i class="fas fa-hands-helping"></i></a>
                         <a href="#" @click.prevent="editModal(user)"><i class="fas fa-edit"></i></a>
                         <a href="#" @click.prevent="deleteUser(user.id)"><i class="fas fa-trash text-red"></i></a>
                     </td>
@@ -162,6 +163,65 @@
                     </div>
                 </div>
                 </div>
+
+
+                 <div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"  id="exampleModalLabel">Request form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form @submit.prevent="sendRequest" @keydown="form.onKeydown($event)">
+                        <div class="modal-body">
+                             <div class="row">
+                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                                <label>Date</label>
+                                                <input v-model="request.date" type="date" name="date"
+                                                    class="form-control" :class="{ 'is-invalid': request.errors.has('date') }">
+                                                <has-error :form="request" field="date"></has-error>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Urgency</label>
+                                                    <select name="urgency"
+                                                    class="form-control" v-model="request.urgency" :class="{ 'is-invalid': request.errors.has('urgency') }">
+                                                    <option value="" disabled>Select urgency</option>
+                                                    <option value="1">High</option>
+                                                    <option value="2">Medium</option>
+                                                    <option value="3">Low</option>
+                                                    </select>
+                                                <has-error :form="request" field="urgency"></has-error>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                                <label>Message</label>
+                                                    <textarea v-model="request.message" type="text" name="message"
+                                                    class="form-control" :class="{ 'is-invalid': request.errors.has('message') }"></textarea>
+                                                <has-error :form="request" field="message"></has-error>
+                                    </div>
+                                    </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit"  class="btn btn-primary">Send Request</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
             <!-- End of Modal -->
           </div>
 </template>
@@ -184,6 +244,13 @@
                     type:'',
                     created_at:''
                 }),
+                request: new Form({
+                    id:'',
+                    date:'',
+                    urgency:'',
+                    message:''
+                })
+
            }
        },
        methods:{
@@ -246,6 +313,25 @@
                    this.$Progress.fail();
                    swal('Oops!!','Something went wrong','warning');
                })
+           },
+           requestblood(id){
+               $('#requestModal').modal('show');
+               this.request.id = id;
+
+           },
+           sendRequest(){
+               this.$Progress.start();
+                this.request.post('api/request').then(()=>{
+                     this.$Progress.finish();
+                      $('#requestModal').modal('hide');
+                       toast({
+                            type: 'success',
+                            title: 'Requested Successfully'
+                        })
+                }).catch(()=>{
+                     this.$Progress.fail();
+                      swal('Oops!!','Something went wrong','warning');
+                });
            }
        },
        created(){

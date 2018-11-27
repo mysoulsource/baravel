@@ -25,3 +25,6 @@ Route::put('notice/image/{id}','API\NoticeController@image');
 Route::apiResources(['gallery'=>'API\GalleryController']);
 Route::apiResources(['demands'=>'API\DemandController']);
 Route::apiResources(['bloods'=>'API\BloodController']);
+Route::apiResources(['request'=>'API\RequestController']);
+Route::apiResources(['donate'=>'API\DonateController']);
+Route::post('donate/accept','API\DonateController@accept');

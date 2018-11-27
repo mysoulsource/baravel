@@ -58,7 +58,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <img src="{{asset('img/profile/'. Auth()->user()->img)}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
         <a href="#" class="d-block">{{Auth()->user()->name}}</a>
@@ -104,6 +104,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
+            <a href="/requests" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Requests
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/donate" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Donate
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="/bloods" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
@@ -117,6 +133,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <p>
                Gallery
               </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a  class="nav-link" href="{{ route('logout') }}"
+               onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+               Logout
+              </p>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
             </a>
           </li>
           <li class="nav-item has-treeview menu-open">
@@ -140,6 +169,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Add new</p>
                 </a>
               </li>
+
             </ul>
           </li>
           {{-- <li class="nav-item">

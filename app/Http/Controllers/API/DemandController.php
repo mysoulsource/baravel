@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Demand;
+use App\Demandstatus;
 
 class DemandController extends Controller
 {
@@ -15,9 +16,9 @@ class DemandController extends Controller
      */
     public function index()
     {
-        $demands = Demand::all();
+        $demands = Demand::with('bloodName')->get();
 
-        return $demands;
+       return $demands;
 
     }
 
@@ -48,7 +49,7 @@ class DemandController extends Controller
             'location'=>'required|string|max:500',
         ]);
 
-        Demand::create([
+        $demand_id = Demand::create([
             'title' => $request->input('title'),
             'blood' =>$request->input('blood'),
             'date' =>$request->input('date'),
@@ -58,7 +59,13 @@ class DemandController extends Controller
             'location' =>$request->input('location'),
             'added_by'=>auth('api')->user()->id,
             'code'=>str_random(16)
+        ])->id;
+        Demandstatus::create([
+            'demand_id'=>$demand_id,
+            'message'=>'Pending',
+            'status'=>0
         ]);
+
     }
 
     /**

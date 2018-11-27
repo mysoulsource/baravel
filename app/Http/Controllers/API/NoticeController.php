@@ -16,7 +16,13 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $notices = Notice::all();
+        $notices = Notice::with('Updatedby')->get();
+
+
+//        foreach ($notices as $notice){
+//
+//            $notice->updated_by = $notice->Updatedby->name;
+//        }
         return $notices;
     }
 

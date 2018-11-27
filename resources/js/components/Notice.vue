@@ -33,7 +33,7 @@
                     <td>{{notice.id}}</td>
                     <td>{{notice.title | capitalize}}</td>
                     <td><img :src="getPhoto(notice.image)" class="event_image" alt=""></td>
-                    <td>{{notice.updated_by}}</td>
+                    <td>{{notice.updatedby.name}}</td>
                     <td>{{notice.updated_at | dateChange}}</td>
                     <td>{{notice.status | stringConv}}</td>
                     <td>
@@ -51,7 +51,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Event</h5>
+                        <h5 class="modal-title" id="">Edit Event</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>

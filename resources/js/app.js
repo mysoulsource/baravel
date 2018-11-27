@@ -96,6 +96,8 @@ let routes = [
     { path: '/gallery', component: require('./components/Gallery.vue') },
     { path: '/demands', component: require('./components/Demands.vue') },
     { path: '/bloods', component: require('./components/Bloods.vue') },
+    { path: '/requests', component: require('./components/Request.vue') },
+    { path: '/donate', component: require('./components/Donate.vue') },
   ]
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))

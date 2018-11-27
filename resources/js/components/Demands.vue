@@ -25,7 +25,7 @@
                             <tr v-for="demand in demands.data" :key="demand.id">
                                 <td>{{demand.id}}</td>
                                 <td>{{demand.title}}</td>
-                                <td>{{demand.blood}}</td>
+                                <td>{{demand.blood_name.name}}</td>
                                 <td>{{demand.date}}</td>
                                 <td>{{demand.urgency | urgencyStatus}}</td>
                                 <td>{{demand.accepted_by}}</td>

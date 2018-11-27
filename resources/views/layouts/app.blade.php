@@ -13,19 +13,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="/css/app.css">
   <title>Baravel</title>
 
+  @yield('links')
   <!-- Font Awesome Icons -->
-
 </head>
 <body>
+
 <div class="wrapper">
 
   <!-- Navbar -->
-
-
-
-
-
-
+    @include('layouts.contents.navbar')
   <!-- /.navbar -->
 
 
@@ -54,14 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Anything you want
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2018 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
+  @include('layouts.contents.footer')
 </div>
 <!-- ./wrapper -->
 
