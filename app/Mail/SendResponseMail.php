@@ -38,6 +38,8 @@ class SendResponseMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.response');
+        return $this
+            ->to($this->requested_by->email)
+            ->markdown('email.response');
     }
 }

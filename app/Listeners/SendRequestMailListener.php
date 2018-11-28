@@ -2,13 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\SendRequest;
+use App\Events\SendRequestEvent;
+use App\Mail\SendRequestMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
-use App\Mail\SendRequestMail as SRM;
 
-class SendRequestMail
+class SendRequestMailListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -23,12 +23,14 @@ class SendRequestMail
     /**
      * Handle the event.
      *
-     * @param  SendRequest  $event
+     * @param  SendRequestEvent  $event
      * @return void
      */
-    public function handle(SendRequest $event)
+    public function handle(SendRequestEvent $event)
     {
-        dd($event);
-//        Mail::to($requested_to->email)->send(new SRM($event->request));
+
+        $email = new SendRequestMail($event->request);
+        Mail::send($email);
+
     }
 }

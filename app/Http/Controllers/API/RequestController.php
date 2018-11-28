@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\SendRequestEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Request as Requests;
@@ -59,7 +60,7 @@ class RequestController extends Controller
             'message'=>$request->input('message')
         ]);
 
-        dispatch(new SendRequestEmailJob($request));
+        event(new SendRequestEvent($request));
 
     }
 

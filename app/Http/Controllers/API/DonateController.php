@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\SendResponseEvent;
 use App\Jobs\SendResponseMailJob;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -95,9 +96,10 @@ class DonateController extends Controller
 
             Requeststatus::create([
                 'request_id' => $donate->id,
-                'status' => 1
+                'status' => 1,
+                'message'=>''
             ]);
-            dispatch(new SendResponseMailJob($donate));
+            event(new SendResponseEvent($donate));
 
         }
     }

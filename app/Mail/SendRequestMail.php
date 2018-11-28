@@ -25,8 +25,10 @@ class SendRequestMail extends Mailable
     public function __construct(Request $request)
     {
         $this->request = $request;
+
         $this->requested_to =User::findOrFail($this->request->requested_to);
         $this->requested_by =User::findOrFail($this->request->requested_by);
+
     }
 
     /**
@@ -36,6 +38,8 @@ class SendRequestMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.request');
+        return $this
+            ->to($this->requested_to->email)
+            ->markdown('email.request');
     }
 }
