@@ -51,16 +51,28 @@ class RequestController extends Controller
             'message'=>'required|max:500'
         ]);
 
-        $request = Requests::create([
-            'requested_by'=> auth('api')->user()->id,
-            'requested_to'=>$request->input('id'),
-            'status'=>0,
-            'date'=>$request->input('date'),
-            'urgency'=>$request->input('urgency'),
-            'message'=>$request->input('message')
-        ]);
+        $prev_request = Requests::where('requested_by','=',auth('api')->user()->id)
+            ->where('requested_to','=',$request->input('id'))
+            ->get();
+       if($prev_request){
+           return response()->json([
+               'status' => 'error',
+               'msg'    => 'You have already Requested this User'
+           ], 422);
+       }else{
+           $request = Requests::create([
+               'requested_by'=> auth('api')->user()->id,
+               'requested_to'=>$request->input('id'),
+               'status'=>0,
+               'date'=>$request->input('date'),
+               'urgency'=>$request->input('urgency'),
+               'message'=>$request->input('message')
+           ]);
 
-        event(new SendRequestEvent($request));
+           event(new SendRequestEvent($request));
+       }
+
+
 
     }
 

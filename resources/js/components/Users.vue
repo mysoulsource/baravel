@@ -328,7 +328,8 @@
                             type: 'success',
                             title: 'Requested Successfully'
                         })
-                }).catch(()=>{
+                }).catch((error)=>{
+                    console.log(error);
                      this.$Progress.fail();
                       swal('Oops!!','Something went wrong','warning');
                 });
