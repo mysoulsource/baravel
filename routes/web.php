@@ -18,6 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/gallery', 'HomeController@gallery')->name('gallery');
+Route::get('/events', 'HomeController@events')->name('events');
 
 Route::get('/mail','API\RequestController@mail');
 

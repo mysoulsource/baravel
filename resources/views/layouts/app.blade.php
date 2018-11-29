@@ -11,17 +11,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="/css/app.css">
-  <title>Baravel</title>
+  <link rel="stylesheet" href="/css/footer.css">
+  <meta name="token" id="token" value="{{ auth()->check() ? auth()->user() : 'null' }}">
+
+  <link rel="stylesheet" href="/css/supporters.css">
+  <title>@{{ title }}</title>
 
   @yield('links')
   <!-- Font Awesome Icons -->
 </head>
 <body>
 
-<div class="wrapper">
+<div class="wrapper" id="app">
 
   <!-- Navbar -->
     @include('layouts.contents.navbar')
+
   <!-- /.navbar -->
 
 
@@ -33,6 +38,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Main content -->
     <div class="content">
+
         @yield('content')
     </div>
     <!-- /.content -->
@@ -50,6 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
+  @include('contents.supporters')
   @include('layouts.contents.footer')
 </div>
 <!-- ./wrapper -->
@@ -57,5 +64,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 <script src="/js/app.js"></script>
+@yield('scripts')
 </body>
 </html>

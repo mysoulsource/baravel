@@ -54,12 +54,12 @@ class RequestController extends Controller
         $prev_request = Requests::where('requested_by','=',auth('api')->user()->id)
             ->where('requested_to','=',$request->input('id'))
             ->get();
-       if($prev_request){
-           return response()->json([
-               'status' => 'error',
-               'msg'    => 'You have already Requested this User'
-           ], 422);
-       }else{
+//       if($prev_request){
+//           return response()->json([
+//               'status' => 'error',
+//               'msg'    => 'You have already Requested this User'
+//           ], 422);
+//       }else{
            $request = Requests::create([
                'requested_by'=> auth('api')->user()->id,
                'requested_to'=>$request->input('id'),
@@ -70,7 +70,7 @@ class RequestController extends Controller
            ]);
 
            event(new SendRequestEvent($request));
-       }
+//       }
 
 
 

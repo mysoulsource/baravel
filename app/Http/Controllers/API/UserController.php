@@ -16,6 +16,11 @@ class UserController extends Controller
     public function __construct(){
         $this->middleware('auth:api');
     }
+
+    public  function user(){
+       $user = auth('api')->user();
+       return $user;
+    }
     public function index()
     {
         $users = User::all();
