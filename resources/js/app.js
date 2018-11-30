@@ -128,7 +128,7 @@ const app = new Vue({
                     swal({
                         position: 'top-end',
                         type: 'success',
-                        title: request.requested_by + ' requested you on' + request.date ,
+                        title: request.requested_by + ' requested you on' + request.on ,
                         showConfirmButton: false,
                         timer: 1500
                     })
