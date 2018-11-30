@@ -13,10 +13,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class SendRequestEvent implements shouldBroadcastNow
+class SendRequestEvent implements shouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $request;
+    public $requested_to;
 
     /**
      * Create a new event instance.
@@ -26,6 +27,7 @@ class SendRequestEvent implements shouldBroadcastNow
     public function __construct(Request $request)
     {
         $this->request = $request;
+        $this->requested_to = User::findOrFail($this->request->requested_to);
     }
 
     /**
@@ -35,17 +37,17 @@ class SendRequestEvent implements shouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('AlertRequest.'.$this->request->id);
+        return new PrivateChannel('AlertRequest.'.$this->requested_to->id);
     }
     public function broadcastAs(){
         return 'RequestStatus';
     }
     public function broadcastWith(){
 
-        $requested_by = User::where('id','=',$this->request->requested_by)->get();
+        $requested_by = User::findOrFail($this->request->requested_by);
 
         return [
-            'requested_by' => $requested_by[0]->name,
+            'requested_by' => $requested_by->name,
             'on' => $this->request->created_at->toFormattedDateString(),
         ];
 

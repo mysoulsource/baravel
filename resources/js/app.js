@@ -117,14 +117,27 @@ const app = new Vue({
     el: '#app',
     router,
     data:{
-       user:{}
+       user:{},
+        hide:false,
     },
     methods:{
+        listen(){
+            window.Echo.private('AlertRequest.' + this.user)
+                .listen('.RequestStatus',(request)=>{
 
+                    swal({
+                        position: 'top-end',
+                        type: 'success',
+                        title: request.requested_by + ' requested you on' + request.date ,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+        }
     },
     created(){
-        // this.user = document.querySelector('#token').getAttribute('value');
-
+        this.user = document.querySelector('#token').getAttribute('value');
+        this.listen();
     }
 
 });
