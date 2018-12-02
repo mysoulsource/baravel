@@ -141,4 +141,13 @@ class UserController extends Controller
             return $users;
 
     }
+    public function advsearch(Request $request){
+        $users = User::where(function($query) use ($request){
+            $query->where('zone','LIKE',"%$request->zone%")
+                ->Where('district','LIKE',"%$request->district%")
+                ->Where('area','LIKE',"%$request->area%")
+                ->Where('blood','LIKE',"%$request->bloodgroup%");
+        })->get();
+        return $users;
+    }
 }

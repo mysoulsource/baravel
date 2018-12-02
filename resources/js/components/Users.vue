@@ -4,7 +4,28 @@
 
 <template>
     <div class="col-12">
-        <div class="row"></div>
+        <div class="search">
+            <form @submit.prevent="Advsearch" @keydown="form.onKeydown($event)">
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Zone" v-model="searchuser.zone">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="District"  v-model="searchuser.district">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Area"  v-model="searchuser.area">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Blood Group"  v-model="searchuser.bloodgroup">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-info" value="Advance Search">
+                    </div>
+                </div>
+            </form>
+
+        </div>
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Users Table</h3>
@@ -12,6 +33,7 @@
                 <div class="card-tools">
                   <button class="btn btn-primary" @click="addModal">Add new</button>
                 </div>
+
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
@@ -250,11 +272,28 @@
                     date:'',
                     urgency:'',
                     message:''
-                })
+                }),
+               searchuser : new Form({
+                   zone:'',
+                   district:'',
+                   area:'',
+                   bloodgroup:''
+               })
 
            }
        },
        methods:{
+           Advsearch(){
+               this.$Progress.start();
+               this.searchuser.post('api/advsearch').then(({data})=>{
+                   this.$Progress.finish();
+                   this.users = data;
+
+               }).catch(()=>{
+                   this.$Progress.fail();
+                   swal('Oops!!','Something went wrong','warning');
+               })
+           },
                 deleteUser(id){
                         swal({
                             title: 'Are you sure?',

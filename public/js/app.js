@@ -83071,6 +83071,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -83094,14 +83116,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 date: '',
                 urgency: '',
                 message: ''
+            }),
+            searchuser: new Form({
+                zone: '',
+                district: '',
+                area: '',
+                bloodgroup: ''
             })
 
         };
     },
 
     methods: {
-        deleteUser: function deleteUser(id) {
+        Advsearch: function Advsearch() {
             var _this = this;
+
+            this.$Progress.start();
+            this.searchuser.post('api/advsearch').then(function (_ref) {
+                var data = _ref.data;
+
+                _this.$Progress.finish();
+                _this.users = data;
+            }).catch(function () {
+                _this.$Progress.fail();
+                swal('Oops!!', 'Something went wrong', 'warning');
+            });
+        },
+        deleteUser: function deleteUser(id) {
+            var _this2 = this;
 
             swal({
                 title: 'Are you sure?',
@@ -83115,7 +83157,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 if (result.value) {
                     //send ajax request to server
-                    _this.form.delete('api/user/' + id).then(function () {
+                    _this2.form.delete('api/user/' + id).then(function () {
                         //fire the event trigger
                         Fire.$emit('datauploaded');
                         swal('Deleted!', 'Your file has been deleted.', 'success');
@@ -83126,11 +83168,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         getUsers: function getUsers() {
-            var _this2 = this;
+            var _this3 = this;
 
-            axios.get("api/user").then(function (_ref) {
-                var data = _ref.data;
-                return _this2.users = data;
+            axios.get("api/user").then(function (_ref2) {
+                var data = _ref2.data;
+                return _this3.users = data;
             });
         },
         addModal: function addModal() {
@@ -83142,11 +83184,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         addUser: function addUser() {},
         editUser: function editUser() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.$Progress.start();
             this.form.put('api/user/' + this.form.id).then(function () {
-                _this3.$Progress.finish();
+                _this4.$Progress.finish();
                 $('#userModal').modal('hide');
                 Fire.$emit('datauploaded');
                 toast({
@@ -83154,7 +83196,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     title: 'Updated Successfully'
                 });
             }).catch(function () {
-                _this3.$Progress.fail();
+                _this4.$Progress.fail();
                 swal('Oops!!', 'Something went wrong', 'warning');
             });
         },
@@ -83163,11 +83205,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.request.id = id;
         },
         sendRequest: function sendRequest() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.$Progress.start();
             this.request.post('api/request').then(function () {
-                _this4.$Progress.finish();
+                _this5.$Progress.finish();
                 $('#requestModal').modal('hide');
                 toast({
                     type: 'success',
@@ -83175,28 +83217,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             }).catch(function (error) {
                 console.log(error);
-                _this4.$Progress.fail();
+                _this5.$Progress.fail();
                 swal('Oops!!', 'Something went wrong', 'warning');
             });
         },
         userSearch: function userSearch() {
-            var _this5 = this;
+            var _this6 = this;
 
             var query = this.$parent.search;
             axios.get('api/usersearch?q=' + query).then(function (response) {
-                _this5.users = response.data;
+                _this6.users = response.data;
             });
         }
     },
     created: function created() {
-        var _this6 = this;
+        var _this7 = this;
 
         this.getUsers();
         Fire.$on('datauploaded', function () {
-            _this6.getUsers();
+            _this7.getUsers();
         });
         Fire.$on('searching', function () {
-            _this6.userSearch();
+            _this7.userSearch();
         });
     }
 });
@@ -83210,7 +83252,123 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-12" }, [
-    _c("div", { staticClass: "row" }),
+    _c("div", { staticClass: "search" }, [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.Advsearch($event)
+            },
+            keydown: function($event) {
+              _vm.form.onKeydown($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "row mb-3" }, [
+            _c("div", { staticClass: "col" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchuser.zone,
+                    expression: "searchuser.zone"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Zone" },
+                domProps: { value: _vm.searchuser.zone },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.searchuser, "zone", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchuser.district,
+                    expression: "searchuser.district"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "District" },
+                domProps: { value: _vm.searchuser.district },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.searchuser, "district", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchuser.area,
+                    expression: "searchuser.area"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Area" },
+                domProps: { value: _vm.searchuser.area },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.searchuser, "area", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchuser.bloodgroup,
+                    expression: "searchuser.bloodgroup"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Blood Group" },
+                domProps: { value: _vm.searchuser.bloodgroup },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.searchuser, "bloodgroup", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
@@ -83230,7 +83388,7 @@ var render = function() {
           _c(
             "tbody",
             [
-              _vm._m(0),
+              _vm._m(1),
               _vm._v(" "),
               _vm._l(_vm.users, function(user) {
                 return _c("tr", { key: user.id }, [
@@ -83364,7 +83522,7 @@ var render = function() {
                   [_vm._v("Edit User")]
                 ),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm._m(2)
               ]),
               _vm._v(" "),
               _c(
@@ -83876,7 +84034,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(3),
               _vm._v(" "),
               _c(
                 "form",
@@ -84061,7 +84219,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(3)
+                  _vm._m(4)
                 ]
               )
             ])
@@ -84072,6 +84230,17 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col" }, [
+      _c("input", {
+        staticClass: "btn btn-info",
+        attrs: { type: "submit", value: "Advance Search" }
+      })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
