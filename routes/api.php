@@ -32,3 +32,5 @@ Route::post('donate/decline','API\DonateController@decline');
 Route::get('currentUser','API\UserController@user');
 Route::get('usersearch','API\UserController@search');
 Route::post('advsearch','API\UserController@advsearch');
+Route::get('profile','API\UserController@profile');
+Route::put('profile/update','API\UserController@updateProfile');
