@@ -4,6 +4,7 @@
 
 <template>
     <div class="col-12">
+        <div class="row"></div>
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Users Table</h3>
@@ -169,7 +170,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title"  id="exampleModalLabel">Request form</h5>
+                        <h5 class="modal-title"  id="">Request form</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -333,12 +334,22 @@
                      this.$Progress.fail();
                       swal('Oops!!','Something went wrong','warning');
                 });
-           }
+           },
+           userSearch(){
+               let query = this.$parent.search;
+               axios.get('api/usersearch?q=' + query)
+                   .then(response => {
+                       this.users = response.data;
+                   });
+           },
        },
        created(){
            this.getUsers();
            Fire.$on('datauploaded',()=>{
                this.getUsers();
+           });
+           Fire.$on('searching',()=>{
+               this.userSearch();
            });
 
        }

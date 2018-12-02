@@ -103,19 +103,16 @@ class DonateController extends Controller
 
         }
     }
-    public function  Decline(Request $request){
+    public function  decline(Request $request){
         $donate = Donate::findOrFail($request->did);
         if($donate){
 
-            $donate->update([
-                'status' => 2,
-                'code'=>str_random(16)
-            ]);
             Requeststatus::create([
                 'request_id' => $donate->id,
                 'status' => 0,
                 'message'=>'Declined'
             ]);
+            $donate->delete();
             dispatch(new SendResponseMailJob($donate));
 
         }

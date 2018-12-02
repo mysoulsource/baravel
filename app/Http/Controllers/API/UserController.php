@@ -119,4 +119,26 @@ class UserController extends Controller
         $user->delete();
         return ['message','Deleted Successfully'];
     }
+    public function search(){
+        // if the gate allows
+
+            //if the search query has data
+            if($search = \Request::get('q')){
+                /// store in users var after searching
+                $users = User::where(function($query) use ($search){
+                    $query->where('name','LIKE',"%$search%")
+                        ->orWhere('email','LIKE',"%$search%")
+                        ->orWhere('country','LIKE',"%$search%")
+                        ->orWhere('zone','LIKE',"%$search%")
+                        ->orWhere('district','LIKE',"%$search%")
+                        ->orWhere('area','LIKE',"%$search%")
+                        ->orWhere('blood','LIKE',"%$search%");
+                })->get();
+            }else{
+                // if the query is empty send
+                $users = User::latest()->get();
+            }
+            return $users;
+
+    }
 }

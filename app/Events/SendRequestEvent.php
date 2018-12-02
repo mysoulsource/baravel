@@ -49,6 +49,7 @@ class SendRequestEvent implements shouldBroadcast
         return [
             'requested_by' => $requested_by->name,
             'on' => $this->request->created_at->toFormattedDateString(),
+            'id' => $this->request->id,
         ];
 
     }

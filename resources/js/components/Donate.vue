@@ -90,7 +90,20 @@
 
 
             },
-            declineRequest(donate){
+            declineRequest(id){
+                axios.post('api/donate/decline', { did : id }, {
+                })
+                    .then(()=>{
+                        Fire.$emit('datauploaded');
+                        swal(
+                            'Declined!',
+                            'Request Declined Successfully.',
+                            'success'
+                        )
+                    })
+                    .catch(()=>{
+                        swal('Oops!!','Something went wrong','warning');
+                    });
 
             }
         },

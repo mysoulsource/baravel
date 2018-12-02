@@ -28,4 +28,6 @@ Route::apiResources(['bloods'=>'API\BloodController']);
 Route::apiResources(['request'=>'API\RequestController']);
 Route::apiResources(['donate'=>'API\DonateController']);
 Route::post('donate/accept','API\DonateController@accept');
+Route::post('donate/decline','API\DonateController@decline');
 Route::get('currentUser','API\UserController@user');
+Route::get('usersearch','API\UserController@search');

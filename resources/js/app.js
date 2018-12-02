@@ -119,21 +119,73 @@ const app = new Vue({
     data:{
        user:{},
         hide:false,
+        donate:{},
+        search:''
     },
     methods:{
         listen(){
             window.Echo.private('AlertRequest.' + this.user)
                 .listen('.RequestStatus',(request)=>{
-
+                    this.donate = request;
                     swal({
-                        position: 'top-end',
-                        type: 'success',
-                        title: request.requested_by + ' requested you on' + request.on ,
-                        showConfirmButton: false,
-                        timer: 1500
+                        title: 'Blood Request Notification',
+                        text: request.requested_by + ' Requested for Blood on ' + request.on ,
+                        type: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Accept it.',
+                        cancelButtonText:'Decline it.'
+
+                    }).then((result) => {
+
+                        if (result.value) {
+                            this.acceptRequest();
+                            swal(
+                                'Accepted!',
+                                'Your accepted the request.',
+                                'success'
+                            )
+                        }else{
+                         this.declineRequest();
+                        }
                     })
                 });
-        }
+        },
+        acceptRequest(){
+            axios.post('api/donate/accept', { did : this.donate.id }, {
+            })
+                .then(()=>{
+                    Fire.$emit('datauploaded');
+                    swal(
+                        'Accepted!',
+                        'Request accepted Successfully.',
+                        'success'
+                    )
+                })
+                .catch(()=>{
+                    swal('Oops!!','Something went wrong','warning');
+                });
+
+        },
+        declineRequest(){
+            axios.post('api/donate/decline', { did : this.donate.id }, {
+            })
+                .then(()=>{
+                    Fire.$emit('datauploaded');
+                    swal(
+                        'Declined!',
+                        'Request Declined Successfully.',
+                        'success'
+                    )
+                })
+                .catch(()=>{
+                    swal('Oops!!','Something went wrong','warning');
+                });
+        },
+        searchfun: _.debounce(()=>{
+            Fire.$emit('searching');
+        },1000)
     },
     created(){
         this.user = document.querySelector('#token').getAttribute('value');
