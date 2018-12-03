@@ -34,3 +34,4 @@ Route::get('usersearch','API\UserController@search');
 Route::post('advsearch','API\UserController@advsearch');
 Route::get('profile','API\UserController@profile');
 Route::put('profile/update','API\UserController@updateProfile');
+Route::apiResources(['banner'=>'API\BannerController']);
