@@ -10,82 +10,30 @@
                 </div>
             </div>
         <div class="row">
+            @forelse($demands as $demand)
+
             <div class="col-md-3">
                 <figure class="card card-product">
-                    <div class="img-wrap"><img src="https://steemitimages.com/DQmf8HeXvxmKrTKqyVxLDaYzYTo56af6egK9bAanukT5sDZ/b%2B.png"></div>
+                    <div class="img-wrap"><img src="{{asset('img/bloods/'.$demand->bloodName->image)}}"></div>
                     <figcaption class="info-wrap">
-                        <h4 class="title">B+ required</h4>
-                        <p class="desc">Some small description goes here</p>
+                        <h4 class="title">{{ $demand->title }}</h4>
+                        <p class="desc">{{ $demand->detail }}</p>
                         <div class="rating-wrap">
-                            <div class="label-rating">132 reviews</div>
-                            <div class="label-rating">154 orders </div>
+                            <div class="label-rating">{{ $demand->location }}</div>
+                            {{--<div class="label-rating">154 orders </div>--}}
                         </div> <!-- rating-wrap.// -->
                     </figcaption>
                     <div class="bottom-wrap">
                         <a href="" class="btn btn-sm btn-success float-right">Order Now</a>
                         <div class="price-wrap h5">
-                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
+                            <span class="price-new">{{  $demand->date }}</span>
                         </div> <!-- price-wrap.// -->
                     </div> <!-- bottom-wrap.// -->
                 </figure>
             </div> <!-- col // -->
-            <div class="col-md-3">
-                <figure class="card card-product">
-                    <div class="img-wrap"><img src="https://steemitimages.com/DQmf8HeXvxmKrTKqyVxLDaYzYTo56af6egK9bAanukT5sDZ/b%2B.png"> </div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">B+ required</h4>
-                        <p class="desc">Some small description goes here</p>
-                        <div class="rating-wrap">
-                            <div class="label-rating">132 reviews</div>
-                            <div class="label-rating">154 orders </div>
-                        </div> <!-- rating-wrap.// -->
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <a href="" class="btn btn-sm btn-success float-right">Order Now</a>
-                        <div class="price-wrap h5">
-                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
-                        </div> <!-- price-wrap.// -->
-                    </div> <!-- bottom-wrap.// -->
-                </figure>
-            </div> <!-- col // -->
-            <div class="col-md-3">
-                <figure class="card card-product">
-                    <div class="img-wrap"><img src="https://steemitimages.com/DQmf8HeXvxmKrTKqyVxLDaYzYTo56af6egK9bAanukT5sDZ/b%2B.png"></div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">B+ required</h4>
-                        <p class="desc">Some small description goes here</p>
-                        <div class="rating-wrap">
-                            <div class="label-rating">132 reviews</div>
-                            <div class="label-rating">154 orders </div>
-                        </div> <!-- rating-wrap.// -->
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <a href="" class="btn btn-sm btn-success float-right">Order Now</a>
-                        <div class="price-wrap h5">
-                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
-                        </div> <!-- price-wrap.// -->
-                    </div> <!-- bottom-wrap.// -->
-                </figure>
-            </div> <!-- col // -->
-            <div class="col-md-3">
-                <figure class="card card-product">
-                    <div class="img-wrap"><img src="https://steemitimages.com/DQmf8HeXvxmKrTKqyVxLDaYzYTo56af6egK9bAanukT5sDZ/b%2B.png"></div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">B+ required</h4>
-                        <p class="desc">Some small description goes here</p>
-                        <div class="rating-wrap">
-                            <div class="label-rating">132 reviews</div>
-                            <div class="label-rating">154 orders </div>
-                        </div> <!-- rating-wrap.// -->
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <a href="" class="btn btn-sm btn-success float-right">Order Now</a>
-                        <div class="price-wrap h5">
-                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
-                        </div> <!-- price-wrap.// -->
-                    </div> <!-- bottom-wrap.// -->
-                </figure>
-            </div> <!-- col // -->
+            @empty
+                <p>No Demands</p>
+            @endforelse
         </div>
             <div class="row mt-3">
                 <br/>
