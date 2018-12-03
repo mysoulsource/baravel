@@ -65,6 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 <script src="/js/app.js"></script>
+<script src="/js/banner.js"></script>
 @yield('scripts')
 </body>
 </html>

@@ -25,18 +25,9 @@ class HomeController extends Controller
     public function index()
     {
 
-        return view('home')->with(compact('demands'));
+        return view('home');
     }
-    public function home(){
-        $demands = Demand::with('bloodName')->latest()->paginate(4);
-        return view('index')->with(compact('demands'));
-    }
-    public function gallery()
-    {
-        return view('gallery');
-    }
-    public function events()
-    {
-        return view('events');
-    }
+
+
+
 }

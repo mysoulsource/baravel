@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', 'HomeController@home');
+Route::get('/', 'IndexController@home');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/gallery', 'HomeController@gallery')->name('gallery');
-Route::get('/events', 'HomeController@events')->name('events');
+Route::get('/gallery', 'IndexController@gallery')->name('gallery');
+Route::get('/events', 'IndexController@events')->name('events');
 
 Route::get('/mail','API\RequestController@mail');
 

@@ -30,14 +30,14 @@
                         <tr v-for="banner in banners.data" :key="banner.id">
                             <td>{{banner.id}}</td>
                             <td>{{banner.title}}</td>
-                            <td>{{banner.source}}</td>
-                            <td><img :src="getPhoto(gallery.image)" class="gallery_image img-responsive" alt=""></td>
+                            <td>{{banner.sub_title}}</td>
+                            <td><img :src="getPhoto(banner.img)" class="gallery_image img-responsive" alt=""></td>
                             <td>{{banner.uploaded_by}}</td>
                             <td>{{banner.status}}</td>
                             <td>{{banner.created_at}}</td>
                             <td>
                                <a href="#" @click.prevent="editModal(banner)"><i class="fas fa-edit"></i></a>
-                               <a href="#" @click.prevent="deleteGallery(banner.id)"><i class="fas fa-trash text-red"></i></a>
+                               <a href="#" @click.prevent="deleteBanner(banner.id)"><i class="fas fa-trash text-red"></i></a>
 
                             </td>
                         </tr>
@@ -69,10 +69,10 @@
                                 </div>
                                 <div class="col-md-6">
                                            <div class="form-group">
-                                                <label>Source</label>
-                                                <input v-model="form.source" type="text" name="source"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('source') }">
-                                                <has-error :form="form" field="source"></has-error>
+                                                <label>Sub Title</label>
+                                                <input v-model="form.sub_title" type="text" name="sub_title"
+                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('sub_title') }">
+                                                <has-error :form="form" field="sub_title"></has-error>
                                             </div>
                                 </div>
                             </div>
@@ -80,9 +80,9 @@
                                 <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image</label>
-                                            <input id="imageInp" type="file" @change="imageUpload" name="image"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
-                                            <has-error :form="form" field="image"></has-error>
+                                            <input id="imageInp" type="file" @change="imageUpload" name="img"
+                                                class="form-control" :class="{ 'is-invalid': form.errors.has('img') }">
+                                            <has-error :form="form" field="img"></has-error>
                                         </div>
                                 </div>
                                 <div class="col-md-6">
@@ -121,7 +121,7 @@ export default {
                 id:'',
                 title:'',
                 sub_title:'',
-                image:'',
+                img:'',
                 status:'',
                 created_at:''
 
@@ -130,7 +130,7 @@ export default {
     },
     methods:{
         getBanners(){
-            axios.get('api/banners')
+            axios.get('api/banner')
             .then((data)=>{
                 this.banners = data
             })
@@ -138,7 +138,7 @@ export default {
         editModal(banner){
             this.editMode = true;
             $('#bannerModal').modal('show');
-            this.form.fill(gallery);
+            this.form.fill(banner);
         },
         addModal(){
             this.editMode = false;
@@ -182,7 +182,7 @@ export default {
                 var reader = new FileReader();
                  if(file['size'] < 5242880){
                         reader.onloadend = (file) => {
-                         this.form.image = reader.result;
+                         this.form.img = reader.result;
                         }
                    }else{
                         let input = $("#imageInp");

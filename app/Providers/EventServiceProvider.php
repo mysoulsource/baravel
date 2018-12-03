@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SendResponseEvent'=>[
             'App\Listeners\SendResponseMailListener',
         ],
+        'App\Events\SendDemandResponseEvent'=>[
+            'App\Listeners\SendDemandResponseMailListener',
+        ],
     ];
 
     /**

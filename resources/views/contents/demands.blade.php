@@ -24,7 +24,7 @@
                         </div> <!-- rating-wrap.// -->
                     </figcaption>
                     <div class="bottom-wrap">
-                        <a href="" class="btn btn-sm btn-success float-right">Order Now</a>
+                        <a href="" @click.prevent="acceptDemand( {{$demand->id}} )" class="btn btn-sm btn-success float-right">Accept</a>
                         <div class="price-wrap h5">
                             <span class="price-new">{{  $demand->date }}</span>
                         </div> <!-- price-wrap.// -->

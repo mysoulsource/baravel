@@ -93,12 +93,13 @@ let routes = [
     { path: '/addevent', component: require('./components/Addevent.vue') },
     { path: '/notice', component: require('./components/Notice.vue') },
     { path: '/developer', component: require('./components/Developer.vue') },
-    { path: '/gallery', component: require('./components/Gallery.vue') },
+    { path: '/gallerys', component: require('./components/Gallery.vue') },
     { path: '/demands', component: require('./components/Demands.vue') },
     { path: '/bloods', component: require('./components/Bloods.vue') },
     { path: '/requests', component: require('./components/Request.vue') },
     { path: '/donate', component: require('./components/Donate.vue') },
     { path: '/profile', component: require('./components/Profile.vue') },
+    { path: '/banner', component: require('./components/Banner.vue') },
   ]
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
@@ -121,7 +122,8 @@ const app = new Vue({
        user:{},
         hide:false,
         donate:{},
-        search:''
+        search:'',
+        demand:{}
     },
     methods:{
         listen(){
@@ -186,7 +188,23 @@ const app = new Vue({
         },
         searchfun: _.debounce(()=>{
             Fire.$emit('searching');
-        },1000)
+        },1000),
+        acceptDemand(id){
+            axios.post('api/demand/accept', { did : id }, {
+            })
+                .then(()=>{
+                    Fire.$emit('datauploaded');
+                    swal(
+                        'Accepted!',
+                        'Demand accepted Successfully.',
+                        'success'
+                    )
+                })
+                .catch(()=>{
+                    swal('Oops!!','Something went wrong','warning');
+                });
+
+        }
     },
     created(){
         this.user = document.querySelector('#token').getAttribute('value');

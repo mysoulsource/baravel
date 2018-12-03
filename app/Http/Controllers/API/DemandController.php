@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Demand;
 use App\Demandstatus;
+use App\Events\SendDemandResponseEvent;
 
 class DemandController extends Controller
 {
@@ -128,5 +129,24 @@ class DemandController extends Controller
     {
         $demand = Demand::findOrFail($id);
         $demand->delete();
+    }
+
+    public function accept(Request $request){
+        $demand = Demand::findOrFail($request->did);
+        if($demand){
+
+            $demand->update([
+                'accepted_by' => auth('api')->user()->id,
+                'status' => 1,
+            ]);
+
+            Demandstatus::create([
+                'demand_id' => $demand->id,
+                'status' => 1,
+                'message'=>'accepted'
+            ]);
+            event(new SendDemandResponseEvent($demand));
+
+        }
     }
 }

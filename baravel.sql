@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2018 at 08:27 AM
+-- Generation Time: Dec 03, 2018 at 06:32 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -21,6 +21,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `baravel`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banners`
+--
+
+CREATE TABLE `banners` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `img` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sub_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `banners`
+--
+
+INSERT INTO `banners` (`id`, `img`, `title`, `sub_title`, `created_at`, `updated_at`, `status`) VALUES
+(1, '1543855683.png', 'Donate Blood', 'Save life', '2018-12-03 10:32:07', '2018-12-03 11:03:03', 1),
+(3, '1543855753.png', 'Donate Blood', 'Save life', '2018-12-03 11:04:14', '2018-12-03 11:04:14', 1);
 
 -- --------------------------------------------------------
 
@@ -74,9 +98,9 @@ CREATE TABLE `demands` (
 
 INSERT INTO `demands` (`id`, `title`, `blood`, `detail`, `date`, `accepted_by`, `code`, `status`, `created_at`, `updated_at`, `added_by`, `location`, `urgency`) VALUES
 (1, 'B+ blood', 1, 'Blood required for operation', '2018-12-28', NULL, 'ardRidWK01EDwUj3', 0, '2018-12-03 01:31:19', '2018-12-03 01:31:19', 1, 'Koteshwor', 1),
-(2, 'A+', 2, 'Blood required for operation', '2018-12-31', NULL, '0B6jYVA8oOv7jaZv', 0, '2018-12-03 01:31:49', '2018-12-03 01:31:49', 1, 'Baneswor', 2),
-(3, 'A-', 3, 'Teaching hospital admitted patient', '2018-12-31', NULL, 'klAjhOjbVYKJscKl', 0, '2018-12-03 01:32:30', '2018-12-03 01:32:30', 1, 'Kathmandu', 1),
-(4, 'B positive', 1, '1 pint blood required', '2018-12-14', NULL, 'YEm69KVt6HU4ApK4', 0, '2018-12-03 01:33:05', '2018-12-03 01:33:05', 1, 'Gandaki', 3);
+(2, 'A+', 2, 'Blood required for operation', '2018-12-31', 1, '0B6jYVA8oOv7jaZv', 1, '2018-12-03 01:31:49', '2018-12-03 11:41:07', 1, 'Baneswor', 2),
+(3, 'A-', 3, 'Teaching hospital admitted patient', '2018-12-31', 1, 'klAjhOjbVYKJscKl', 1, '2018-12-03 01:32:30', '2018-12-03 11:40:37', 1, 'Kathmandu', 1),
+(4, 'B positive', 1, '1 pint blood required', '2018-12-14', 1, 'YEm69KVt6HU4ApK4', 1, '2018-12-03 01:33:05', '2018-12-03 11:31:32', 1, 'Gandaki', 3);
 
 -- --------------------------------------------------------
 
@@ -101,7 +125,18 @@ INSERT INTO `demandstatus` (`id`, `demand_id`, `message`, `created_at`, `updated
 (1, 1, 'Pending', '2018-12-03 01:31:19', '2018-12-03 01:31:19', 0),
 (2, 2, 'Pending', '2018-12-03 01:31:49', '2018-12-03 01:31:49', 0),
 (3, 3, 'Pending', '2018-12-03 01:32:30', '2018-12-03 01:32:30', 0),
-(4, 4, 'Pending', '2018-12-03 01:33:05', '2018-12-03 01:33:05', 0);
+(4, 4, 'Pending', '2018-12-03 01:33:05', '2018-12-03 01:33:05', 0),
+(5, 4, 'accepted', '2018-12-03 11:31:32', '2018-12-03 11:31:32', 1),
+(6, 3, 'accepted', '2018-12-03 11:40:37', '2018-12-03 11:40:37', 1),
+(7, 2, 'accepted', '2018-12-03 11:41:07', '2018-12-03 11:41:07', 1),
+(8, 3, 'accepted', '2018-12-03 11:41:36', '2018-12-03 11:41:36', 1),
+(9, 3, 'accepted', '2018-12-03 11:41:42', '2018-12-03 11:41:42', 1),
+(10, 2, 'accepted', '2018-12-03 11:42:11', '2018-12-03 11:42:11', 1),
+(11, 3, 'accepted', '2018-12-03 11:43:00', '2018-12-03 11:43:00', 1),
+(12, 2, 'accepted', '2018-12-03 11:44:49', '2018-12-03 11:44:49', 1),
+(13, 2, 'accepted', '2018-12-03 11:45:27', '2018-12-03 11:45:27', 1),
+(14, 2, 'accepted', '2018-12-03 11:45:57', '2018-12-03 11:45:57', 1),
+(15, 2, 'accepted', '2018-12-03 11:46:27', '2018-12-03 11:46:27', 1);
 
 -- --------------------------------------------------------
 
@@ -137,6 +172,20 @@ CREATE TABLE `galleries` (
   `status` int(11) NOT NULL,
   `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `galleries`
+--
+
+INSERT INTO `galleries` (`id`, `title`, `source`, `uploaded_by`, `created_at`, `updated_at`, `status`, `image`) VALUES
+(1, 'asdad', 'asdad', 1, '2018-12-03 11:15:41', '2018-12-03 11:15:41', 1, '1543856441.jpeg'),
+(2, 'zxcasda', 'dsadada', 1, '2018-12-03 11:15:50', '2018-12-03 11:15:50', 1, '1543856450.jpeg'),
+(3, 'asdsad', 'adada', 1, '2018-12-03 11:15:57', '2018-12-03 11:15:57', 1, '1543856457.jpeg'),
+(4, 'adsad', 'aasdada', 1, '2018-12-03 11:16:07', '2018-12-03 11:16:07', 1, '1543856467.jpeg'),
+(5, 'sada', 'dadada', 1, '2018-12-03 11:16:19', '2018-12-03 11:16:19', 1, '1543856478.png'),
+(6, 'as', 'sada', 1, '2018-12-03 11:16:26', '2018-12-03 11:16:26', 1, '1543856486.jpeg'),
+(7, 'asda', 'dsasada', 1, '2018-12-03 11:16:33', '2018-12-03 11:16:33', 1, '1543856493.png'),
+(8, 'asda', 'dasda', 1, '2018-12-03 11:16:44', '2018-12-03 11:16:44', 1, '1543856504.jpeg');
 
 -- --------------------------------------------------------
 
@@ -195,7 +244,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (22, '2018_11_25_125319_create_requeststatus_table', 1),
 (23, '2018_11_25_130055_add_status_to_demandstatus', 1),
 (24, '2018_11_25_133123_add_fields_to_request', 1),
-(25, '2018_11_25_173049_create_jobs_table', 1);
+(25, '2018_11_25_173049_create_jobs_table', 1),
+(26, '2018_12_03_103725_create_banners_table', 2),
+(27, '2018_12_03_104659_add_status_to_banner', 2);
 
 -- --------------------------------------------------------
 
@@ -495,6 +546,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `co
 --
 
 --
+-- Indexes for table `banners`
+--
+ALTER TABLE `banners`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `bloods`
 --
 ALTER TABLE `bloods`
@@ -607,6 +664,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `banners`
+--
+ALTER TABLE `banners`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `bloods`
 --
 ALTER TABLE `bloods`
@@ -622,7 +685,7 @@ ALTER TABLE `demands`
 -- AUTO_INCREMENT for table `demandstatus`
 --
 ALTER TABLE `demandstatus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `events`
@@ -634,7 +697,7 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT for table `galleries`
 --
 ALTER TABLE `galleries`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -646,7 +709,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `notices`
