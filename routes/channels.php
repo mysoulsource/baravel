@@ -22,3 +22,7 @@ Broadcast::channel('AlertRequest.{id}',function($user,$id){
 Broadcast::channel('DemandAlert.{id}',function($user,$id){
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('RequestResponse.{id}',function($user,$id){
+    return (int) $user->id === (int) $id;
+});

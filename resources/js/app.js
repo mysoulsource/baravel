@@ -165,6 +165,17 @@ const app = new Vue({
                     )
 
                 });
+
+            window.Echo.private('RequestResponse.' + this.user)
+                .listen('.RequestResponseEvent',(request)=>{
+                    let text =   request.requested_to + ' accepted your request on ' + request.on ;
+                    swal(
+                        'Accepted!',
+                        text,
+                        'success'
+                    )
+
+                });
         },
         acceptRequest(){
             axios.post('api/donate/accept', { did : this.donate.id }, {

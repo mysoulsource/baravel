@@ -30845,6 +30845,11 @@ var app = new Vue({
                 var text = demand.accepted + ' accepted your request on ' + demand.on;
                 swal('Accepted!', text, 'success');
             });
+
+            window.Echo.private('RequestResponse.' + this.user).listen('.RequestResponseEvent', function (request) {
+                var text = request.requested_to + ' accepted your request on ' + request.on;
+                swal('Accepted!', text, 'success');
+            });
         },
         acceptRequest: function acceptRequest() {
             axios.post('api/donate/accept', { did: this.donate.id }, {}).then(function () {
