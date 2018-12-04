@@ -30692,7 +30692,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(141);
-module.exports = __webpack_require__(238);
+module.exports = __webpack_require__(243);
 
 
 /***/ }),
@@ -30790,7 +30790,7 @@ Vue.component('passport-authorized-clients', __webpack_require__(180));
 
 Vue.component('passport-personal-access-tokens', __webpack_require__(185));
 Vue.component('example-component', __webpack_require__(190));
-var routes = [{ path: '/users', component: __webpack_require__(193) }, { path: '/events', component: __webpack_require__(198) }, { path: '/addevent', component: __webpack_require__(203) }, { path: '/notice', component: __webpack_require__(206) }, { path: '/developer', component: __webpack_require__(211) }, { path: '/gallerys', component: __webpack_require__(214) }, { path: '/demands', component: __webpack_require__(219) }, { path: '/bloods', component: __webpack_require__(222) }, { path: '/requests', component: __webpack_require__(227) }, { path: '/donate', component: __webpack_require__(230) }, { path: '/profile', component: __webpack_require__(233) }, { path: '/banner', component: __webpack_require__(254) }];
+var routes = [{ path: '/users', component: __webpack_require__(193) }, { path: '/events', component: __webpack_require__(198) }, { path: '/addevent', component: __webpack_require__(203) }, { path: '/notice', component: __webpack_require__(206) }, { path: '/developer', component: __webpack_require__(211) }, { path: '/gallerys', component: __webpack_require__(214) }, { path: '/demands', component: __webpack_require__(219) }, { path: '/bloods', component: __webpack_require__(222) }, { path: '/requests', component: __webpack_require__(227) }, { path: '/donate', component: __webpack_require__(230) }, { path: '/profile', component: __webpack_require__(233) }, { path: '/banner', component: __webpack_require__(238) }];
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 
@@ -30839,6 +30839,11 @@ var app = new Vue({
                         _this.declineRequest();
                     }
                 });
+            });
+
+            window.Echo.private('DemandAlert.' + this.user).listen('.DemandStatus', function (demand) {
+                var text = demand.accepted + ' accepted your request on ' + demand.on;
+                swal('Accepted!', text, 'success');
             });
         },
         acceptRequest: function acceptRequest() {
@@ -90995,39 +91000,18 @@ if (false) {
 
 /***/ }),
 /* 238 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(255)
+  __webpack_require__(239)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(257)
+var __vue_script__ = __webpack_require__(241)
 /* template */
-var __vue_template__ = __webpack_require__(258)
+var __vue_template__ = __webpack_require__(242)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -91066,13 +91050,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 255 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(256);
+var content = __webpack_require__(240);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -91092,7 +91076,7 @@ if(false) {
 }
 
 /***/ }),
-/* 256 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -91106,7 +91090,7 @@ exports.push([module.i, "\n.gallery_image{\n    width: 50px;\n    height: auto;\
 
 
 /***/ }),
-/* 257 */
+/* 241 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -91350,7 +91334,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 258 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -91795,6 +91779,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-3d01b757", module.exports)
   }
 }
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

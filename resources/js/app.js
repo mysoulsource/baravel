@@ -154,34 +154,18 @@ const app = new Vue({
                         }
                     })
                 });
+
             window.Echo.private('DemandAlert.' + this.user)
                 .listen('.DemandStatus',(demand)=>{
+                   let text =   demand.accepted + ' accepted your request on ' + demand.on ;
+                    swal(
+                        'Accepted!',
+                            text,
+                        'success'
+                    )
 
-                    swal({
-                        title: 'Blood Request Notification',
-                        text: demand.accepted + ' your request ' + demand.on ,
-                        type: 'info',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Accept it.',
-                        cancelButtonText:'Decline it.'
-
-                    }).then((result) => {
-
-                        if (result.value) {
-
-                            swal(
-                                'Accepted!',
-                                'Your accepted the request.',
-                                'success'
-                            )
-                        }
-                    })
                 });
-
         },
-
         acceptRequest(){
             axios.post('api/donate/accept', { did : this.donate.id }, {
             })
@@ -236,7 +220,8 @@ const app = new Vue({
     created(){
         this.user = document.querySelector('#token').getAttribute('value');
         this.listen();
-        this.demandlisten();
+
+
     }
 
 });
