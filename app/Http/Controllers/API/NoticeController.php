@@ -10,72 +10,24 @@ use Illuminate\Support\Facades\Auth;
 class NoticeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * methods used :
+     *              Index: to send the notice
+     *              update: to update the notice
+     *              image: to update the image of notice
      *
-     * @return \Illuminate\Http\Response
+     * NOTE: Only one notice is saved . So no delete and create function
      */
     public function index()
     {
+        //sending the notice with relation of updated by
         $notices = Notice::with('Updatedby')->get();
-
-
-//        foreach ($notices as $notice){
-//
-//            $notice->updated_by = $notice->Updatedby->name;
-//        }
         return $notices;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $notice = Notice::findOrFail($id);
@@ -118,20 +70,4 @@ class NoticeController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        // $notice = Notice::findOrFail($id);
-        // $noticePhoto =public_path('img/notice/').$notice->img;
-        // if(file_exists($noticePhoto)){
-        //     @unlink($noticePhoto);
-        // }
-        // $notice->delete();
-        // return ['message','Deleted Successfully'];
-    }
 }

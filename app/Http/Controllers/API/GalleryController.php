@@ -9,33 +9,21 @@ use App\Gallery;
 class GalleryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * methods :
+     *          index: to view all the gallery
+     *          store : to create a gallery
+     *          update: to update the gallery
+     *          destroy: to delete the gallery
      */
     public function index()
     {
         return Gallery::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        //if request has image
         if($request->image){
             $name = time().'.' .explode('/', explode(':',substr($request->image,0,strpos($request->image,';')))[1])[1];
             $img = \Image::make($request->image);
@@ -45,12 +33,14 @@ class GalleryController extends Controller
             $img->save(public_path('img/gallery/'.$name));
             $request->merge(['image'=>$name]);
         }
+        //validate the request
         $this->validate($request,[
             'title' =>'required|string|max:191',
             'status'=>'required|integer|max:191',
             'source'=>'required|string|max:500',
             'image'=>'required|string|max:191',
         ]);
+        //create the gallery
         Gallery::create([
             'title' => $request->input('title'),
             'status' =>$request->input('status'),
@@ -60,43 +50,16 @@ class GalleryController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
+        //find the gallery data
         $gallery = Gallery::findOrFail($id);
         $this->validate($request,[
             'title' =>'required|string|max:191',
             'status'=>'required|integer|max:191',
             'source'=>'required|string|max:500',
         ]);
+        //if request image is not old one
         if($request->image != $gallery->image){
             $name = time().'.' .explode('/', explode(':',substr($request->image,0,strpos($request->image,';')))[1])[1];
             $img = \Image::make($request->image);
@@ -106,7 +69,7 @@ class GalleryController extends Controller
             $img->save(public_path('img/gallery/'.$name));
             $request->merge(['image'=>$name]);
         }
-
+        //update the gallery
         $gallery->update([
             'title' => $request->input('title'),
             'status' =>$request->input('status'),
@@ -116,19 +79,17 @@ class GalleryController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
+        //find the data
         $gallery = Gallery::findOrFail($id);
+        //find the image
         $image = public_path('img/gallery/').$gallery->image;
+        //delete the image
         if(file_exists($image)){
             @unlink($image);
         }
+        //delete the gallery
         $gallery->delete();
     }
 }

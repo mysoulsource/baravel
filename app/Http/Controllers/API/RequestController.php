@@ -14,9 +14,13 @@ use App\Jobs\SendRequestEmailJob;
 class RequestController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * methods used :
+     *              index : to send the request according to the logged in user
+     *              store: to store the request data
      *
-     * @return \Illuminate\Http\Response
+     * To do : If already made request . Decline
+     *          Send limited data
+     *          Role
      */
     public function index()
     {
@@ -26,22 +30,7 @@ class RequestController extends Controller
        return $requests;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -51,6 +40,7 @@ class RequestController extends Controller
             'message'=>'required|max:500'
         ]);
 
+        //search if the user has already requested to this user
         $prev_request = Requests::where('requested_by','=',auth('api')->user()->id)
             ->where('requested_to','=',$request->input('id'))
             ->get();
@@ -60,6 +50,8 @@ class RequestController extends Controller
 //               'msg'    => 'You have already Requested this User'
 //           ], 422);
 //       }else{
+
+        //if not send a request
            $request = Requests::create([
                'requested_by'=> auth('api')->user()->id,
                'requested_to'=>$request->input('id'),
@@ -68,56 +60,14 @@ class RequestController extends Controller
                'urgency'=>$request->input('urgency'),
                'message'=>$request->input('message')
            ]);
-
+            //fire the event to send mail and live notification
            event(new SendRequestEvent($request));
-//       }
+       //}
 
 
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

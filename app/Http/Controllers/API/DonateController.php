@@ -13,9 +13,12 @@ use App\Requeststatus;
 class DonateController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     *  NOTE: App\Request used as Donate
+     *  methods used :
+     *              index : send all the request got by user
+     *              accept: fire this function if accpeted by user.(mail and pusher)
+     *              decline: fire this function if declined by user.(mail and delete the request)
+     * To do: Roles and send only limited data
      */
     public function index()
     {
@@ -26,106 +29,48 @@ class DonateController extends Controller
         return $donate;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
-    }
-
 
 
     //function to accpet the donation request
     public function  accept(Request $request){
+        //find the donation request
         $donate = Donate::findOrFail($request->did);
+        //if exists
         if($donate){
-
+            //update the data
             $donate->update([
                 'status' => 1,
                 'code'=>str_random(16),
                 'message' => 'Accpeted'
             ]);
-
+            //update the request status table data
             Requeststatus::create([
                 'request_id' => $donate->id,
                 'status' => 1,
                 'message'=>''
             ]);
+            //fire the event(email and pusher)
             event(new SendResponseEvent($donate));
 
         }
     }
     public function  decline(Request $request){
+        //find the donation request
         $donate = Donate::findOrFail($request->did);
+        //if exists
         if($donate){
-
+            //update the request status table data
             Requeststatus::create([
                 'request_id' => $donate->id,
                 'status' => 0,
                 'message'=>'Declined'
             ]);
+            //delete the request
             $donate->delete();
+            //fire the email
             dispatch(new SendResponseMailJob($donate));
 
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

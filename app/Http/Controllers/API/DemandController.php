@@ -11,9 +11,15 @@ use App\Events\SendDemandResponseEvent;
 class DemandController extends Controller
 {
     /**
-     * Display a listing of the resource.
+    methods used :
+     *          index : to send all the demands data
+     *          store : to create a new demands
+     *          update: to update the demands
+     *          delete : to delete the demands
+     *          accept : if someone accpet the request call this function to notify the demand user and modify the status
      *
-     * @return \Illuminate\Http\Response
+     * To do : Send only limited info to normal users
+     *          Roles
      */
     public function __construct()
     {
@@ -46,6 +52,7 @@ class DemandController extends Controller
      */
     public function store(Request $request)
     {
+        //validating the request
         $this->validate($request,[
             'title' =>'required|string|max:191',
             'blood'=>'required|integer|max:191',
@@ -55,6 +62,7 @@ class DemandController extends Controller
             'location'=>'required|string|max:500',
         ]);
 
+        //creating variable to create the demand to store it in demandstatus
         $demand_id = Demand::create([
             'title' => $request->input('title'),
             'blood' =>$request->input('blood'),
@@ -66,6 +74,8 @@ class DemandController extends Controller
             'added_by'=>auth('api')->user()->id,
             'code'=>str_random(16)
         ])->id;
+
+        //storing the default info of demands
         Demandstatus::create([
             'demand_id'=>$demand_id,
             'message'=>'Pending',
@@ -74,38 +84,13 @@ class DemandController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
+        //finding the demand
         $demand = Demand::findOrFail($id);
+        //validating the request
         $this->validate($request,[
             'title' =>'required|string|max:191',
             'blood'=>'required|integer|max:191',
@@ -114,6 +99,7 @@ class DemandController extends Controller
             'detail'=>'required|string|max:500',
             'location'=>'required|string|max:500',
         ]);
+        //updating the demand data
         $demand->update([
             'title' => $request->input('title'),
             'blood' =>$request->input('blood'),
@@ -124,32 +110,31 @@ class DemandController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
+        //finding the demand data and deleting
         $demand = Demand::findOrFail($id);
         $demand->delete();
     }
 
-    public function accept(Request $request){
+    public function accept(Request $request)
+    {
+        //find the demand by id
         $demand = Demand::findOrFail($request->did);
+        //if demand exists
         if($demand){
-
+            //updaete the demand data with the accpeted user id and change status to 1
             $demand->update([
                 'accepted_by' => auth('api')->user()->id,
                 'status' => 1,
             ]);
-
+            //modify the demandstatus table
             Demandstatus::create([
                 'demand_id' => $demand->id,
                 'status' => 1,
                 'message'=>'accepted'
             ]);
+            //fire the event to send mail and to pusher
             event(new SendDemandResponseEvent($demand));
 
         }

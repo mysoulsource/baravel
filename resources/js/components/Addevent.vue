@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-6">
                          <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
+                    <label for="imageInp">File input</label>
                     <input id="imageInp" type="file" @change="uploadImage" name="img" class="form-control" :class="{ 'is-invalid': form.errors.has('img') }">
                     <has-error :form="form" field="img"></has-error>
                   </div>

@@ -14,17 +14,23 @@ import { Form, HasError, AlertError } from 'vform'
 import VueProgressBar from 'vue-progressbar'
 import Swal from 'sweetalert2'
 import moment from 'moment'
+///end
+
+//use vue router
 Vue.use(VueRouter)
 
-///end
+//form error
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+//globally assigning form
 window.Form = Form;
+//vue progressbar
 Vue.use(VueProgressBar, {
     color: 'rgb(143, 255, 199)',
     failedColor: 'red',
     height: '2px'
 })
+//vue sweetalert2
 const toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -33,13 +39,20 @@ const toast = Swal.mixin({
   });
   window.swal = Swal;
   window.toast = toast;
+  //to fire an event
   window.Fire = new Vue();
+
+
+  //vue filter to capitalize the text
   Vue.filter('capitalize',function(text){
     return text.charAt(0).toUpperCase() + text.slice(1)
 });
+
+  //vue filter to change the date to human readable
 Vue.filter('dateChange',function(date){
     return moment().format('MMM Do YYYY')
 });
+//vue filter to convert the status from 0 and 1 to string
 Vue.filter('stringConv',function(text){
     if(text==1){
         return 'Active';
@@ -47,6 +60,7 @@ Vue.filter('stringConv',function(text){
         return 'Inactive';
     }
 });
+//vue filter to convert the demand status
 Vue.filter('demandStatus',function(text){
     if(text==0){
         return 'Pending';
@@ -56,6 +70,8 @@ Vue.filter('demandStatus',function(text){
         return 'Declined';
     }
 });
+
+//vue filter to convert the urgency status
 Vue.filter('urgencyStatus',function(text){
     if(text==1){
         return 'High';
@@ -72,6 +88,8 @@ Vue.filter('urgencyStatus',function(text){
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
+
+//JWT
 Vue.component(
     'passport-clients',
     require('./components/passport/Clients.vue')
@@ -86,7 +104,9 @@ Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue')
 );
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+//JWT END
+
+//routes
 let routes = [
     { path: '/users', component: require('./components/Users.vue') },
     { path: '/events', component: require('./components/Events.vue') },
@@ -101,6 +121,8 @@ let routes = [
     { path: '/profile', component: require('./components/Profile.vue') },
     { path: '/banner', component: require('./components/Banner.vue') },
   ]
+
+//end of routes
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 
@@ -109,24 +131,27 @@ let routes = [
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+//instance if vue router
 const router = new VueRouter({
     mode:'history',
     routes // short for `routes: routes`
 })
 
 
+//instance of vue
 const app = new Vue({
     el: '#app',
     router,
     data:{
-       user:{},
+       user:{}, //to store the user id for pusher notification
         hide:false,
-        donate:{},
-        search:'',
-        demand:{}
+        donate:{}, // to accept or decline the request
+        search:'', // instant search feature
+        demand:{} // to accept the demand
     },
     methods:{
         listen(){
+            //pusher notification for request alert
             window.Echo.private('AlertRequest.' + this.user)
                 .listen('.RequestStatus',(request)=>{
                     this.donate = request;
@@ -141,7 +166,7 @@ const app = new Vue({
                         cancelButtonText:'Decline it.'
 
                     }).then((result) => {
-
+                    //if accepted
                         if (result.value) {
                             this.acceptRequest();
                             swal(
@@ -150,11 +175,12 @@ const app = new Vue({
                                 'success'
                             )
                         }else{
+                            //if declined
                          this.declineRequest();
                         }
                     })
                 });
-
+        //pusher notification for the status of demand
             window.Echo.private('DemandAlert.' + this.user)
                 .listen('.DemandStatus',(demand)=>{
                    let text =   demand.accepted + ' accepted your request on ' + demand.on ;
@@ -165,7 +191,7 @@ const app = new Vue({
                     )
 
                 });
-
+            //pusher notification for the request response
             window.Echo.private('RequestResponse.' + this.user)
                 .listen('.RequestResponseEvent',(request)=>{
                     let text =   request.requested_to + ' accepted your request on ' + request.on ;
@@ -178,6 +204,7 @@ const app = new Vue({
                 });
         },
         acceptRequest(){
+            //if accpeted the request
             axios.post('api/donate/accept', { did : this.donate.id }, {
             })
                 .then(()=>{
@@ -194,6 +221,7 @@ const app = new Vue({
 
         },
         declineRequest(){
+            //if declined the request
             axios.post('api/donate/decline', { did : this.donate.id }, {
             })
                 .then(()=>{
@@ -209,9 +237,11 @@ const app = new Vue({
                 });
         },
         searchfun: _.debounce(()=>{
+            //instant searh functionality on each vue templates
             Fire.$emit('searching');
         },1000),
         acceptDemand(id){
+            //if demand is accepted
             axios.post('api/demand/accept', { did : id }, {
             })
                 .then(()=>{
@@ -229,7 +259,9 @@ const app = new Vue({
         }
     },
     created(){
+        //get user id
         this.user = document.querySelector('#token').getAttribute('value');
+        //start the listen method to receive the pusher notification
         this.listen();
 
 

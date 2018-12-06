@@ -9,6 +9,15 @@ use App\Demand;
 
 class IndexController extends Controller
 {
+    //methods used
+    //    home : redirecting to index page with data
+    //    gallery : redirecting to gallery page with data
+    //     events : redirecting to events page with data
+
+    //to do
+    // return demands only according to the logged in user blood group
+
+
 
     public function home(){
         //demands

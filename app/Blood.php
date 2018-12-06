@@ -9,6 +9,8 @@ class Blood extends Model
     protected $fillable = [
         'name','detail','image'
     ];
+
+    //relation to demands
     public function Demands(){
         return $this->hasMany('App\Demand');
     }

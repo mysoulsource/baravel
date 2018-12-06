@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Auth;
 class EventController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * methods :
+     *          index: to view all the events
+     *          store : to create a event
+     *          update: to update the event
+     *          destroy: to delete the event
+     *          image: to update the image
      */
     public function index()
     {
@@ -20,24 +23,10 @@ class EventController extends Controller
         return $events;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        //if request has image .generate name and make image and upload
         if($request->img){
             $name = time().'.' .explode('/', explode(':',substr($request->img,0,strpos($request->img,';')))[1])[1];
             $img = \Image::make($request->img);
@@ -47,6 +36,7 @@ class EventController extends Controller
             $img->save(public_path('img/events/'.$name));
             $request->merge(['img'=>$name]);
         }
+        //validate requests
         $this->validate($request,[
             'title' =>'required|string|max:191',
             'organizer'=>'required|string|max:191',
@@ -55,7 +45,7 @@ class EventController extends Controller
             'date'=>'required|max:191',
             'status'=>'required|max:191',
         ]);
-
+        //create event
         Events::create([
             'title' => $request->input('title'),
             'organizer' =>$request->input('organizer'),
@@ -69,38 +59,11 @@ class EventController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
+        //find the event
         $event = Events::findOrFail($id);
+        //validate the event
         $this->validate($request,[
             'title' =>'required|string|max:191',
             'organizer'=>'required|string|max:191',
@@ -108,6 +71,7 @@ class EventController extends Controller
             'date'=>'required|max:191',
             'status'=>'required|max:191',
         ]);
+        //update the event
         $event->update([
             'title' => $request->input('title'),
             'organizer' =>$request->input('organizer'),
@@ -119,9 +83,12 @@ class EventController extends Controller
 
 
     public function image(Request $request,$id){
+        //find the event
         $event = Events::findOrFail($id);
+        //to delete the old image
         $old = $event->img;
         $eventPhoto = public_path('img/events/').$old;
+        //if request has image
         if($request->img){
             $name = time().'.' .explode('/', explode(':',substr($request->img,0,strpos($request->img,';')))[1])[1];
             $img = \Image::make($request->img);
@@ -131,12 +98,17 @@ class EventController extends Controller
             $img->save(public_path('img/events/'.$name));
             $request->merge(['img'=>$name]);
         }
+        //validate the request
         $this->validate($request,[
             'img'=>'required',
         ]);
+        //update the image
         $event->update([
             'img' => $request->input('img')
         ]);
+
+
+        //delete the old one
         if(file_exists($eventPhoto)){
             @unlink($eventPhoto);
         }
@@ -151,11 +123,14 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
+        //find the event
         $event = Events::findOrFail($id);
+        //delete the image
         $eventPhoto =public_path('img/events/').$event->img;
         if(file_exists($eventPhoto)){
             @unlink($eventPhoto);
         }
+        //delete the event
         $event->delete();
         return ['message','Deleted Successfully'];
     }

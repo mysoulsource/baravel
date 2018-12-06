@@ -9,9 +9,15 @@ use App\User;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * methods used :
+     *              user: for pusher functionality, alert only the requested one
+     *              index: return all the users
+     *              profile: return authenticated user profile data
+     *              updateProfile : UPDATE THE profile
+     *              update : done by admin
+     *              destroy : To filter spam user in future
+     *              search : fast search function of users
+     *              advsearch : advance search of a user according to location and blood group
      */
     public function __construct(){
         $this->middleware('auth:api');
@@ -69,56 +75,7 @@ class UserController extends Controller
         $user->update($request->all());
         return ['message','Successfully Updated'];
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //search for user
@@ -149,12 +106,7 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $user = User::findOrFail($id);

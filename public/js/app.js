@@ -30726,17 +30726,23 @@ window.Vue = __webpack_require__(166);
 
 
 
+///end
+
+//use vue router
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
-///end
+//form error
 Vue.component(__WEBPACK_IMPORTED_MODULE_1_vform__["HasError"].name, __WEBPACK_IMPORTED_MODULE_1_vform__["HasError"]);
 Vue.component(__WEBPACK_IMPORTED_MODULE_1_vform__["AlertError"].name, __WEBPACK_IMPORTED_MODULE_1_vform__["AlertError"]);
+//globally assigning form
 window.Form = __WEBPACK_IMPORTED_MODULE_1_vform__["Form"];
+//vue progressbar
 Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_progressbar___default.a, {
     color: 'rgb(143, 255, 199)',
     failedColor: 'red',
     height: '2px'
 });
+//vue sweetalert2
 var toast = __WEBPACK_IMPORTED_MODULE_3_sweetalert2___default.a.mixin({
     toast: true,
     position: 'top-end',
@@ -30745,13 +30751,19 @@ var toast = __WEBPACK_IMPORTED_MODULE_3_sweetalert2___default.a.mixin({
 });
 window.swal = __WEBPACK_IMPORTED_MODULE_3_sweetalert2___default.a;
 window.toast = toast;
+//to fire an event
 window.Fire = new Vue();
+
+//vue filter to capitalize the text
 Vue.filter('capitalize', function (text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 });
+
+//vue filter to change the date to human readable
 Vue.filter('dateChange', function (date) {
     return __WEBPACK_IMPORTED_MODULE_4_moment___default()().format('MMM Do YYYY');
 });
+//vue filter to convert the status from 0 and 1 to string
 Vue.filter('stringConv', function (text) {
     if (text == 1) {
         return 'Active';
@@ -30759,6 +30771,7 @@ Vue.filter('stringConv', function (text) {
         return 'Inactive';
     }
 });
+//vue filter to convert the demand status
 Vue.filter('demandStatus', function (text) {
     if (text == 0) {
         return 'Pending';
@@ -30768,6 +30781,8 @@ Vue.filter('demandStatus', function (text) {
         return 'Declined';
     }
 });
+
+//vue filter to convert the urgency status
 Vue.filter('urgencyStatus', function (text) {
     if (text == 1) {
         return 'High';
@@ -30784,13 +30799,19 @@ Vue.filter('urgencyStatus', function (text) {
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
+
+//JWT
 Vue.component('passport-clients', __webpack_require__(174));
 
 Vue.component('passport-authorized-clients', __webpack_require__(180));
 
 Vue.component('passport-personal-access-tokens', __webpack_require__(185));
-Vue.component('example-component', __webpack_require__(190));
+//JWT END
+
+//routes
 var routes = [{ path: '/users', component: __webpack_require__(193) }, { path: '/events', component: __webpack_require__(198) }, { path: '/addevent', component: __webpack_require__(203) }, { path: '/notice', component: __webpack_require__(206) }, { path: '/developer', component: __webpack_require__(211) }, { path: '/gallerys', component: __webpack_require__(214) }, { path: '/demands', component: __webpack_require__(219) }, { path: '/bloods', component: __webpack_require__(222) }, { path: '/requests', component: __webpack_require__(227) }, { path: '/donate', component: __webpack_require__(230) }, { path: '/profile', component: __webpack_require__(233) }, { path: '/banner', component: __webpack_require__(238) }];
+
+//end of routes
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 
@@ -30799,25 +30820,28 @@ var routes = [{ path: '/users', component: __webpack_require__(193) }, { path: '
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+//instance if vue router
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     mode: 'history',
     routes: routes // short for `routes: routes`
 });
 
+//instance of vue
 var app = new Vue({
     el: '#app',
     router: router,
     data: {
-        user: {},
+        user: {}, //to store the user id for pusher notification
         hide: false,
-        donate: {},
-        search: '',
-        demand: {}
+        donate: {}, // to accept or decline the request
+        search: '', // instant search feature
+        demand: {} // to accept the demand
     },
     methods: {
         listen: function listen() {
             var _this = this;
 
+            //pusher notification for request alert
             window.Echo.private('AlertRequest.' + this.user).listen('.RequestStatus', function (request) {
                 _this.donate = request;
                 swal({
@@ -30831,27 +30855,29 @@ var app = new Vue({
                     cancelButtonText: 'Decline it.'
 
                 }).then(function (result) {
-
+                    //if accepted
                     if (result.value) {
                         _this.acceptRequest();
                         swal('Accepted!', 'Your accepted the request.', 'success');
                     } else {
+                        //if declined
                         _this.declineRequest();
                     }
                 });
             });
-
+            //pusher notification for the status of demand
             window.Echo.private('DemandAlert.' + this.user).listen('.DemandStatus', function (demand) {
                 var text = demand.accepted + ' accepted your request on ' + demand.on;
                 swal('Accepted!', text, 'success');
             });
-
+            //pusher notification for the request response
             window.Echo.private('RequestResponse.' + this.user).listen('.RequestResponseEvent', function (request) {
                 var text = request.requested_to + ' accepted your request on ' + request.on;
                 swal('Accepted!', text, 'success');
             });
         },
         acceptRequest: function acceptRequest() {
+            //if accpeted the request
             axios.post('api/donate/accept', { did: this.donate.id }, {}).then(function () {
                 Fire.$emit('datauploaded');
                 swal('Accepted!', 'Request accepted Successfully.', 'success');
@@ -30860,6 +30886,7 @@ var app = new Vue({
             });
         },
         declineRequest: function declineRequest() {
+            //if declined the request
             axios.post('api/donate/decline', { did: this.donate.id }, {}).then(function () {
                 Fire.$emit('datauploaded');
                 swal('Declined!', 'Request Declined Successfully.', 'success');
@@ -30869,9 +30896,11 @@ var app = new Vue({
         },
 
         searchfun: _.debounce(function () {
+            //instant searh functionality on each vue templates
             Fire.$emit('searching');
         }, 1000),
         acceptDemand: function acceptDemand(id) {
+            //if demand is accepted
             axios.post('api/demand/accept', { did: id }, {}).then(function () {
                 Fire.$emit('datauploaded');
                 swal('Accepted!', 'Demand accepted Successfully.', 'success');
@@ -30881,7 +30910,9 @@ var app = new Vue({
         }
     },
     created: function created() {
+        //get user id
         this.user = document.querySelector('#token').getAttribute('value');
+        //start the listen method to receive the pusher notification
         this.listen();
     }
 });
@@ -82646,125 +82677,9 @@ if (false) {
 }
 
 /***/ }),
-/* 190 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(191)
-/* template */
-var __vue_template__ = __webpack_require__(192)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/ExampleComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-299e239e", Component.options)
-  } else {
-    hotAPI.reload("data-v-299e239e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 191 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
-
-/***/ }),
-/* 192 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-299e239e", module.exports)
-  }
-}
-
-/***/ }),
+/* 190 */,
+/* 191 */,
+/* 192 */,
 /* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -85815,7 +85730,7 @@ var render = function() {
                 "div",
                 { staticClass: "form-group" },
                 [
-                  _c("label", { attrs: { for: "exampleInputFile" } }, [
+                  _c("label", { attrs: { for: "imageInp" } }, [
                     _vm._v("File input")
                   ]),
                   _vm._v(" "),
