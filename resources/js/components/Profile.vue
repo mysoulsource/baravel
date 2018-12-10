@@ -61,7 +61,7 @@
                     <div class="card-header p-2">
                         <ul class="nav nav-pills">
                             <li class="nav-item"><a class="nav-link " href="#activity" data-toggle="tab">Activity</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#code" data-toggle="tab">Code</a></li>
                             <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>
                         </ul>
                     </div><!-- /.card-header -->
@@ -72,8 +72,26 @@
                                 <!-- /.post -->
                             </div>
                             <!-- /.tab-pane -->
-                            <div class="tab-pane" id="timeline">
-                                <!-- The timeline -->
+                            <div class="tab-pane" id="code">
+                                 <form @submit.prevent="submitCode" @keydown="form.onKeydown($event)" class="form-horizontal">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputCode" class="col-sm-4 control-label">Name</label>
+
+                                                <div class="col-sm-10">
+                                                    <input  v-model="codeform.code" type="text" name="code" class="form-control" id="inputCode" placeholder="Enter code here" :class="{ 'is-invalid': codeform.errors.has('code') }">
+                                                    <has-error :form="codeform" field="name"></has-error>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
 
                             </div>
                             <!-- /.tab-pane -->
@@ -257,7 +275,11 @@
                     info_status : '',
                     email:'',
                     password:''
+
                 }),
+                codeform: new Form({
+                    code:'',
+                })
             }
         },
         methods:{
@@ -315,6 +337,27 @@
                 if(this.form.img.length <= 100){
                     return "img/profile/" + this.form.img
                 }
+            },
+            submitCode(){
+                 this.$Progress.start();
+                   this.codeform.put('api/profile/code')
+                    .then(()=>{
+
+                        this.$Progress.finish();
+                        toast({
+                            type: 'success',
+                            title: 'Profile Updated Successfully!!'
+                        })
+                       
+                    })
+                    .catch(()=>{
+                        this.$Progress.fail();
+                        toast({
+                            type: 'error',
+                            title: 'Code Incorrect or Already been used!!!'
+                        })
+                        this.codeform.reset();
+                    });
             }
         },
         created(){

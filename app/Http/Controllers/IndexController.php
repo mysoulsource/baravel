@@ -38,6 +38,8 @@ class IndexController extends Controller
     }
     public function events()
     {
-        return view('events');
+          $banners = Banner::all();
+          $demands = Demand::with('bloodName')->latest()->paginate(4);
+        return view('events')->with(compact('demands','banners'));
     }
 }

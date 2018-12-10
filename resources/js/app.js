@@ -109,7 +109,7 @@ Vue.component(
 //routes
 let routes = [
     { path: '/users', component: require('./components/Users.vue') },
-    { path: '/events', component: require('./components/Events.vue') },
+    { path: '/adminevents', component: require('./components/Events.vue') },
     { path: '/addevent', component: require('./components/Addevent.vue') },
     { path: '/notice', component: require('./components/Notice.vue') },
     { path: '/developer', component: require('./components/Developer.vue') },

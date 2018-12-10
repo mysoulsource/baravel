@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Demand;
+use App\userdetail;
 
 class UserController extends Controller
 {
@@ -143,5 +145,20 @@ class UserController extends Controller
                 ->Where('blood','LIKE',"%$request->bloodgroup%");
         })->get();
         return $users;
+    }
+    
+    public function code(request $request){
+        $id = auth('api')->user()->id;
+        $demand = Demand::where(function($query) use($id,$request){
+                   $query->where('accepted_by','=',$id)
+                         ->where('code','=',$request->code);   
+        })->first();
+       if($demand){
+            $user = userdetail::where('user_id','=',$id)->increment('count');
+            $demand->delete();
+            return true;
+       }else{
+        return false;
+       }
     }
 }

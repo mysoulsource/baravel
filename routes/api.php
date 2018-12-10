@@ -36,3 +36,4 @@ Route::get('profile','API\UserController@profile');
 Route::put('profile/update','API\UserController@updateProfile');
 Route::apiResources(['banner'=>'API\BannerController']);
 Route::post('demand/accept','API\DemandController@accept');
+Route::put('profile/code','API\UserController@code');
