@@ -1,84 +1,63 @@
-
-<footer class="footer">
-    <div class="container bottom_border">
+<!--================ Start Footer Area  =================-->
+<footer class="footer-area section_gap">
+    <div class="container">
         <div class="row">
-            <div class=" col-sm-4 col-md col-sm-4  col-12 col">
-                <h5 class="headin5_amrc col_white_amrc pt2">Find us</h5>
-                <!--headin5_amrc-->
-                <p class="mb10">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-                <p><i class="fa fa-location-arrow"></i> 9878/25 sec 9 rohini 35 </p>
-                <p><i class="fa fa-phone"></i>  +91-9999878398  </p>
-                <p><i class="fa fa fa-envelope"></i> info@example.com  </p>
-
-
+            <div class="col-lg-5  col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h6 class="footer_title">About Me</h6>
+                    <p>
+                        Do you want to be even more successful? Learn to love learning and growth. The more effort you put into improving your skills,
+                    </p>
+                </div>
             </div>
-
-
-            <div class=" col-sm-4 col-md  col-6 col">
-                <h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
-                <!--headin5_amrc-->
-                <ul class="footer_ul_amrc">
-                    <li><a href="http://kalarikendramdelhi.com">Image Rectoucing</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Clipping Path</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Hollow Man Montage</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Ebay & Amazon</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Hair Masking/Clipping</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Image Cropping</a></li>
-                </ul>
-                <!--footer_ul_amrc ends here-->
+            <div class="col-lg-5 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h6 class="footer_title">Newsletter</h6>
+                    <p>Stay updated with our latest trends</p>
+                    <div id="mc_embed_signup">
+                        <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                              method="get" class="subscribe_form relative">
+                            <div class="input-group d-flex flex-row">
+                                <input name="EMAIL" placeholder="Enter Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address '"
+                                       required="" type="email">
+                                <button class="btn sub-btn">
+                                    <span class="lnr lnr-arrow-right"></span>
+                                </button>
+                            </div>
+                            <div class="mt-10 info"></div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-
-            <div class=" col-sm-4 col-md  col-6 col">
-                <h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
-                <!--headin5_amrc-->
-                <ul class="footer_ul_amrc">
-                    <li><a href="http://kalarikendramdelhi.com">Remove Background</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Shadows & Mirror Reflection</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Logo Design</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Vectorization</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Hair Masking/Clipping</a></li>
-                    <li><a href="http://kalarikendramdelhi.com">Image Cropping</a></li>
-                </ul>
-                <!--footer_ul_amrc ends here-->
+            <div class="col-lg-2 col-md-6 col-sm-6">
+                <div class="single-footer-widget f_social_wd">
+                    <h6 class="footer_title">Follow Us</h6>
+                    <p>Let us be social</p>
+                    <div class="f_social">
+                        <a href="#">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-behance"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
+        </div>
 
-
-            <div class=" col-sm-4 col-md  col-12 col">
-                <h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>
-                <!--headin5_amrc ends here-->
-
-                <ul class="footer_ul2_amrc">
-                    <li><a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a><p>Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a></p></li>
-                    <li><a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a><p>Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a></p></li>
-                    <li><a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a><p>Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a></p></li>
-                </ul>
-                <!--footer_ul2_amrc ends here-->
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
             </div>
         </div>
     </div>
-
-
-    <div class="container">
-        <ul class="foote_bottom_ul_amrc">
-            <li><a href="http://kalarikendramdelhi.com">Home</a></li>
-            <li><a href="http://kalarikendramdelhi.com">About</a></li>
-            <li><a href="http://kalarikendramdelhi.com">Services</a></li>
-            <li><a href="http://kalarikendramdelhi.com">Pricing</a></li>
-            <li><a href="http://kalarikendramdelhi.com">Blog</a></li>
-            <li><a href="http://kalarikendramdelhi.com">Contact</a></li>
-        </ul>
-        <!--foote_bottom_ul_amrc ends here-->
-        <p class="text-center">Copyright @2017 | Designed With by <a href="#">Your Company Name</a></p>
-
-        <ul class="social_footer_ul">
-            <li><a href="http://kalarikendramdelhi.com"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href="http://kalarikendramdelhi.com"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="http://kalarikendramdelhi.com"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="http://kalarikendramdelhi.com"><i class="fab fa-instagram"></i></a></li>
-        </ul>
-        <!--social_footer_ul ends here-->
-    </div>
-
 </footer>
-<link rel="stylesheet" href="{{asset('css/footer.css')}}">

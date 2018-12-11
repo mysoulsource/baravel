@@ -1,84 +1,50 @@
-
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
+<!doctype html>
 <html lang="en">
+
 <head>
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <meta name="token"   id="token" value="{{ auth()->check() ? auth()->user()->id : 'null' }}">
-    <link rel="stylesheet" href="{{asset('/css/app.css')}}">
-  <link rel="stylesheet" href="{{asset('/css/footer.css')}}">
-
-
-  <link rel="stylesheet" href="{{asset('/css/supporters.css')}}">
-  <title>@{{ title }}</title>
-
-  @yield('links')
-  <!-- Font Awesome Icons -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="img/favicon.png" type="image/png">
+  <title>Kare Charity</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="vendors/linericon/style.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+  <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css">
+  <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css">
+  <link rel="stylesheet" href="vendors/animate-css/animate.css">
+  <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css">
+  <!-- main css -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
 
-<div class="wrapper" id="app">
 
-  <!-- Navbar -->
-    @include('layouts.contents.navbar')
-
-  <!-- /.navbar -->
-
-
-
-  <!-- Content Wrapper. Contains page content -->
-
-    <!-- Content Header (Page header) -->
-
-
-    <!-- Main content -->
-    <div class="content">
-
-        @yield('content')
-    </div>
-    <!-- /.content -->
-
-  <!-- /.content-wrapper -->
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-    <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
-
-  <!-- Main Footer -->
-  @include('contents.supporters')
-  @include('layouts.contents.footer')
-</div>
-<!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-<script src="{{asset('/js/app.js')}}"></script>
-<script src="{{asset('/js/banner.js')}}"></script>
-@yield('scripts')
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/5c06bb0afd65052a5c93bef9/default';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-    })();
-</script>
-<!--End of Tawk.to Script-->
+<!--================Header Menu Area =================-->
+@include('layouts.contents.header')
+<!--================ End Footer Area  =================-->
+@yield('content')
+@include('layouts.contents.footer')
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- <script src="vendors/lightbox/simpleLightbox.min.js"></script> -->
+<script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+<!-- <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script> -->
+<script src="vendors/isotope/isotope-min.js"></script>
+<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<!-- <script src="vendors/counter-up/jquery.waypoints.min.js"></script> -->
+<!-- <script src="vendors/flipclock/timer.js"></script> -->
+<!-- <script src="vendors/counter-up/jquery.counterup.js"></script> -->
+<script src="js/mail-script.js"></script>
+<script src="js/custom.js"></script>
 </body>
+
 </html>

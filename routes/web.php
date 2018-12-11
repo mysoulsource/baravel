@@ -12,6 +12,9 @@
 */
 
 Route::get('/', 'IndexController@home');
+Route::get('/about', 'IndexController@about');
+Route::get('/demands', 'IndexController@demands');
+Route::get('/gallery', 'IndexController@gallery');
 
 Auth::routes();
 

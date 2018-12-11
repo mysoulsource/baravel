@@ -27,19 +27,28 @@ class IndexController extends Controller
 
         return view('index')->with(compact('demands','banners'));
     }
+    public function about(){
+        return view('about');
+    }
+    public function events(){
+        return view('events');
+    }
+    public function demands(){
+        return view('demands');
+    }
     public function gallery()
     {
 
         //gallery images
-        $gallerys= Gallery::all();
-        //demands
-        $demands = Demand::with('bloodName')->latest()->paginate(4);
-        return view('gallery')->with(compact('demands','gallerys'));
+//        $gallerys= Gallery::all();
+//        //demands
+//        $demands = Demand::with('bloodName')->latest()->paginate(4);
+        return view('gallery');
     }
-    public function events()
-    {
-          $banners = Banner::all();
-          $demands = Demand::with('bloodName')->latest()->paginate(4);
-        return view('events')->with(compact('demands','banners'));
-    }
+//    public function events()
+//    {
+//          $banners = Banner::all();
+//          $demands = Demand::with('bloodName')->latest()->paginate(4);
+//        return view('events')->with(compact('demands','banners'));
+//    }
 }
