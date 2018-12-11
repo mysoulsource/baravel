@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Demand;
 use App\Demandstatus;
 use App\Events\SendDemandResponseEvent;
+use App\Notifications\DemandCreated;
 
 class DemandController extends Controller
 {
@@ -63,7 +64,7 @@ class DemandController extends Controller
         ]);
 
         //creating variable to create the demand to store it in demandstatus
-        $demand_id = Demand::create([
+        $demand= Demand::create([
             'title' => $request->input('title'),
             'blood' =>$request->input('blood'),
             'date' =>$request->input('date'),
@@ -73,15 +74,15 @@ class DemandController extends Controller
             'location' =>$request->input('location'),
             'added_by'=>auth('api')->user()->id,
             'code'=>str_random(16)
-        ])->id;
+        ]);
 
         //storing the default info of demands
         Demandstatus::create([
-            'demand_id'=>$demand_id,
+            'demand_id'=>$demand->id,
             'message'=>'Pending',
             'status'=>0
         ]);
-
+        $demand->notify(new DemandCreated);
     }
 
 
