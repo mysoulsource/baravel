@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Category;
+use Illuminate\Support\Facades\URL;
 
 class PostController extends Controller
 {
@@ -38,7 +39,33 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->image){
+            $name = time().'.' .explode('/', explode(':',substr($request->image,0,strpos($request->image,';')))[1])[1];
+            $img = \Image::make($request->image);
+            $img->resize(600, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path('img/posts/'.$name));
+            $request->merge(['image'=>$name]);
+        }
+        $this->validate($request,[
+            'title' =>'required|string|max:191',
+            'category_id'=>'required|integer',
+            'tags'=>'required|string|max:191',
+            'slug'=>'required|string|max:191',
+            'image'=>'required',
+            'content'=>'required'
+        ]);
+        Post::create([
+           'title'=>$request->input('title'),
+           'category_id'=>$request->input('category_id'),
+           'tags'=>$request->input('tags'),
+           'slug'=>$request->input('slug'),
+           'image'=>$request->input('image'),
+           'content'=>$request->input('content'),
+            'user_id'=>auth('api')->user()->id
+        ]);
+
     }
 
     /**
@@ -72,6 +99,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $post = Post::findOrFail($id);
          $this->validate($request,[
             'title' =>'required|string|max:191',
@@ -99,7 +127,14 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $image = public_path('img/posts/').$post->image;
+        //delete the image
+        if(file_exists($image) && $post->image != 'post.jpg'){
+            @unlink($image);
+        }
+        //delete the gallery
+        $post->delete();
     }
 
    
@@ -140,7 +175,15 @@ class PostController extends Controller
         $categories = Category::all('id','name');
         return $categories;
     }
-    public function content(Request $request){
-        
+    public function content(Request $request,$id){
+        $post = Post::findOrFail($id);
+        //validate the request
+        $this->validate($request,[
+            'content'=>'required',
+        ]);
+        $post->update([
+           'content' => $request->input('content')
+        ]);
     }
+
 }

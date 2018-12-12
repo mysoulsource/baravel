@@ -148,8 +148,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </form>
             </a>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fa fa-dashboard"></i>
               <p>
                Events
@@ -167,6 +167,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="/addevent" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Add new</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fa fa-dashboard"></i>
+              <p>
+                Blogs
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/blog" class="nav-link active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>All Blogs</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/category" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>All category</p>
                 </a>
               </li>
 

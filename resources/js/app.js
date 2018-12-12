@@ -14,11 +14,13 @@ import { Form, HasError, AlertError } from 'vform'
 import VueProgressBar from 'vue-progressbar'
 import Swal from 'sweetalert2'
 import moment from 'moment'
+import { VueEditor, Quill } from "vue2-editor"
 ///end
+
 
 //use vue router
 Vue.use(VueRouter)
-
+window.VueEditor = VueEditor;
 //form error
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
@@ -105,7 +107,6 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue')
 );
 //JWT END
-
 //routes
 let routes = [
     { path: '/users', component: require('./components/Users.vue') },
@@ -122,6 +123,7 @@ let routes = [
     { path: '/banner', component: require('./components/Banner.vue') },
      { path: '/blog', component: require('./components/Blog.vue') },
      { path: '/category', component: require('./components/Category.vue') },
+    { path: '/addpost', component: require('./components/Addpost.vue') },
   ]
 
 //end of routes

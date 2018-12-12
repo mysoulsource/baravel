@@ -46,6 +46,7 @@
                     <td>
                         <a href="#" @click.prevent="imageModal(post)"><i class="fas fa-image text-teal"></i></a>
                         <a href="#" @click.prevent="editModal(post)"><i class="fas fa-edit"></i></a>
+                        <a href="#" @click.prevent="openContent(post.content,post.id)"><i class="fas fa-edit"></i></a>
                         <a href="#" @click.prevent="deletePost(post.id)"><i class="fas fa-trash text-red"></i></a>
                     </td>
                   </tr>
@@ -134,7 +135,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                        <h5 class="modal-title" id="">Edit Post</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -144,7 +145,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                    <label for="exampleInputFile">File input</label>
+                                    <label for="imageInp">File input</label>
                                     <input id="imageInp" type="file" @change="uploadImage" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
                                     <has-error :form="form" field="image"></has-error>
                                 </div>
@@ -160,15 +161,49 @@
                     </div>
                 </div>
                 </div>
+        <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Post</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form @submit.prevent="editContent" @keydown="form.onKeydown($event)">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Content</label>
+                                        <vue-editor v-model="form.content" :editorToolbar="customToolbar">
+                                        </vue-editor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            <button type="submit"  class="btn btn-primary">Update changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
             <!-- End of Modal -->
           </div>
 </template>
 
 <script>
     export default {
+        components: {
+            VueEditor
+        },
        data(){
            return {
             posts:{},
+
             categories:{},
             editmode:false,
             form : new Form({
@@ -181,7 +216,14 @@
                     image: '',
                     created_at:'',
                     user_id:'',
+                    content:'',
                 }),
+               customToolbar: [
+                   ['bold', 'italic', 'underline','strike'],
+                   [{ 'list': 'ordered'}, { 'list': 'bullet' },{'align':'center'},{'align':'right'},{'align':'justify'},],
+                   ['code-block','blockquote',]
+               ]
+
            }
        },
        methods:{
@@ -205,6 +247,7 @@
                this.form.put('api/post/image/' + this.form.id).then(()=>{
                     this.$Progress.finish();
                      $('#updateImage').modal('hide');
+                     this.form.reset();
                      Fire.$emit('datauploaded');
                       toast({
                             type: 'success',
@@ -254,11 +297,13 @@
            },
 
             editModal(post){
+                this.form.reset();
                this.editmode = true,
                $('#postModal').modal('show');
                this.form.fill(post);
            },
            imageModal(post){
+               this.form.reset();
                $('#updateImage').modal('show');
                this.form.fill(post);
            },
@@ -281,10 +326,17 @@
            getPhoto(photo){
                return "img/posts/" + photo;
            },
+           openContent(content,id){
+               this.form.reset();
+               $('#contentModal').modal('show');
+                this.form.content = content;
+                this.form.id = id;
+           },
            editContent(){
             this.$Progress.start();
-            this.form.put('api/post/content' + this.form.id).then(()=>{
+            this.form.put('api/post/content/' + this.form.id).then(()=>{
                 $('#contentModal').modal('hide');
+                Fire.$emit('datauploaded');
                 toast({
                   type:'success',
                   title:'Updated Successfully'
@@ -293,7 +345,8 @@
               this.$Progress.fail();
               swal('Oops!!','Something went wrong','warning');
             })
-           }
+           },
+
        },
        created(){
            this.getPosts();
