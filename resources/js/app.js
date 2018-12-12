@@ -120,6 +120,8 @@ let routes = [
     { path: '/donate', component: require('./components/Donate.vue') },
     { path: '/profile', component: require('./components/Profile.vue') },
     { path: '/banner', component: require('./components/Banner.vue') },
+     { path: '/blog', component: require('./components/Blog.vue') },
+     { path: '/category', component: require('./components/Category.vue') },
   ]
 
 //end of routes

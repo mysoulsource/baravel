@@ -15,6 +15,7 @@ Route::get('/', 'IndexController@home');
 Route::get('/about', 'IndexController@about');
 Route::get('/demands', 'IndexController@demands');
 Route::get('/gallery', 'IndexController@gallery');
+Route::get('/blogs', 'IndexController@blogs');
 
 Auth::routes();
 
@@ -23,6 +24,8 @@ Route::get('/gallery', 'IndexController@gallery')->name('gallery');
 Route::get('/events', 'IndexController@events')->name('events');
 
 Route::get('/mail','API\RequestController@mail');
+Route::resource('/comments','CommentController');
+
 
 
 Route::get('{path}',"HomeController@index")->where( 'path', '([A-z\d-\/_.]+)?' );

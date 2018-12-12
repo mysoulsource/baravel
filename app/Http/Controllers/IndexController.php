@@ -36,6 +36,9 @@ class IndexController extends Controller
     public function demands(){
         return view('demands');
     }
+    public function blogs(){
+        return view('blog');
+    }
     public function gallery()
     {
 
