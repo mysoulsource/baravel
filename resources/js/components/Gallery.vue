@@ -157,6 +157,8 @@ export default {
                             title: 'Updated Successfully'
                         })
                         this.form.reset();
+                let input = $("#imageInp");
+                input.replaceWith(input.val('').clone(true));
 
             }).catch(()=>{
                 this.$Progress.fail();
@@ -173,6 +175,8 @@ export default {
                             type: 'success',
                             title: 'Updated Successfully'
                         })
+                let input = $("#imageInp");
+                input.replaceWith(input.val('').clone(true));
             })
             .catch(()=>{
                 this.$Progress.fail();

@@ -150,6 +150,8 @@ export default {
                 this.$Progress.finish();
                 $('#bannerModal').modal('hide');
                  Fire.$emit('datauploaded');
+                let input = $("#imageInp");
+                input.replaceWith(input.val('').clone(true));
                       toast({
                             type: 'success',
                             title: 'Updated Successfully'
@@ -166,6 +168,8 @@ export default {
                 this.$Progress.start();
                 $('#bannerModal').modal('hide');
                 Fire.$emit('datauploaded');
+                let input = $("#imageInp");
+                input.replaceWith(input.val('').clone(true));
                 this.form.reset();
                       toast({
                             type: 'success',

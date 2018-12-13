@@ -30,7 +30,7 @@ class DemandController extends Controller
     public function index()
     {
 
-        $demands = Demand::with(['bloodName:id,name','user:id,name'])->get();
+        $demands = Demand::with(['bloodName:id,name','user:id,name'])->paginate(10);
        return $demands;
 
     }

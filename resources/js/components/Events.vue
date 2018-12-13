@@ -199,6 +199,8 @@
                     this.$Progress.finish();
                      $('#updateImage').modal('hide');
                      Fire.$emit('datauploaded');
+                   let input = $("#imageInp");
+                   input.replaceWith(input.val('').clone(true));
                       toast({
                             type: 'success',
                             title: 'Updated Successfully'

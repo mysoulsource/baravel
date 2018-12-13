@@ -29,7 +29,7 @@
                                 <td>{{category.id}}</td>
                                 <td>{{category.name}}</td>
                                 <td><img :src="getPhoto(category.image)" alt="" class="blood_image img-responsive"></td>
-                                <td>{{category.user_id}}</td>
+                                <td>{{category.user.name}}</td>
                                 <td>{{category.created_at}}</td>
                                 <td>
                                     <a href="" @click.prevent="openeditModal(category)"><i class="fas fa-edit"></i></a>
@@ -39,6 +39,9 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="card-footer">
+                    <pagination :data="categories" @pagination-change-page="getCategory"></pagination>
                 </div>
 
             </div>
@@ -116,8 +119,11 @@ export default {
 
                 reader.readAsDataURL(file);
            },
-        getCategory(){
-            axios.get('api/category').then((data)=>{this.categories = data});
+        getCategory(page = 1){
+            axios.get('api/category?page=' + page)
+                .then(response => {
+                    this.categories = response.data;
+                });
         },
         openaddModal(){
              this.editMode = false;
@@ -134,6 +140,8 @@ export default {
                     this.$Progress.finish();
                     $('#CategoryModal').modal('hide');
                      Fire.$emit('datauploaded');
+                   let input = $("#imageInp");
+                   input.replaceWith(input.val('').clone(true));
                     toast({
                             type: 'success',
                             title: 'Added Successfully'
@@ -150,6 +158,8 @@ export default {
                     this.$Progress.finish();
                      $('#CategoryModal').modal('hide');
                      Fire.$emit('datauploaded');
+                   let input = $("#imageInp");
+                   input.replaceWith(input.val('').clone(true));
                     toast({
                             type: 'success',
                             title: 'Updated Successfully'

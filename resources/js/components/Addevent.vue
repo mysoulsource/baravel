@@ -119,6 +119,8 @@
                             title: 'Added Successfully'
                         })
                         this.form.reset();
+                   let input = $("#imageInp");
+                   input.replaceWith(input.val('').clone(true));
                }).catch(()=>{
                     this.$Progress.fail();
                    swal('Oops!!','Something went wrong','warning');

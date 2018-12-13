@@ -26,7 +26,7 @@ class RequestController extends Controller
     {
         $requests = Requests::with('requestedToName:id,name')
             ->where('requested_by','=',auth('api')->user()->id)
-            ->get();
+            ->paginate(10);
        return $requests;
     }
 

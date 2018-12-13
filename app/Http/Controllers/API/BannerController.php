@@ -18,7 +18,10 @@ class BannerController extends Controller
      * To do : Send only limited info to normal users
      *         Roles
      */
-
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function index()
     {
         if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {

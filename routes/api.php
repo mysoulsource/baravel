@@ -24,6 +24,7 @@ Route::apiResources(['category'=>'API\CategoryController']);
 Route::put('event/image/{id}','API\EventController@image');
 Route::put('post/image/{id}','API\PostController@image');
 Route::get('post/category','API\PostController@category');
+Route::get('post/publish/{id}','API\PostController@publish');
 Route::post('post/images','API\PostController@images');
 Route::put('post/content/{id}','API\PostController@content');
 Route::put('notice/image/{id}','API\NoticeController@image');

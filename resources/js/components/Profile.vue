@@ -298,6 +298,8 @@
                             title: 'Profile Updated Successfully!!'
                         })
                         Fire.$emit('profileUpdated');
+                        let input = $("#imageInp");
+                        input.replaceWith(input.val('').clone(true));
                     })
                     .catch(()=>{
                         this.$Progress.fail();

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Category;
 use Illuminate\Support\Facades\URL;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
@@ -15,10 +16,14 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function index()
     {
         if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
-            $posts = Post::with('category')->with('user')->get();
+            $posts = Post::with('category:id,name')->with('user')->paginate(10);
             return $posts;
          }
     }
@@ -198,6 +203,12 @@ class PostController extends Controller
                'content' => $request->input('content')
             ]);
         }
+    }
+    public function publish($id){
+       $post = Post::findOrFail($id);
+       $post->update([
+          'published_on' => Carbon::now()
+       ]);
     }
 
 }

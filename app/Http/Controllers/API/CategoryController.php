@@ -17,11 +17,15 @@ class CategoryController extends Controller
      *todo : // close button reset the form data
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        //laravel passport api protection against unauthenticated users
+        $this->middleware('auth:api');
+    }
     public function index()
     {
         if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
-        $categories = Category::all();
-        return $categories;
+            $categories = Category::with('user:id,name')->paginate(10);
+            return $categories;
         }
     }
 

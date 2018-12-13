@@ -23,27 +23,28 @@
                     <th>ID</th>
                     <th>Title</th>
                     <th>Category</th>
-                    <th>Tags</th>
-                    <th>Slugs</th>
-                    <th>Status</th>
+                    <!--<th>Tags</th>-->
+                    <!--<th>Slugs</th>-->
+                    <th>Published</th>
                     <th>Image</th>
                     <th>Created By</th>
-                    <th>Created On</th>
+                    <!--<th>Created On</th>-->
                     <th>Options</th>
                   </tr>
-                  <tr v-for="post in posts" :key="post.id">
+                  <tr v-for="post in posts.data" :key="post.id">
                     <td>{{post.id}}</td>
                     <td>{{post.title}}</td>
                     <td>{{post.category.name}}</td>
-                    <td>{{post.tags}}</td>
-                    <td>{{post.slug}}</td>
-                     <td>{{post.published_on}}</td>
+                    <!--<td>{{post.tags}}</td>-->
+                    <!--<td>{{post.slug}}</td>-->
+                     <td>{{post.published_on | published}}</td>
                     <td>
                     <a :href="getPhoto(post.image)" target="_blank">View Image</a>
                     </td>
                     <td>{{post.user.name}}</td>
-                    <td>{{post.created_at | dateChange}}</td>
+                    <!--<td>{{post.created_at | dateChange}}</td>-->
                     <td>
+                        <a href="#" @click.prevent="publish(post.id)"><i class="fas fa-eye text-teal"></i></a>
                         <a href="#" @click.prevent="imageModal(post)"><i class="fas fa-image text-teal"></i></a>
                         <a href="#" @click.prevent="editModal(post)"><i class="fas fa-edit"></i></a>
                         <a href="#" @click.prevent="openContent(post.content,post.id)"><i class="fas fa-edit"></i></a>
@@ -54,6 +55,9 @@
                 </tbody></table>
               </div>
               <!-- /.card-body -->
+                <div class="card-footer">
+                    <pagination :data="posts" @pagination-change-page="getPosts"></pagination>
+                </div>
             </div>
             <!-- /.card -->
 
@@ -248,6 +252,8 @@
                     this.$Progress.finish();
                      $('#updateImage').modal('hide');
                      this.form.reset();
+                   let input = $("#imageInp");
+                   input.replaceWith(input.val('').clone(true));
                      Fire.$emit('datauploaded');
                       toast({
                             type: 'success',
@@ -287,9 +293,11 @@
 
                             })
            },
-           getPosts(){
-                axios.get("api/post")
-               .then(({ data }) => (this.posts=data));
+           getPosts(page = 1){
+               axios.get('api/post?page=' + page)
+                   .then(response => {
+                       this.posts = response.data;
+                   });
            },
             getCategories(){
                 axios.get("api/post/category")
@@ -350,7 +358,20 @@
                 if(!this.$gate.isAdminOrAuthor()){
                 this.$router.push("empty")
                 }  
-            }
+            },
+           publish(id){
+               this.$Progress.start();
+               axios.get("api/post/publish/" + id)
+                   .then(()=>{
+                       toast({
+                           type:'success',
+                           title:'Updated Successfully'
+                       })
+                   }).catch(()=>{
+                   this.$Progress.fail();
+                   swal('Oops!!','Something went wrong','warning');
+               });
+           }
 
        },
        created(){

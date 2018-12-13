@@ -115,7 +115,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                    <label for="exampleInputFile">File input</label>
+                                    <label for="">File input</label>
                                     <input id="imageInp" type="file" @change="uploadImage" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
                                     <has-error :form="form" field="image"></has-error>
                                 </div>
@@ -161,6 +161,7 @@
                      this.$Progress.finish();
                      $('#noticeModal').modal('hide');
                      Fire.$emit('datauploaded');
+
                       toast({
                             type: 'success',
                             title: 'Updated Successfully'
@@ -177,6 +178,8 @@
                     this.$Progress.finish();
                      $('#updateImage').modal('hide');
                      Fire.$emit('datauploaded');
+                       let input = $("#imageInp");
+                       input.replaceWith(input.val('').clone(true));
                       toast({
                             type: 'success',
                             title: 'Updated Successfully'

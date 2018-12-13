@@ -45,9 +45,9 @@
                     <th v-if="$gate.isAdmin()">Email</th>
                     <th  v-if="$gate.isAdmin()">Type</th>
                     <th>Blood Type</th>
-                    <th>Zone</th>
-                    <th>District</th>
-                    <th>Area</th>
+                    <th v-if="$gate.isUser()">Zone</th>
+                    <th v-if="$gate.isUser()">District</th>
+                    <th v-if="$gate.isUser()">Area</th>
                     <th v-if="$gate.isAdmin()">Created</th>
                     <th>Options</th>
                   </tr>
@@ -57,9 +57,9 @@
                     <td v-if="$gate.isAdmin()">{{user.email}}</td>
                     <td  v-if="$gate.isAdmin()">{{user.type | capitalize}}</td>
                     <td>{{user.blood}}</td>
-                    <td>{{user.zone | capitalize}}</td>
-                    <td>{{user.district | capitalize}}</td>
-                    <td>{{user.area | capitalize}}</td>
+                    <td v-if="$gate.isUser()">{{user.zone | capitalize}}</td>
+                    <td v-if="$gate.isUser()">{{user.district | capitalize}}</td>
+                    <td v-if="$gate.isUser()">{{user.area | capitalize}}</td>
                     <td v-if="$gate.isAdmin()">{{user.created_at | dateChange}}</td>
                     <td>
                         <a href="#" @click.prevent="requestblood(user.id)"><i class="fas fa-hands-helping"></i></a>
@@ -82,8 +82,8 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" v-show="!editmode" id="exampleModalLabel">Add new</h5>
-                        <h5 class="modal-title" v-show="editmode" id="exampleModalLabel">Edit User</h5>
+                        <h5 class="modal-title" v-show="!editmode" >Add new</h5>
+                        <h5 class="modal-title" v-show="editmode">Edit User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -133,6 +133,7 @@
                                                     <option class="hidden"  selected disabled>User Type</option>
                                                         <option value="admin">Admin</option>
                                                         <option value="user">Simple User</option>
+                                                        <option value="author">Author</option>
 
                                                 </select>
                                             <has-error :form="form" field="type"></has-error>

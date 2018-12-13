@@ -85,6 +85,13 @@ Vue.filter('urgencyStatus',function(text){
         return 'Low';
     }
 });
+Vue.filter('published',function (date) {
+    if(date == null){
+        return 'Inactive';
+    }else{
+        return moment().format('MMM Do YYYY')
+    }
+})
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -112,9 +119,10 @@ Vue.component(
 //routes
  Vue.prototype.$gate = new Gate(window.authuser);
 let routes = [
+    { path: '/login/dashboard', component: require('./components/Dashboard.vue') },
     { path: '/users', component: require('./components/Users.vue') },
     { path: '/adminevents', component: require('./components/Events.vue') },
-    { path: '/addevent', component: require('./components/Addevent.vue') },
+    { path: '/adminaddevent', component: require('./components/Addevent.vue') },
     { path: '/adminnotice', component: require('./components/Notice.vue') },
     { path: '/admindeveloper', component: require('./components/Developer.vue') },
     { path: '/admingallery', component: require('./components/Gallery.vue') },

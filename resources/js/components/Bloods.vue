@@ -141,6 +141,8 @@ export default {
                     this.$Progress.finish();
                     $('#BloodModal').modal('hide');
                      Fire.$emit('datauploaded');
+                   let input = $("#imageInp");
+                   input.replaceWith(input.val('').clone(true));
                     toast({
                             type: 'success',
                             title: 'Added Successfully'
@@ -156,6 +158,8 @@ export default {
                this.form.put('api/bloods/'+ this.form.id).then(()=>{
                     this.$Progress.finish();
                      $('#BloodModal').modal('hide');
+                   let input = $("#imageInp");
+                   input.replaceWith(input.val('').clone(true));
                      Fire.$emit('datauploaded');
                     toast({
                             type: 'success',

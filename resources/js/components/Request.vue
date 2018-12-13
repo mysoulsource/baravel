@@ -35,6 +35,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="card-footer">
+                    <pagination :data="requests" @pagination-change-page="getRequests"></pagination>
+                </div>
 
             </div>
         </div>
@@ -55,8 +58,11 @@ export default {
         }
     },
     methods:{
-        getRequests(){
-            axios.get('api/request').then((data)=>{this.requests = data});
+        getRequests(page = 1){
+            axios.get('api/request?page=' + page)
+                .then(response => {
+                    this.requests = response.data;
+                });
         },
         deleteall(){
             this.$Progress.start();

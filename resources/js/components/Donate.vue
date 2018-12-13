@@ -3,9 +3,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Bloods</h3>
+                <h3 class="card-title">Donate</h3>
                 <div class="card-tools">
-                    <button class="btn btn-primary">Add New</button>
+                    <!--<button class="btn btn-primary"></button>-->
                 </div>
             </div>
             <div class="card-body table-responsive p-0">
@@ -36,6 +36,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="card-footer">
+                <pagination :data="donates" @pagination-change-page="getDonates"></pagination>
+            </div>
 
         </div>
     </div>
@@ -53,8 +56,11 @@
             }
         },
         methods:{
-            getBloods(){
-                axios.get('api/donate').then((data)=>{this.donates = data});
+            getDonates(page = 1){
+                axios.get('api/donate?page=' + page)
+                    .then(response => {
+                        this.donates = response.data;
+                    });
             },
             acceptRequest(id){
                 swal({
@@ -108,9 +114,9 @@
             }
         },
         created(){
-            this.getBloods();
+            this.getDonates();
             Fire.$on('datauploaded',()=>{
-                this.getBloods();
+                this.getDonates();
             });
         }
     }

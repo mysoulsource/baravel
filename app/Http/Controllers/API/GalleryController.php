@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Notice;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Gallery;
+use App\User;
 
 class GalleryController extends Controller
 {
@@ -15,43 +17,49 @@ class GalleryController extends Controller
      *          update: to update the gallery
      *          destroy: to delete the gallery
      */
+    public function __construct(){
+        //laravel passport api protection against unauthenticated users
+        $this->middleware('auth:api');
+    }
     public function index()
     {
         if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
-                 return Gallery::all();
+                return Gallery::all();
         }
+
+
     }
 
 
     public function store(Request $request)
     {
-        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
         //if request has image
-                if($request->image){
-                    $name = time().'.' .explode('/', explode(':',substr($request->image,0,strpos($request->image,';')))[1])[1];
-                    $img = \Image::make($request->image);
-                    $img->resize(600, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                    $img->save(public_path('img/gallery/'.$name));
-                    $request->merge(['image'=>$name]);
-                }
-                //validate the request
-                $this->validate($request,[
-                    'title' =>'required|string|max:191',
-                    'status'=>'required|integer|max:191',
-                    'source'=>'required|string|max:500',
-                    'image'=>'required|string|max:191',
-                ]);
-                //create the gallery
-                Gallery::create([
-                    'title' => $request->input('title'),
-                    'status' =>$request->input('status'),
-                    'source' =>$request->input('source'),
-                    'image' =>$request->input('image'),
-                    'uploaded_by' =>  auth('api')->user()->id
-                ]);
+            //validate the request
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
+            if ($request->image) {
+                $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+                $img = \Image::make($request->image);
+                $img->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path('img/gallery/' . $name));
+                $request->merge(['image' => $name]);
             }
+            $this->validate($request, [
+                'title' => 'required|string|max:191',
+                'status' => 'required|integer|max:191',
+                'source' => 'required|string|max:500',
+                'image' => 'required|string|max:191',
+            ]);
+            //create the gallery
+            Gallery::create([
+                'title' => $request->input('title'),
+                'status' => $request->input('status'),
+                'source' => $request->input('source'),
+                'image' => $request->input('image'),
+                'uploaded_by' => auth('api')->user()->id
+            ]);
+        }
     }
 
     public function update(Request $request, $id)

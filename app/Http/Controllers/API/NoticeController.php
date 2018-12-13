@@ -17,6 +17,10 @@ class NoticeController extends Controller
      *
      * NOTE: Only one notice is saved . So no delete and create function
      */
+    public function __construct(){
+        //laravel passport api protection against unauthenticated users
+        $this->middleware('auth:api');
+    }
     public function index()
     {
         if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {

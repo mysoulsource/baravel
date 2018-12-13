@@ -39,6 +39,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="card-footer">
+                    <pagination :data="demands" @pagination-change-page="getDemands"></pagination>
+                </div>
 
             </div>
             <!-- modal -->
@@ -46,8 +49,8 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="exampleModalLongTitle">Add new</h5>
-                            <h5 class="modal-title" v-show="editMode" id="exampleModalLongTitle">Edit</h5>
+                            <h5 class="modal-title" v-show="!editMode" >Add new</h5>
+                            <h5 class="modal-title" v-show="editMode" >Edit</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -157,8 +160,11 @@ export default {
         getBloods(){
             axios.get('api/bloods').then((data)=>{this.bloods = data});
         },
-        getDemands(){
-            axios.get('api/demands').then((data)=>{this.demands = data});
+        getDemands(page = 1){
+            axios.get('api/demands?page=' + page)
+                .then(response => {
+                    this.demands = response.data;
+                });
         },
         editDemand(){
              this.$Progress.start();
