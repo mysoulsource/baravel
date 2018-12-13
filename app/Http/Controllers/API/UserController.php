@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Demand;
 use App\userdetail;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -22,6 +23,7 @@ class UserController extends Controller
      *              advsearch : advance search of a user according to location and blood group
      */
     public function __construct(){
+        //laravel passport api protection against unauthenticated users
         $this->middleware('auth:api');
     }
 
@@ -31,7 +33,13 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users = User::all();
+        if (\Gate::allows('isAdmin') ) {
+            $users= User::latest()->paginate(10);
+        }else if(\Gate::allows('isUser') || \Gate::allows('isAuthor')){
+            $users = User::select('id','name','country','zone','district','area','blood')->paginate(10);
+               // $users= User::all();
+        }
+
         return $users;
     }
 
@@ -80,40 +88,43 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
         //search for user
-        $user = User::findOrFail($id);
-        //validating the request
-        $this->validate($request,[
-            'name' =>'required|string|max:191',
-            'email' =>'required|string|max:191|unique:users,email,'.$user->id,
-            'blood'=>'required|string|max:191',
-            'type'=>'required|string|max:191',
-            'country'=>'required|string|max:191',
-            'zone'=>'required|string|max:191',
-            'district'=>'required|string|max:191',
-            'area'=>'required|string|max:191',
-        ]);
+                $user = User::findOrFail($id);
+                //validating the request
+                $this->validate($request,[
+                    'name' =>'required|string|max:191',
+                    'email' =>'required|string|max:191|unique:users,email,'.$user->id,
+                    'blood'=>'required|string|max:191',
+                    'type'=>'required|string|max:191',
+                    'country'=>'required|string|max:191',
+                    'zone'=>'required|string|max:191',
+                    'district'=>'required|string|max:191',
+                    'area'=>'required|string|max:191',
+                ]);
 
-        //updating the user
-        $user->update([
-            'name' =>$request->input('name'),
-            'email' =>$request->input('email'),
-            'blood' =>$request->input('blood'),
-            'type' =>$request->input('type'),
-            'country' =>$request->input('country'),
-            'zone' =>$request->input('zone'),
-            'district' =>$request->input('district'),
-            'area' =>$request->input('area'),
-        ]);
+                //updating the user
+                $user->update([
+                    'name' =>$request->input('name'),
+                    'email' =>$request->input('email'),
+                    'blood' =>$request->input('blood'),
+                    'type' =>$request->input('type'),
+                    'country' =>$request->input('country'),
+                    'zone' =>$request->input('zone'),
+                    'district' =>$request->input('district'),
+                    'area' =>$request->input('area'),
+                ]);
+             }   
 
     }
 
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return ['message','Deleted Successfully'];
+        if (\Gate::allows('isAdmin')) {
+            $user = User::findOrFail($id);
+            $user->delete();
+        }
     }
     public function search(){
         // if the gate allows

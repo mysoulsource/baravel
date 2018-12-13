@@ -22,7 +22,7 @@ class DonateController extends Controller
      */
     public function index()
     {
-        $donate = Donate::with('requestedByName')
+        $donate = Donate::with('requestedByName:id,name')
                 ->where('requested_to','=',auth('api')->user()->id)
                 ->where('status','=',0)
                 ->get();

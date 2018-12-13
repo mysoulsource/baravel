@@ -79,24 +79,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+         
           <li class="nav-item">
-            <a href="/developer" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-               Developer
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/notice" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-               Notice
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/demands" class="nav-link">
+            <a href="/userdemands" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                Demands
@@ -104,7 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="/requests" class="nav-link">
+            <a href="/userrequests" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Requests
@@ -112,15 +97,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="/donate" class="nav-link">
+            <a href="/userdonate" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Donate
               </p>
             </a>
           </li>
+           @can('isAdmin')
+           <li class="nav-item">
+            <a href="/admindeveloper" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+               Developer
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
-            <a href="/bloods" class="nav-link">
+            <a href="/adminnotice" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+               Notice
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/adminbloods" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                Bloods
@@ -128,13 +130,62 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="/gallery" class="nav-link">
+            <a href="/admingallery" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                Gallery
               </p>
             </a>
           </li>
+           <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-dashboard"></i>
+              <p>
+               Events
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/events/admin" class="nav-link active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>All Events</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/addevent/admin" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Add new</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+           <li class="nav-item has-treeview">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fa fa-dashboard"></i>
+              <p>
+                Blogs
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/blog/admin" class="nav-link active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>All Blogs</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/category/admin" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>All category</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+          @endcan
           <li class="nav-item">
             <a  class="nav-link" href="{{ route('logout') }}"
                onclick="event.preventDefault();
@@ -148,54 +199,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </form>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-dashboard"></i>
-              <p>
-               Events
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/adminevents" class="nav-link active">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>All Events</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/addevent" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Add new</p>
-                </a>
-              </li>
-
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link ">
-              <i class="nav-icon fa fa-dashboard"></i>
-              <p>
-                Blogs
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/blog" class="nav-link active">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>All Blogs</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/category" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>All category</p>
-                </a>
-              </li>
-
-            </ul>
-          </li>
+         
+         
           {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-th"></i>
@@ -265,7 +270,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-
+<script>
+   @auth
+    window.authuser = @json(auth()->user());
+  @endauth
+</script>
 <script src="/js/app.js"></script>
 </body>
 </html>

@@ -28,7 +28,7 @@
                                 <td>{{demand.blood_name.name}}</td>
                                 <td>{{demand.date}}</td>
                                 <td>{{demand.urgency | urgencyStatus}}</td>
-                                <td>{{demand.accepted_by}}</td>
+                                <td>{{demand.user.name}}</td>
                                 <td>{{demand.code}}</td>
                                 <td>{{demand.status | demandStatus}}</td>
                                 <td>

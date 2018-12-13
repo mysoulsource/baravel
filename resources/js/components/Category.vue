@@ -190,9 +190,15 @@ export default {
                                 }
 
                             })
-           }
+           },
+             checkuser(){
+                if(!this.$gate.isAdminOrAuthor()){
+                this.$router.push("empty")
+                }  
+            }
     },
     created(){
+         this.checkuser();
         this.getCategory();
          Fire.$on('datauploaded',()=>{
             this.getCategory();

@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'IndexController@home');
+Route::get('/', 'IndexController@home')->name('home');
 Route::get('/about', 'IndexController@about');
 Route::get('/demands', 'IndexController@demands');
 Route::get('/gallery', 'IndexController@gallery');
@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/gallery', 'IndexController@gallery')->name('gallery');
 Route::get('/events', 'IndexController@events')->name('events');
 
-Route::get('/mail','API\RequestController@mail');
+
 Route::resource('/comments','CommentController');
 
 

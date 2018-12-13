@@ -20,85 +20,93 @@ class BloodController extends Controller
      */
     public function index()
     {
-        return Blood::all();
+       
+                return Blood::all();
+        
         //returning all the bloodgroup data back to vue
     }
 
 
     public function store(Request $request)
     {
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
         //converting the image
-        if($request->image){
-            $name = time().'.' .explode('/', explode(':',substr($request->image,0,strpos($request->image,';')))[1])[1];
-            $img = \Image::make($request->image);
-            $img->resize(600, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path('img/bloods/'.$name));
-            $request->merge(['image'=>$name]);
-        }
-        //validating the request
-        $this->validate($request,[
-            'name' =>'required|string|max:191',
-            'detail'=>'required|string|max:500',
-            'image'=>'required',
-        ]);
+            if($request->image){
+                $name = time().'.' .explode('/', explode(':',substr($request->image,0,strpos($request->image,';')))[1])[1];
+                $img = \Image::make($request->image);
+                $img->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path('img/bloods/'.$name));
+                $request->merge(['image'=>$name]);
+            }
+            //validating the request
+            $this->validate($request,[
+                'name' =>'required|string|max:191',
+                'detail'=>'required|string|max:500',
+                'image'=>'required',
+            ]);
 
-        //creating the bloodgroup data
-        Blood::create([
-            'name' => $request->input('name'),
-            'detail' =>$request->input('detail'),
-            'image' =>$request->input('image'),
-        ]);
+            //creating the bloodgroup data
+            Blood::create([
+                'name' => $request->input('name'),
+                'detail' =>$request->input('detail'),
+                'image' =>$request->input('image'),
+            ]);
+        }
     }
 
 
 
     public function update(Request $request, $id)
     {
-        //finding the blood group by id
-        $blood = Blood::findOrFail($id);
-        //checking if the image is same
-        $currentPhoto = $blood->image;
-        //if not upload image
-        if($request->image != $currentPhoto){
-            $name = time().'.' .explode('/', explode(':',substr($request->image,0,strpos($request->image,';')))[1])[1];
-            $img = \Image::make($request->image);
-            $img->resize(600, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path('img/bloods/'.$name));
-            $request->merge(['image'=>$name]);
-            $oldImage = public_path('img/bloods'.$currentPhoto);
-            if(file_exists($oldImage)){
-                @unlink($oldImage);
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
+            //finding the blood group by id
+            $blood = Blood::findOrFail($id);
+            //checking if the image is same
+            $currentPhoto = $blood->image;
+            //if not upload image
+            if($request->image != $currentPhoto){
+                $name = time().'.' .explode('/', explode(':',substr($request->image,0,strpos($request->image,';')))[1])[1];
+                $img = \Image::make($request->image);
+                $img->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path('img/bloods/'.$name));
+                $request->merge(['image'=>$name]);
+                $oldImage = public_path('img/bloods'.$currentPhoto);
+                if(file_exists($oldImage)){
+                    @unlink($oldImage);
+                }
             }
+            //validating the request
+            $this->validate($request,[
+                'name' =>'required|string|max:191',
+                'detail'=>'required|string|max:500',
+            ]);
+            //updating the data
+            $blood->update([
+                'name' => $request->input('name'),
+                'detail' => $request->input('detail'),
+                'image' => $request->input('image'),
+            ]);
         }
-        //validating the request
-        $this->validate($request,[
-            'name' =>'required|string|max:191',
-            'detail'=>'required|string|max:500',
-        ]);
-        //updating the data
-        $blood->update([
-            'name' => $request->input('name'),
-            'detail' => $request->input('detail'),
-            'image' => $request->input('image'),
-        ]);
     }
 
     public function destroy($id)
     {
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
         //finding by id
-        $blood = Blood::findOrFail($id);
-        //check old image
-        $bloodPhoto =public_path('img/bloods/').$blood->img;
-        //if image found delete it
-        if(file_exists($bloodPhoto)){
-            @unlink($bloodPhoto);
+            $blood = Blood::findOrFail($id);
+            //check old image
+            $bloodPhoto =public_path('img/bloods/').$blood->img;
+            //if image found delete it
+            if(file_exists($bloodPhoto)){
+                @unlink($bloodPhoto);
+            }
+            //finally delete the data
+            $blood->delete();
+            return ['message','Deleted Successfully'];
         }
-        //finally delete the data
-        $blood->delete();
-        return ['message','Deleted Successfully'];
     }
 }

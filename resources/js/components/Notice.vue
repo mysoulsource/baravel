@@ -217,8 +217,14 @@
                $('#updateImage').modal('show');
                this.form.fill(notice);
            },
+             checkuser(){
+                if(!this.$gate.isAdmin()){
+                this.$router.push("empty")
+                }  
+            }
        },
        created(){
+        this.checkuser();
            this.getNotice();
            Fire.$on('datauploaded',()=>{
                this.getNotice();

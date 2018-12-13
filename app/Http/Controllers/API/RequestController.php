@@ -24,13 +24,13 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $requests = Requests::with('requestedToName')
+        $requests = Requests::with('requestedToName:id,name')
             ->where('requested_by','=',auth('api')->user()->id)
             ->get();
        return $requests;
     }
 
-
+  
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -66,6 +66,20 @@ class RequestController extends Controller
 
 
 
+    }
+    public function deleteall(){
+      $requests =  Requests::where('requested_by','=',auth('api')->user()->id)
+            ->where('status','=',0)
+            ->get();
+        foreach($requests as $request){
+          $request->delete();
+        }
+    }
+    public function destroy($id){
+      $request = Requests::findOrFail($id);
+      if($request){
+        $request->delete();
+      }
     }
 
 

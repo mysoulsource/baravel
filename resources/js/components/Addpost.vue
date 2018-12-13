@@ -145,8 +145,14 @@
                axios.get("api/post/category")
                    .then(({ data }) => (this.categories=data));
            },
+            checkuser(){
+                if(!this.$gate.isAdminOrAuthor()){
+                this.$router.push("empty")
+                }  
+            }
        },
         created(){
+            this.checkuser();
             this.getCategories();
         }
     }

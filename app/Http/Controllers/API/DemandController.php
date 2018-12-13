@@ -29,8 +29,8 @@ class DemandController extends Controller
 
     public function index()
     {
-        $demands = Demand::with('bloodName')->get();
 
+        $demands = Demand::with(['bloodName:id,name','user:id,name'])->get();
        return $demands;
 
     }

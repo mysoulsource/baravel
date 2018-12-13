@@ -197,9 +197,15 @@ export default {
                                 }
 
                             })
-           }
+           },
+            checkuser(){
+                if(!this.$gate.isAdmin()){
+                this.$router.push("empty")
+                }  
+            }
     },
     created(){
+         this.checkuser();
         this.getBloods();
          Fire.$on('datauploaded',()=>{
             this.getBloods();

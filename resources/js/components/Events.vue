@@ -269,9 +269,15 @@
            },
            getPhoto(photo){
                return "img/events/" + photo;
-           }
+           },
+             checkuser(){
+                if(!this.$gate.isAdminOrAuthor()){
+                this.$router.push("empty")
+                }  
+            }
        },
        created(){
+          this.checkuser();
            this.getEvents();
            Fire.$on('datauploaded',()=>{
                this.getEvents();

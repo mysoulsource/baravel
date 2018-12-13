@@ -123,7 +123,15 @@
                     this.$Progress.fail();
                    swal('Oops!!','Something went wrong','warning');
                });
-           }
+           },
+            checkuser(){
+                if(!this.$gate.isAdminOrAuthor()){
+                this.$router.push("empty")
+                }  
+            }
+       },
+       created(){
+          this.checkuser();
        }
     }
 </script>

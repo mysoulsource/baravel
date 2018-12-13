@@ -40,37 +40,40 @@
                 <table class="table table-hover">
                   <tbody>
                   <tr>
-                    <th>ID</th>
+                    <th v-if="$gate.isAdmin()">ID</th>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Type</th>
+                    <th v-if="$gate.isAdmin()">Email</th>
+                    <th  v-if="$gate.isAdmin()">Type</th>
                     <th>Blood Type</th>
                     <th>Zone</th>
                     <th>District</th>
                     <th>Area</th>
-                    <th>Created</th>
+                    <th v-if="$gate.isAdmin()">Created</th>
                     <th>Options</th>
                   </tr>
-                  <tr v-for="user in users" :key="user.id">
-                    <td>{{user.id}}</td>
+                  <tr v-for="user in users.data" :key="user.id">
+                    <td v-if="$gate.isAdmin()">{{user.id}}</td>
                     <td>{{user.name | capitalize}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.type | capitalize}}</td>
+                    <td v-if="$gate.isAdmin()">{{user.email}}</td>
+                    <td  v-if="$gate.isAdmin()">{{user.type | capitalize}}</td>
                     <td>{{user.blood}}</td>
                     <td>{{user.zone | capitalize}}</td>
                     <td>{{user.district | capitalize}}</td>
                     <td>{{user.area | capitalize}}</td>
-                    <td>{{user.created_at | dateChange}}</td>
+                    <td v-if="$gate.isAdmin()">{{user.created_at | dateChange}}</td>
                     <td>
                         <a href="#" @click.prevent="requestblood(user.id)"><i class="fas fa-hands-helping"></i></a>
-                        <a href="#" @click.prevent="editModal(user)"><i class="fas fa-edit"></i></a>
-                        <a href="#" @click.prevent="deleteUser(user.id)"><i class="fas fa-trash text-red"></i></a>
+                        <a href="#" @click.prevent="editModal(user)" v-if="$gate.isAdmin()"><i class="fas fa-edit"></i></a>
+                        <a href="#" @click.prevent="deleteUser(user.id)" v-if="$gate.isAdmin()"><i class="fas fa-trash text-red"></i></a>
                     </td>
                   </tr>
 
                 </tbody></table>
               </div>
               <!-- /.card-body -->
+              <div class="card-footer">
+                  <pagination :data="users" @pagination-change-page="getResults"></pagination>
+              </div>
             </div>
             <!-- /.card -->
 
@@ -326,6 +329,13 @@
                 axios.get("api/user")
                .then(({ data }) => (this.users=data));
            },
+            //get Result
+            getResults(page = 1) {
+            axios.get('api/user?page=' + page)
+                .then(response => {
+                    this.users = response.data;
+                });
+             },
            addModal(){
                this.editmode = false,
                $('#userModal').modal('show');
@@ -383,9 +393,9 @@
            },
        },
        created(){
-           this.getUsers();
+           this.getResults();
            Fire.$on('datauploaded',()=>{
-               this.getUsers();
+               this.getResults();
            });
            Fire.$on('searching',()=>{
                this.userSearch();

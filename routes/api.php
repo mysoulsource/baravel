@@ -30,7 +30,9 @@ Route::put('notice/image/{id}','API\NoticeController@image');
 Route::apiResources(['gallery'=>'API\GalleryController']);
 Route::apiResources(['demands'=>'API\DemandController']);
 Route::apiResources(['bloods'=>'API\BloodController']);
+
 Route::apiResources(['request'=>'API\RequestController']);
+Route::get('requestdeletall','API\RequestController@deleteall');
 Route::apiResources(['donate'=>'API\DonateController']);
 Route::apiResources(['post'=>'API\PostController']);
 Route::post('donate/accept','API\DonateController@accept');

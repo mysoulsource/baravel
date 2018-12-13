@@ -224,11 +224,17 @@ export default {
                                 }
 
                             })
-           }
+           },
+             checkuser(){
+                if(!this.$gate.isAdminOrAuthor()){
+                this.$router.push("empty")
+                }  
+            }
 
 
     },
     created(){
+        this.checkuser();
         this.getGallerys();
         Fire.$on('datauploaded',()=>{
             this.getGallerys();

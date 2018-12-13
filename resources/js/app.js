@@ -15,6 +15,7 @@ import VueProgressBar from 'vue-progressbar'
 import Swal from 'sweetalert2'
 import moment from 'moment'
 import { VueEditor, Quill } from "vue2-editor"
+import Gate from './Gate' //importing Gate class
 ///end
 
 
@@ -24,6 +25,7 @@ window.VueEditor = VueEditor;
 //form error
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+Vue.component('pagination', require('laravel-vue-pagination'));
 //globally assigning form
 window.Form = Form;
 //vue progressbar
@@ -108,22 +110,24 @@ Vue.component(
 );
 //JWT END
 //routes
+ Vue.prototype.$gate = new Gate(window.authuser);
 let routes = [
     { path: '/users', component: require('./components/Users.vue') },
     { path: '/adminevents', component: require('./components/Events.vue') },
     { path: '/addevent', component: require('./components/Addevent.vue') },
-    { path: '/notice', component: require('./components/Notice.vue') },
-    { path: '/developer', component: require('./components/Developer.vue') },
-    { path: '/gallerys', component: require('./components/Gallery.vue') },
-    { path: '/demands', component: require('./components/Demands.vue') },
-    { path: '/bloods', component: require('./components/Bloods.vue') },
-    { path: '/requests', component: require('./components/Request.vue') },
-    { path: '/donate', component: require('./components/Donate.vue') },
-    { path: '/profile', component: require('./components/Profile.vue') },
-    { path: '/banner', component: require('./components/Banner.vue') },
-     { path: '/blog', component: require('./components/Blog.vue') },
-     { path: '/category', component: require('./components/Category.vue') },
-    { path: '/addpost', component: require('./components/Addpost.vue') },
+    { path: '/adminnotice', component: require('./components/Notice.vue') },
+    { path: '/admindeveloper', component: require('./components/Developer.vue') },
+    { path: '/admingallery', component: require('./components/Gallery.vue') },
+    { path: '/userdemands', component: require('./components/Demands.vue') },
+    { path: '/adminbloods', component: require('./components/Bloods.vue') },
+    { path: '/userrequests', component: require('./components/Request.vue') },
+    { path: '/userdonate', component: require('./components/Donate.vue') },
+    { path: '/userprofile', component: require('./components/Profile.vue') },
+    { path: '/adminbanner', component: require('./components/Banner.vue') },
+     { path: '/adminblog', component: require('./components/Blog.vue') },
+     { path: '/admincategory', component: require('./components/Category.vue') },
+    { path: '/adminaddpost', component: require('./components/Addpost.vue') },
+     { path: '*',name:'empty', component: require('./components/Empty.vue') }
   ]
 
 //end of routes
