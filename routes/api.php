@@ -16,7 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::get('dashboard','API\DashboardController@index');
+Route::get('getBloodgroup','API\DashboardController@getBloodgroup');
 Route::apiResources(['user'=>'API\UserController']);
 Route::apiResources(['event'=>'API\EventController']);
 Route::apiResources(['notice'=>'API\NoticeController']);

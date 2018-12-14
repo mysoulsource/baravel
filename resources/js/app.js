@@ -16,6 +16,8 @@ import Swal from 'sweetalert2'
 import moment from 'moment'
 import { VueEditor, Quill } from "vue2-editor"
 import Gate from './Gate' //importing Gate class
+import VueChartJs from 'vue-chartjs'
+import { Bar, Line } from 'vue-chartjs'
 ///end
 
 
@@ -115,11 +117,46 @@ Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue')
 );
+Vue.component('line-chart', {
+    extends: Bar,
+    data(){
+        return{
+            bloodgroup:[],
+        }
+    },
+    methods:{
+
+
+    },
+    mounted () {
+            axios.get('api/getBloodgroup').then((response) => {
+                let data = response.data;
+                if(data) {
+                    let BloodName = data.bloodGroupName;
+                    let countusers = data.usercount;
+                    this.renderChart({
+                        labels: BloodName,
+                        datasets: [{
+                            label: 'Blood Group Data',
+                            backgroundColor: '#FC2525',
+                            data: countusers
+                        }]
+                    }, {responsive: true, maintainAspectRatio: false})
+                }
+                else {
+                    console.log('No data');
+                }
+            });
+        }
+
+
+})
+
 //JWT END
 //routes
  Vue.prototype.$gate = new Gate(window.authuser);
 let routes = [
-    { path: '/login/dashboard', component: require('./components/Dashboard.vue') },
+    { path: '/dashboard', component: require('./components/Dashboard.vue') },
     { path: '/users', component: require('./components/Users.vue') },
     { path: '/adminevents', component: require('./components/Events.vue') },
     { path: '/adminaddevent', component: require('./components/Addevent.vue') },

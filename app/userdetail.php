@@ -10,5 +10,8 @@ class userdetail extends Model
     	'user_id','count'
     ];
 
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
     
 }

@@ -14,4 +14,7 @@ class Blood extends Model
     public function Demands(){
         return $this->hasMany('App\Demand');
     }
+    public function users(){
+        return $this->hasMany('App\User','blood');
+    }
 }

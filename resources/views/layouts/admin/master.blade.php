@@ -12,35 +12,74 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="token"   id="token" value="{{ auth()->check() ? auth()->user()->id : 'null' }}">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/btn.css">
   <title>Baravel</title>
 
   <!-- Font Awesome Icons -->
-
+  <style>
+    .nav-sidebar > .nav-item .nav-icon {
+      color: lawngreen;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+  {{--<nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">--}}
+    {{--<!-- Left navbar links -->--}}
+    {{--<ul class="navbar-nav">--}}
+      {{--<li class="nav-item">--}}
+        {{--<a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>--}}
+      {{--</li>--}}
+    {{--</ul>--}}
+
+    {{--<!-- SEARCH FORM -->--}}
+
+    {{--<div class="input-group input-group-sm">--}}
+      {{--<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" v-model="search" @keyup="searchfun">--}}
+      {{--<div class="input-group-append">--}}
+        {{--<button class="btn btn-navbar" type="submit" @click ="searchfun">--}}
+          {{--<i class="fa fa-search"></i>--}}
+        {{--</button>--}}
+      {{--</div>--}}
+    {{--</div>--}}
+
+
+  {{--</nav>--}}
+  <nav class="main-header navbar navbar-expand border-bottom navbar-dark bg-primary">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
       </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="index3.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Contact</a>
+      </li>
     </ul>
 
     <!-- SEARCH FORM -->
-
-    <div class="input-group input-group-sm">
-      <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" v-model="search" @keyup="searchfun">
-      <div class="input-group-append">
-        <button class="btn btn-navbar" type="submit" @click ="searchfun">
-          <i class="fa fa-search"></i>
-        </button>
+    <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" v-model="search" @keyup="searchfun">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit" @click ="searchfun">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
 
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
 
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i class="fa fa-th-large"></i></a>
+      </li>
+    </ul>
   </nav>
   <!-- /.navbar -->
 
@@ -71,43 +110,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
            <li class="nav-item">
-            <a href="/users" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+            <a href="/users" class="nav-link text-red">
+              <i class="nav-icon fas fa-users"></i>
               <p>
                Users
-                <span class="right badge badge-danger">New</span>
+                <span class="right badge badge-success">{{$users}}</span>
               </p>
             </a>
           </li>
          
           <li class="nav-item">
             <a href="/userdemands" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-life-ring"></i>
               <p>
                Demands
+                <span class="right badge badge-success">{{$demands}}</span>
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="/userrequests" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-hands-helping"></i>
               <p>
                 Requests
+                <span class="right badge badge-success">{{$requests}}</span>
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="/userdonate" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-hand-holding-heart"></i>
               <p>
                 Donate
+                <span class="right badge badge-success">{{$donates}}</span>
               </p>
             </a>
           </li>
            @can('isAdmin')
            <li class="nav-item">
             <a href="/admindeveloper" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-stream"></i>
               <p>
                Developer
               </p>
@@ -115,7 +157,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item">
             <a href="/adminnotice" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-flag-checkered"></i>
               <p>
                Notice
               </p>
@@ -123,7 +165,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item">
             <a href="/adminbloods" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-list-alt"></i>
               <p>
                Bloods
               </p>
@@ -131,15 +173,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item">
             <a href="/admingallery" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-images"></i>
               <p>
                Gallery
+                <span class="right badge badge-success">{{$gallery}}</span>
               </p>
             </a>
           </li>
            <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-dashboard"></i>
+              <i class="nav-icon fas fa-calendar-check"></i>
               <p>
                Events
                 <i class="right fa fa-angle-left"></i>
@@ -148,8 +191,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/events/admin" class="nav-link active">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>All Events</p>
+                  <i class="fas fa-calendar-week nav-icon"></i>
+                  <p>All Events <span class="right badge badge-success">{{$events}}</span></p>
                 </a>
               </li>
               <li class="nav-item">
@@ -163,7 +206,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
            <li class="nav-item has-treeview">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fa fa-dashboard"></i>
+              <i class="nav-icon fas fa-clipboard"></i>
               <p>
                 Blogs
                 <i class="right fa fa-angle-left"></i>
@@ -173,13 +216,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
                 <a href="/adminblog" class="nav-link active">
                   <i class="fa fa-circle-o nav-icon"></i>
-                  <p>All Blogs</p>
+                  <p>All Blogs  <span class="right badge badge-success">{{$posts}}</span></p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/admincategory" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
-                  <p>All category</p>
+                  <p>All category <span class="right badge badge-success">{{$category}}</span></p>
                 </a>
               </li>
 
@@ -190,7 +233,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a  class="nav-link" href="{{ route('logout') }}"
                onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-power-off"></i>
               <p>
                Logout
               </p>
@@ -248,12 +291,47 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
+  <aside class="control-sidebar">
     <!-- Control sidebar content goes here -->
-    <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
-    </div>
+
+      <div class="card card-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-warning">
+          <div class="widget-user-image">
+            <img class="img-circle elevation-2" src="{{asset('img/profile/'. Auth()->user()->img)}}" alt="User Avatar">
+          </div>
+          <!-- /.widget-user-image -->
+          <h6 class="widget-user-username">{{auth()->user()->name}}</h6>
+          <h6 class="widget-user-desc">{{auth()->user()->email}}</h6>
+        </div>
+        <div class="card-footer p-0">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                Blood Group <span class="float-right badge bg-primary">{{ $bloodname }}</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                Points <span class="float-right badge bg-info">{{$point}}</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+               Status<span class="float-right badge "><button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                  <div class="handle"></div>
+                </button></span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                Information <span class="float-right badge"><button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    <div class="handle"></div></button></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
   </aside>
   <!-- /.control-sidebar -->
 

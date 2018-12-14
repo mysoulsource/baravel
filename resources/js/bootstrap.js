@@ -13,6 +13,7 @@ try {
 
     require('bootstrap');
     require('admin-lte');
+    require('mdbootstrap');
 } catch (e) {}
 
 /**
