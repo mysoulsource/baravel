@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/demands', 'IndexController@demands')->name('demands');
 Route::get('/gallery', 'IndexController@gallery')->name('gallery');
 Route::get('/events', 'IndexController@events')->name('events');
+Route::get('/event-detail/{id}', 'IndexController@singleEvent')->name('event.single');
 
 
 Route::resource('/comments','CommentController');

@@ -36,7 +36,14 @@ class IndexController extends Controller
         return view('about');
     }
     public function events(){
-        return view('events');
+        $events = events::latest()->paginate(9);
+        return view('events')->with(compact('events'));
+    }
+
+    public function singleEvent($id)
+    {
+        $event = events::findOrFail($id);
+        return view('eventdetail')->with(compact('event'));
     }
     public function demands(){
         $demands = Demand::with('bloodName:id,image')->latest()->paginate(9);
