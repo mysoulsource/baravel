@@ -172,4 +172,36 @@ class UserController extends Controller
         return false;
        }
     }
+
+    public function getInfo(){
+        $user = auth('api')->user();
+        $data = [
+            'activeStatus' => $user->status,
+            'infoStatus'=>$user->info_status
+        ];
+        return $data;
+    }
+    public function changeStatus(){
+         $user = auth('api')->user();
+        if($user->status == 1){
+            $status = 0;
+        }else{
+            $status = 1;
+        }
+         $user->update([
+            'status' => $status 
+         ]);
+         
+    }
+      public function changeInfoStatus(){
+         $user = auth('api')->user();
+        if($user->info_status == 1){
+            $status = 0;
+        }else{
+            $status = 1;
+        }
+         $user->update([
+            'info_status' => $status 
+         ]);
+    }
 }

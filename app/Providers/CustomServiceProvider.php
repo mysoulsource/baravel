@@ -19,6 +19,7 @@ use App\Request;
 use App\User;
 use App\userdetail;
 use Carbon\Laravel\ServiceProvider;
+use App\Banner;
 
 class CustomServiceProvider extends ServiceProvider
 {
@@ -43,6 +44,7 @@ class CustomServiceProvider extends ServiceProvider
                     $posts = Post::count();
                     $category = Category::count();
                     $bloodgroup = Blood::where('id','=',auth()->user()->blood)->first();
+                     $banner = Banner::latest()->first();
                     $bloodname = $bloodgroup->name;
                     $userdetail = userdetail::where('user_id','=',$id)->first();
                     if(!empty($userdetail )){
@@ -68,9 +70,14 @@ class CustomServiceProvider extends ServiceProvider
                     }else{
                         $point = 0;
                     }
+                     $banner = Banner::latest()->first();
                     $data->with(compact('users','demands','requests','donates','bloodname','point'));
                 }
 
+            });
+            View()->composer('*', function($data){
+                $banner = Banner::latest()->first();
+                $data->with(compact('banner'));
             });
         }
 }

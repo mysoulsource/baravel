@@ -21,7 +21,7 @@
                                     <a class="nav-link" href="index.html">home</a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="causes.html">causes</a>
+                                    <a class="nav-link" href="{{route('demands')}}">causes</a>
                                 </li>
                                 <li class="nav-item ">
                                     <a class="nav-link" href="events.html">events</a>

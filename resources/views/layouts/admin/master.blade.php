@@ -11,8 +11,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="token"   id="token" value="{{ auth()->check() ? auth()->user()->id : 'null' }}">
-    <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/btn.css">
+    <link rel="stylesheet" href="{{asset('/css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/btn.css')}}">
   <title>Baravel</title>
 
   <!-- Font Awesome Icons -->
@@ -24,29 +24,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
-
-  <!-- Navbar -->
-  {{--<nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">--}}
-    {{--<!-- Left navbar links -->--}}
-    {{--<ul class="navbar-nav">--}}
-      {{--<li class="nav-item">--}}
-        {{--<a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>--}}
-      {{--</li>--}}
-    {{--</ul>--}}
-
-    {{--<!-- SEARCH FORM -->--}}
-
-    {{--<div class="input-group input-group-sm">--}}
-      {{--<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" v-model="search" @keyup="searchfun">--}}
-      {{--<div class="input-group-append">--}}
-        {{--<button class="btn btn-navbar" type="submit" @click ="searchfun">--}}
-          {{--<i class="fa fa-search"></i>--}}
-        {{--</button>--}}
-      {{--</div>--}}
-    {{--</div>--}}
-
-
-  {{--</nav>--}}
   <nav class="main-header navbar navbar-expand border-bottom navbar-dark bg-primary">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -87,7 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="/img/logo.png" alt="Baravel Logo" class="brand-image img-circle elevation-3"
+      <img src="{{asset('/img/logo.png')}}" alt="Baravel Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Baravel</span>
     </a>
@@ -120,7 +97,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
          
           <li class="nav-item">
-            <a href="/userdemands" class="nav-link">
+            <a href="{{url('/users')}}" class="nav-link">
               <i class="nav-icon fas fa-life-ring"></i>
               <p>
                Demands
@@ -318,14 +295,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-               Status<span class="float-right badge "><button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+               Status<span class="float-right badge "><button v-bind:class="{ active: isActiveStatus }" @click="changeStatus" type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
                   <div class="handle"></div>
                 </button></span>
               </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                Information <span class="float-right badge"><button type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                Information <span class="float-right badge"><button v-bind:class="{active : infoStatus}" @click="changeInfoStatus" type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
                     <div class="handle"></div></button></span>
               </a>
             </li>
@@ -353,6 +330,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     window.authuser = @json(auth()->user());
   @endauth
 </script>
-<script src="/js/app.js"></script>
+<script src="{{asset('/js/app.js')}}"></script>
 </body>
 </html>

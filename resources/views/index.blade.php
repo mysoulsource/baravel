@@ -1,9 +1,6 @@
 @extends('layouts.app')
 @section('content')
 
-
-
-
     @include('layouts.contents.banner')
 <!--================ Start important-points section =================-->
 <section class="donation_details pad_top">
@@ -47,7 +44,7 @@
     <div class="container">
         <div class="row justify-content-center section-title-wrap">
             <div class="col-lg-12">
-                <h1>Our Major Causes</h1>
+                <h1>Blood Demands</h1>
                 <p>
                     The French Revolution constituted for the conscience of the dominant aristocratic class a fall from innocence the natural
                     chain of events.
@@ -57,166 +54,30 @@
 
         <div class="row">
             <div id="our-major-cause" class="owl-carousel">
+                @foreach($demands as $demand)
                 <div class="card">
                     <div class="card-body">
                         <figure>
-                            <img class="card-img-top img-fluid" src="img/donation/d1.jpg" alt="Card image cap">
+                            <img class="card-img-top img-fluid" src="{{asset('img/bloods/'.$demand->bloodName->image)}}" alt="Card image cap">
                         </figure>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                                <span>Funded 76%</span>
+                                <span>Date : {{$demand->date}}</span>
                             </div>
                         </div>
                         <div class="card_inner_body">
                             <div class="card-body-top">
-                                <span>Raised: $7,689</span> / $10,000
+                                <span>Location : </span> {{$demand->location}}
                             </div>
-                            <h4 class="card-title">Did not find your Package</h4>
-                            <p class="card-text">inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially
-                                in the workplace that’s why it’s crucial.
+                            <h4 class="card-title">{{$demand->title}}</h4>
+                            <p class="card-text">{{$demand->detail}}
                             </p>
-                            <a href="#" class="main_btn2">donate here</a>
+                            <a href="#" class="main_btn2">Aceept</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-body">
-                        <figure>
-                            <img class="card-img-top img-fluid" src="img/donation/d2.jpg" alt="Card image cap">
-                        </figure>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                                <span>Funded 76%</span>
-                            </div>
-                        </div>
-                        <div class="card_inner_body">
-                            <div class="card-body-top">
-                                <span>Raised: $7,689</span> / $10,000
-                            </div>
-                            <h4 class="card-title">Did not find your Package</h4>
-                            <p class="card-text">inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially
-                                in the workplace that’s why it’s crucial.
-                            </p>
-                            <a href="#" class="main_btn2">donate here</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <figure>
-                            <img class="card-img-top img-fluid" src="img/donation/d3.jpg" alt="Card image cap">
-                        </figure>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                                <span>Funded 76%</span>
-                            </div>
-                        </div>
-                        <div class="card_inner_body">
-                            <div class="card-body-top">
-                                <span>Raised: $7,689</span> / $10,000
-                            </div>
-                            <h4 class="card-title">Did not find your Package</h4>
-                            <p class="card-text">inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially
-                                in the workplace that’s why it’s crucial.
-                            </p>
-                            <a href="#" class="main_btn2">donate here</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <figure>
-                            <img class="card-img-top img-fluid" src="img/donation/d2.jpg" alt="Card image cap">
-                        </figure>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                                <span>Funded 76%</span>
-                            </div>
-                        </div>
-                        <div class="card_inner_body">
-                            <div class="card-body-top">
-                                <span>Raised: $7,689</span> / $10,000
-                            </div>
-                            <h4 class="card-title">Did not find your Package</h4>
-                            <p class="card-text">inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially
-                                in the workplace that’s why it’s crucial.
-                            </p>
-                            <a href="#" class="main_btn2">donate here</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <figure>
-                            <img class="card-img-top img-fluid" src="img/donation/d3.jpg" alt="Card image cap">
-                        </figure>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                                <span>Funded 76%</span>
-                            </div>
-                        </div>
-                        <div class="card_inner_body">
-                            <div class="card-body-top">
-                                <span>Raised: $7,689</span> / $10,000
-                            </div>
-                            <h4 class="card-title">Did not find your Package</h4>
-                            <p class="card-text">inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially
-                                in the workplace that’s why it’s crucial.
-                            </p>
-                            <a href="#" class="main_btn2">donate here</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <figure>
-                            <img class="card-img-top img-fluid" src="img/donation/d1.jpg" alt="Card image cap">
-                        </figure>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                                <span>Funded 76%</span>
-                            </div>
-                        </div>
-                        <div class="card_inner_body">
-                            <div class="card-body-top">
-                                <span>Raised: $7,689</span> / $10,000
-                            </div>
-                            <h4 class="card-title">Did not find your Package</h4>
-                            <p class="card-text">inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially
-                                in the workplace that’s why it’s crucial.
-                            </p>
-                            <a href="#" class="main_btn2">donate here</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <figure>
-                            <img class="card-img-top img-fluid" src="img/donation/d2.jpg" alt="Card image cap">
-                        </figure>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                                <span>Funded 76%</span>
-                            </div>
-                        </div>
-                        <div class="card_inner_body">
-                            <div class="card-body-top">
-                                <span>Raised: $7,689</span> / $10,000
-                            </div>
-                            <h4 class="card-title">Did not find your Package</h4>
-                            <p class="card-text">inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially
-                                in the workplace that’s why it’s crucial.
-                            </p>
-                            <a href="#" class="main_btn2">donate here</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -323,150 +184,45 @@
 </section>
 <!--================ End Make Donation Area =================-->
 
-
-
-<!--================ Support Campaign Area =================-->
-<section class="support_campaign pad_bottom">
-    <div class="container">
-        <div class="row justify-content-center section-title-wrap">
-            <div class="col-lg-12">
-                <h1>Support a campaign or fundraiser</h1>
-                <p>
-                    The French Revolution constituted for the conscience of the dominant aristocratic class a fall from innocence the natural
-                    chain of events.
-                </p>
+    <section class="recent_event section_gap_custom">
+        <div class="container">
+            <div class="row justify-content-center section-title-wrap">
+                <div class="col-lg-12">
+                    <h1>Support a campaign or fundraiser</h1>
+                    <p>
+                        The French Revolution constituted for the conscience of the dominant aristocratic class a fall from innocence the natural
+                        chain of events.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                @forelse($events as $event)
+                <div class="col-lg-6">
+                    <div class="single_event">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-5">
+                                <figure>
+                                    <img class="img-fluid w-100" src="{{asset('img/events/'.$event->img)}}" alt="">
+                                    <div class="img-overlay"></div>
+                                </figure>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="content_wrapper">
+                                    <p class="date_time">{{$event->date}}</p>
+                                    <h4 class="title">
+                                        <a href="event-details.html">{{$event->title}}</a>
+                                    </h4>
+                                    <p>{{$event->detail}} </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                @endforelse
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-6 mb-30">
-                <div class="campaign_box">
-                    <div class="camppaign d-flex">
-                        <div class="img-box">
-                            <img class="img-fluid" src="img/donation/sc1.jpg" alt="">
-                        </div>
-
-                        <div>
-                            <h4>Help for cancer victims</h4>
-                            <h4>USD 22,563</h4>
-                        </div>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                            <span>Funded 76%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 mb-30">
-                <div class="campaign_box">
-                    <div class="camppaign d-flex">
-                        <div class="img-box">
-                            <img class="img-fluid" src="img/donation/sc1.jpg" alt="">
-                        </div>
-
-                        <div>
-                            <h4>Help for cancer victims</h4>
-                            <h4>USD 22,563</h4>
-                        </div>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                            <span>Funded 76%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 mb-30">
-                <div class="campaign_box">
-                    <div class="camppaign d-flex">
-                        <div class="img-box">
-                            <img class="img-fluid" src="img/donation/sc1.jpg" alt="">
-                        </div>
-
-                        <div>
-                            <h4>Help for cancer victims</h4>
-                            <h4>USD 22,563</h4>
-                        </div>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                            <span>Funded 76%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 mb-30">
-                <div class="campaign_box">
-                    <div class="camppaign d-flex">
-                        <div class="img-box">
-                            <img class="img-fluid" src="img/donation/sc1.jpg" alt="">
-                        </div>
-
-                        <div>
-                            <h4>Help for cancer victims</h4>
-                            <h4>USD 22,563</h4>
-                        </div>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                            <span>Funded 76%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="campaign_box">
-                    <div class="camppaign d-flex">
-                        <div class="img-box">
-                            <img class="img-fluid" src="img/donation/sc1.jpg" alt="">
-                        </div>
-
-                        <div>
-                            <h4>Help for cancer victims</h4>
-                            <h4>USD 22,563</h4>
-                        </div>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                            <span>Funded 76%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="campaign_box">
-                    <div class="camppaign d-flex">
-                        <div class="img-box">
-                            <img class="img-fluid" src="img/donation/sc1.jpg" alt="">
-                        </div>
-
-                        <div>
-                            <h4>Help for cancer victims</h4>
-                            <h4>USD 22,563</h4>
-                        </div>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width: 76%;">
-                            <span>Funded 76%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 <!--================ End Support Campaing Area =================-->
 
 <!--================ Start Experience Area =================-->

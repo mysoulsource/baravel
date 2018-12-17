@@ -6,6 +6,7 @@ use App\Banner;
 use App\Gallery;
 use Illuminate\Http\Request;
 use App\Demand;
+use App\events;
 
 class IndexController extends Controller
 {
@@ -21,11 +22,15 @@ class IndexController extends Controller
 
     public function home(){
         //demands
-        $demands = Demand::with('bloodName')->latest()->paginate(4);
-        //banners
-        $banners = Banner::all();
+        $demands = Demand::with('bloodName:id,image')->latest()->paginate(9);
+       
+        //events
+        $events = events::latest()->paginate(9);
+       
+       
+        
 
-        return view('index')->with(compact('demands','banners'));
+        return view('index')->with(compact('demands','events'));
     }
     public function about(){
         return view('about');
@@ -34,7 +39,8 @@ class IndexController extends Controller
         return view('events');
     }
     public function demands(){
-        return view('demands');
+        $demands = Demand::with('bloodName:id,image')->latest()->paginate(9);
+        return view('demands')->with(compact('demands'));
     }
     public function blogs(){
         return view('blog');

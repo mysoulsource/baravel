@@ -200,7 +200,10 @@ const app = new Vue({
         hide:false,
         donate:{}, // to accept or decline the request
         search:'', // instant search feature
-        demand:{} // to accept the demand
+        demand:{}, // to accept the demand
+        data:[],
+        isActiveStatus:null,
+        infoStatus:null
     },
     methods:{
         listen(){
@@ -309,6 +312,29 @@ const app = new Vue({
                     swal('Oops!!','Something went wrong','warning');
                 });
 
+        },
+        getUserInfo(){
+         axios.get("api/userinfo")
+                    .then(({data}) => (this.isActiveStatus = data.activeStatus, this.infoStatus = data.infoStatus));
+
+        },
+        changeStatus(){
+           axios.get('api/changeStatus').then(()=>{
+                 toast({
+                            type: 'success',
+                            title: 'Changed Successfully'
+                        });
+
+           });
+        },
+        changeInfoStatus(){
+             axios.get('api/changeInfoStatus').then(()=>{
+                 toast({
+                            type: 'success',
+                            title: 'Changed Successfully'
+                        });
+
+           });
         }
     },
     created(){
@@ -316,6 +342,7 @@ const app = new Vue({
         this.user = document.querySelector('#token').getAttribute('value');
         //start the listen method to receive the pusher notification
         this.listen();
+        this.getUserInfo();
 
 
     }

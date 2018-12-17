@@ -112,7 +112,7 @@
            },
            addEvent(){
                this.$Progress.start();
-               this.form.post('api/event/').then(()=>{
+               this.form.post('api/event').then(()=>{
                     this.$Progress.finish();
                     toast({
                             type: 'success',
@@ -121,6 +121,7 @@
                         this.form.reset();
                    let input = $("#imageInp");
                    input.replaceWith(input.val('').clone(true));
+
                }).catch(()=>{
                     this.$Progress.fail();
                    swal('Oops!!','Something went wrong','warning');

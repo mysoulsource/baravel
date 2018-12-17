@@ -20,6 +20,7 @@ Route::get('/blogs', 'IndexController@blogs');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/demands', 'IndexController@demands')->name('demands');
 Route::get('/gallery', 'IndexController@gallery')->name('gallery');
 Route::get('/events', 'IndexController@events')->name('events');
 

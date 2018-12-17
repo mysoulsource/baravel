@@ -82,7 +82,8 @@ class DemandController extends Controller
             'message'=>'Pending',
             'status'=>0
         ]);
-        $demand->notify(new DemandCreated);
+        $when = now()->addMinutes(1);
+        $demand->notify((new DemandCreated($demand))->delay($when));
     }
 
 

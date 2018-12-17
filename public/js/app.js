@@ -35402,7 +35402,10 @@ var app = new Vue({
         hide: false,
         donate: {}, // to accept or decline the request
         search: '', // instant search feature
-        demand: {} // to accept the demand
+        demand: {}, // to accept the demand
+        data: [],
+        isActiveStatus: null,
+        infoStatus: null
     },
     methods: {
         listen: function listen() {
@@ -35474,6 +35477,30 @@ var app = new Vue({
             }).catch(function () {
                 swal('Oops!!', 'Something went wrong', 'warning');
             });
+        },
+        getUserInfo: function getUserInfo() {
+            var _this3 = this;
+
+            axios.get("api/userinfo").then(function (_ref) {
+                var data = _ref.data;
+                return _this3.isActiveStatus = data.activeStatus, _this3.infoStatus = data.infoStatus;
+            });
+        },
+        changeStatus: function changeStatus() {
+            axios.get('api/changeStatus').then(function () {
+                toast({
+                    type: 'success',
+                    title: 'Changed Successfully'
+                });
+            });
+        },
+        changeInfoStatus: function changeInfoStatus() {
+            axios.get('api/changeInfoStatus').then(function () {
+                toast({
+                    type: 'success',
+                    title: 'Changed Successfully'
+                });
+            });
         }
     },
     created: function created() {
@@ -35481,6 +35508,7 @@ var app = new Vue({
         this.user = document.querySelector('#token').getAttribute('value');
         //start the listen method to receive the pusher notification
         this.listen();
+        this.getUserInfo();
     }
 });
 
@@ -35507,7 +35535,6 @@ try {
 
     __webpack_require__(161);
     __webpack_require__(162);
-    __webpack_require__(339);
 } catch (e) {}
 
 /**
@@ -102184,7 +102211,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.$Progress.start();
-            this.form.post('api/event/').then(function () {
+            this.form.post('api/event').then(function () {
                 _this2.$Progress.finish();
                 toast({
                     type: 'success',
@@ -112143,27 +112170,6 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 324 */,
-/* 325 */,
-/* 326 */,
-/* 327 */,
-/* 328 */,
-/* 329 */,
-/* 330 */,
-/* 331 */,
-/* 332 */,
-/* 333 */,
-/* 334 */,
-/* 335 */,
-/* 336 */,
-/* 337 */,
-/* 338 */,
-/* 339 */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'F:\\xmp\\htdocs\\baravel\\node_modules\\mdbootstrap\\js\\mdb.min.js'");
 
 /***/ })
 /******/ ]);

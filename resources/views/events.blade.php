@@ -1,7 +1,22 @@
 @extends('layouts.app')
 <!--================ Start Recent Event Area =================-->
 @section('content')
-    @include('layouts.contents.banner')
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="banner_content text-center">
+                    <h2>Events</h2>
+                    <div class="page_link">
+                        <a href="{{route('home')}}">Home</a>
+                        <a href="#">Events</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 <section class="recent_event section_gap_custom">
     <div class="container">
         <div class="row">

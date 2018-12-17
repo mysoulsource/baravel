@@ -18,6 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('dashboard','API\DashboardController@index');
 Route::get('getBloodgroup','API\DashboardController@getBloodgroup');
+Route::get('userinfo','API\UserController@getInfo');
+Route::get('changeStatus','API\UserController@changeStatus');
+Route::get('changeInfoStatus','API\UserController@changeInfoStatus');
 Route::apiResources(['user'=>'API\UserController']);
 Route::apiResources(['event'=>'API\EventController']);
 Route::apiResources(['notice'=>'API\NoticeController']);

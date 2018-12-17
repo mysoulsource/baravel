@@ -17,6 +17,10 @@ class EventController extends Controller
      *          destroy: to delete the event
      *          image: to update the image
      */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function index()
     {
         if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
@@ -29,6 +33,8 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+
+       
         if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
         //if request has image .generate name and make image and upload
         if($request->img){
