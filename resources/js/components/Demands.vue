@@ -30,7 +30,7 @@
                                 <td>{{demand.urgency | urgencyStatus}}</td>
                                 <td>{{demand.user.name}}</td>
                                 <td>{{demand.code}}</td>
-                                <td>{{demand.status | demandStatus}}</td>
+                                <td><p class="demandstatus">{{demand.status | demandStatus}}</p></td>
                                 <td>
                                     <a href="" @click.prevent="openeditModal(demand)"><i class="fas fa-pen"></i></a>
                                     <a href="" @click.prevent="deleteDemand(demand.id)"><i class="fas fa-trash text-red"></i></a>
@@ -246,3 +246,23 @@ export default {
 }
 </script>
 
+<style>
+    .pending{
+            padding: 2px 3px;
+            background: #cccfd2;
+            border-radius: 2px;
+            text-align: center;
+    }
+    .success{
+         padding: 2px 3px;
+            background: green;
+            border-radius: 2px;
+            text-align: center;
+    }
+    .denied{
+         padding: 2px 3px;
+            background: red;
+            border-radius: 2px;
+            text-align: center;
+    }
+</style>

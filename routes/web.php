@@ -15,7 +15,8 @@ Route::get('/', 'IndexController@home')->name('home');
 Route::get('/about', 'IndexController@about');
 Route::get('/demands', 'IndexController@demands');
 Route::get('/gallery', 'IndexController@gallery');
-Route::get('/blogs', 'IndexController@blogs');
+Route::get('/blogs', 'IndexController@blogs')->name('blogs');
+Route::get('/blog-single/{id}', 'IndexController@singleBlog')->name('blog.single');
 
 Auth::routes();
 

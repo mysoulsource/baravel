@@ -7,6 +7,9 @@ use App\Gallery;
 use Illuminate\Http\Request;
 use App\Demand;
 use App\events;
+use App\Category;
+use App\Post;
+use App\User;
 
 class IndexController extends Controller
 {
@@ -50,7 +53,9 @@ class IndexController extends Controller
         return view('demands')->with(compact('demands'));
     }
     public function blogs(){
-        return view('blog');
+        $categories = Category::latest()->paginate(3);
+        $posts = Post::with('user:id,name')->withCount('comments')->latest()->paginate(5);   
+        return view('blog')->with(compact('categories','posts'));
     }
     public function gallery()
     {
@@ -61,10 +66,10 @@ class IndexController extends Controller
 //        $demands = Demand::with('bloodName')->latest()->paginate(4);
         return view('gallery');
     }
-//    public function events()
-//    {
-//          $banners = Banner::all();
-//          $demands = Demand::with('bloodName')->latest()->paginate(4);
-//        return view('events')->with(compact('demands','banners'));
-//    }
+    public function singleBlog($id){
+        $post = Post::with('comments')->findOrFail($id);
+        return view('singleblog')->with(compact('post'));
+
+
+    }
 }
