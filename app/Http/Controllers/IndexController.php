@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use App\Comment;
 use App\Gallery;
 use Illuminate\Http\Request;
 use App\Demand;
@@ -10,6 +11,7 @@ use App\events;
 use App\Category;
 use App\Post;
 use App\User;
+use CyrildeWit\EloquentViewable\Support\Period;
 
 class IndexController extends Controller
 {
@@ -45,6 +47,7 @@ class IndexController extends Controller
 
     public function singleEvent($id)
     {
+
         $event = events::findOrFail($id);
         return view('eventdetail')->with(compact('event'));
     }
@@ -67,8 +70,14 @@ class IndexController extends Controller
         return view('gallery');
     }
     public function singleBlog($id){
-        $post = Post::with('comments')->findOrFail($id);
-        return view('singleblog')->with(compact('post'));
+
+        $categories = Category::select('id','name')->withCount('posts')->paginate(7);
+        $post = Post::withCount('comments')->findOrFail($id);
+        views($post)->record();
+        $count = views($post)->count();
+        $popular_posts = Post::select('id','image','title','created_at')->orderByViews('asc', Period::pastDays(3))->paginate(4);
+        $comments = Comment::where('post_id','=',$id)->with('user:id,name,img')->get();
+        return view('singleblog')->with(compact('post','categories','comments','count','popular_posts'));
 
 
     }
