@@ -81,7 +81,7 @@
                                 <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image</label>
-                                            <input id="imageInp" type="file" @change="imageUpload" name="image"
+                                            <input id="imageInp" type="file" v-if="uploadReady" @change="imageUpload" name="image"
                                                 class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
                                             <has-error :form="form" field="image"></has-error>
                                         </div>
@@ -116,6 +116,7 @@ export default {
 
     data(){
         return{
+            uploadReady: true,
             gallerys:{},
             editMode:false,
             form : new Form({
@@ -131,6 +132,12 @@ export default {
         }
     },
     methods:{
+         clear () {
+              this.uploadReady = false
+              this.$nextTick(() => {
+                this.uploadReady = true
+              })
+            },
         getGallerys(){
             axios.get('api/gallery')
             .then((data)=>{
@@ -157,6 +164,7 @@ export default {
                             title: 'Updated Successfully'
                         })
                         this.form.reset();
+                        this.clear();
                 let input = $("#imageInp");
                 input.replaceWith(input.val('').clone(true));
 
@@ -175,8 +183,7 @@ export default {
                             type: 'success',
                             title: 'Updated Successfully'
                         })
-                let input = $("#imageInp");
-                input.replaceWith(input.val('').clone(true));
+               this.clear();
             })
             .catch(()=>{
                 this.$Progress.fail();
@@ -191,8 +198,7 @@ export default {
                          this.form.image = reader.result;
                         }
                    }else{
-                        let input = $("#imageInp");
-                        input.replaceWith(input.val('').clone(true));
+                        this.clear();
                        swal('Oops!!','File is too Large','warning');
                    }
 

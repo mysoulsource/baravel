@@ -92,6 +92,7 @@
         },
         data(){
            return {
+              uploadReady: true,
                categories:{},
             events:{},
             form : new Form({
@@ -112,6 +113,12 @@
            }
        },
        methods:{
+        clear () {
+              this.uploadReady = false
+              this.$nextTick(() => {
+                this.uploadReady = true
+              })
+            },
            uploadImage(e){
                var file = e.target.files[0];
                 var reader = new FileReader();
@@ -120,8 +127,7 @@
                          this.form.image = reader.result;
                         }
                    }else{
-                        let input = $("#imageInp");
-                        input.replaceWith(input.val('').clone(true));
+                      this.clear();
                        swal('Oops!!','File is too Large','warning');
                    }
 
@@ -136,8 +142,7 @@
                             title: 'Added Successfully'
                         })
                         this.form.reset();
-                       let input = $("#imageInp");
-                       input.replaceWith(input.val('').clone(true));
+                        this.clear();
                }).catch(()=>{
                     this.$Progress.fail();
                    swal('Oops!!','Something went wrong','warning');

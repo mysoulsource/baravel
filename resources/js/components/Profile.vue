@@ -190,10 +190,10 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="inputPhoto" class="col-sm-4 control-label">img</label>
+                                                <label for="inputPhoto" class="col-sm-4 control-label">Profile Photo</label>
 
                                                 <div class="col-sm-10">
-                                                    <input name="img" @change="updatePhoto" type="file" class="form-control" id="inputPhoto" :class="{ 'is-invalid': form.errors.has('img') }">
+                                                    <input name="img" v-if="uploadReady" @change="updatePhoto" type="file" class="form-control" id="inputPhoto" :class="{ 'is-invalid': form.errors.has('img') }">
                                                     <has-error :form="form" field="img"></has-error>
                                                 </div>
                                             </div>
@@ -260,6 +260,7 @@
     export default {
         data(){
             return {
+                 uploadReady: true,
                 changePhoto : true,
                 form : new Form({
                     id:'',
@@ -283,6 +284,12 @@
             }
         },
         methods:{
+            clear () {
+              this.uploadReady = false
+              this.$nextTick(() => {
+                this.uploadReady = true
+              })
+            },
             updateInfo(){
                 this.$Progress.start();
                 if(this.form.password == ''){
@@ -298,8 +305,7 @@
                             title: 'Profile Updated Successfully!!'
                         })
                         Fire.$emit('profileUpdated');
-                        let input = $("#imageInp");
-                        input.replaceWith(input.val('').clone(true));
+                        this.clear();
                     })
                     .catch(()=>{
                         this.$Progress.fail();
@@ -313,19 +319,21 @@
                 this.changePhoto = false;
                 //grab the image file
                 let file = e.target.files[0];
-                console.log(file);
+
                 if(file['size'] < 5242880){
                     let reader = new FileReader();
                     reader.onloadend = (file)=> {
                         //after change what
                         //assign the result to form img
                         this.form.img = reader.result;
+                        
 
                     }
 
                     // function to change to bas64
                     reader.readAsDataURL(file);
                 }else{
+                    this.clear();
                     swal('Oops!!','Image size limit is 5MB','error');
                 }
 

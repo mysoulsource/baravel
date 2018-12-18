@@ -138,7 +138,7 @@ Vue.component('line-chart', {
                         labels: BloodName,
                         datasets: [{
                             label: 'Blood Group Data',
-                            backgroundColor: '#FC2525',
+                            backgroundColor: ' #3490dc',
                             data: countusers
                         }]
                     }, {responsive: true, maintainAspectRatio: false})

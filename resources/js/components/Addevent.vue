@@ -62,7 +62,7 @@
                     <div class="col-md-6">
                          <div class="form-group">
                     <label for="imageInp">File input</label>
-                    <input id="imageInp" type="file" @change="uploadImage" name="img" class="form-control" :class="{ 'is-invalid': form.errors.has('img') }">
+                    <input id="imageInp" v-if="uploadReady" type="file" @change="uploadImage" name="img" class="form-control" :class="{ 'is-invalid': form.errors.has('img') }">
                     <has-error :form="form" field="img"></has-error>
                   </div>
                     </div>
@@ -81,6 +81,7 @@
     export default {
         data(){
            return {
+            uploadReady: true,
             events:{},
             form : new Form({
                     id:'',
@@ -103,13 +104,18 @@
                          this.form.img = reader.result;
                         }
                    }else{
-                        let input = $("#imageInp");
-                        input.replaceWith(input.val('').clone(true));
+                      
                        swal('Oops!!','File is too Large','warning');
                    }
 
                 reader.readAsDataURL(file);
            },
+          clear () {
+              this.uploadReady = false
+              this.$nextTick(() => {
+                this.uploadReady = true
+              })
+            },
            addEvent(){
                this.$Progress.start();
                this.form.post('api/event').then(()=>{
@@ -119,8 +125,8 @@
                             title: 'Added Successfully'
                         })
                         this.form.reset();
-                   let input = $("#imageInp");
-                   input.replaceWith(input.val('').clone(true));
+                        this.clear();
+                 
 
                }).catch(()=>{
                     this.$Progress.fail();

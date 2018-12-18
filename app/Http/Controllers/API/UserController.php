@@ -34,12 +34,18 @@ class UserController extends Controller
     public function index()
     {
         if (\Gate::allows('isAdmin') ) {
-            $users= User::latest()->paginate(10);
-        }else if(\Gate::allows('isUser') || \Gate::allows('isAuthor')){
-            $users = User::select('id','name','country','zone','district','area','blood')->paginate(10);
-               // $users= User::all();
+            $users= 
+                     User::with('bloodgroup:id,name')
+                    ->latest()
+                    ->paginate(10);
         }
-
+        else if(\Gate::allows('isUser') || \Gate::allows('isAuthor')){
+            $users = 
+                      User::with('bloodgroup:id,name')
+                    ->select('id','name','country','zone','district','area','blood')
+                    ->paginate(10);
+        }
+       
         return $users;
     }
 
@@ -49,22 +55,23 @@ class UserController extends Controller
     }
 
     public function updateProfile(Request $request){
+
         ///for api authenticated users
         $user = auth('api')->user();
         //if user didnot uploaded a new image
-        if($request->photo != $user->photo){
+        if($request->img != $user->img){
             //code to change base64 code image name to timestamp name
-            $name = time().'.' .explode('/',explode(':',substr($request->photo,0,strpos($request->photo,';')))[1])[1];
+            $name = time().'.' .explode('/',explode(':',substr($request->img,0,strpos($request->img,';')))[1])[1];
             //use image intervention to convert base64 image to proper image and save it to folder
-            \Image::make($request->photo)->save(public_path('img/profile/').$name);
+            \Image::make($request->img)->save(public_path('img/profile/').$name);
             //update the value in request photo
-            $request->merge(['photo'=>$name]);
+            $request->merge(['img'=>$name]);
             //get the current photo with full dir
             $userPhoto = public_path('img/profile/').$user->photo;
             //check if the file exists
             if(file_exists($userPhoto)){
                 //delete the file
-                unlink($userPhoto);
+                @unlink($userPhoto);
             }
 
         }
@@ -74,7 +81,7 @@ class UserController extends Controller
             'email' =>'required|string|max:191|unique:users,email,'.$user->id,
             'password' =>'sometimes|string|max:191|min:6',
         ]);
-
+        dd($request);
         //if the password is not empty
         if(!empty($request->password)){
             //change it to hashed password

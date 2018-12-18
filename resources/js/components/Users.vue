@@ -17,7 +17,10 @@
                         <input type="text" class="form-control" placeholder="Area"  v-model="searchuser.area">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Blood Group"  v-model="searchuser.bloodgroup">
+                        <!-- <input type="text" class="form-control" placeholder="Blood Group"  v-model="searchuser.bloodgroup"> -->
+                        <select name="" id="" v-model="searchuser.bloodgroup" class="form-control" placeholder="Blood Group">
+                            <option :value="bloodgroup.id" v-for="bloodgroup in bloodgroups" :key="bloodgroup.id">{{bloodgroup.name}}</option>
+                        </select>
                     </div>
                     <div class="col">
                         <input type="submit" class="btn btn-info" value="Advance Search">
@@ -56,7 +59,7 @@
                     <td>{{user.name | capitalize}}</td>
                     <td v-if="$gate.isAdmin()">{{user.email}}</td>
                     <td  v-if="$gate.isAdmin()">{{user.type | capitalize}}</td>
-                    <td>{{user.blood}}</td>
+                    <td>{{user.bloodgroup.name}}</td>
                     <td v-if="$gate.isUser()">{{user.zone | capitalize}}</td>
                     <td v-if="$gate.isUser()">{{user.district | capitalize}}</td>
                     <td v-if="$gate.isUser()">{{user.area | capitalize}}</td>
@@ -282,7 +285,8 @@
                    district:'',
                    area:'',
                    bloodgroup:''
-               })
+               }),
+               bloodgroups:{}
 
            }
        },
@@ -392,9 +396,14 @@
                        this.users = response.data;
                    });
            },
+           getBloodgroups(){
+              axios.get("api/bloodgroup")
+               .then(({ data }) => (this.bloodgroups=data));
+           }
        },
        created(){
            this.getResults();
+           this.getBloodgroups();
            Fire.$on('datauploaded',()=>{
                this.getResults();
            });

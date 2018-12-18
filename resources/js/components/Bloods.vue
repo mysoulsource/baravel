@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <label>Image</label>
                                                 <input  type="file" name="image"
-                                                    class="form-control" @change="uploadImage" :class="{ 'is-invalid': form.errors.has('image') }">
+                                                    class="form-control" v-if="uploadReady" @change="uploadImage" :class="{ 'is-invalid': form.errors.has('image') }">
                                                 <has-error :form="form" field="image"></has-error>
                                             </div>
                                         </div>
@@ -97,6 +97,7 @@
 export default {
     data(){
         return{
+            uploadReady: true,
             bloods:{},
             editMode:false,
             form:new Form({
@@ -116,13 +117,18 @@ export default {
                          this.form.image = reader.result;
                         }
                    }else{
-                        let input = $("#imageInp");
-                        input.replaceWith(input.val('').clone(true));
+                        this.clear();
                        swal('Oops!!','File is too Large','warning');
                    }
 
                 reader.readAsDataURL(file);
            },
+             clear () {
+              this.uploadReady = false
+              this.$nextTick(() => {
+                this.uploadReady = true
+              })
+            },
         getBloods(){
             axios.get('api/bloods').then((data)=>{this.bloods = data});
         },
@@ -148,6 +154,7 @@ export default {
                             title: 'Added Successfully'
                         })
                         this.form.reset();
+                        this.clear();
                }).catch(()=>{
                     this.$Progress.fail();
                    swal('Oops!!','Something went wrong','warning');
@@ -166,6 +173,7 @@ export default {
                             title: 'Updated Successfully'
                         })
                         this.form.reset();
+                        this.clear();
                }).catch(()=>{
                     this.$Progress.fail();
                    swal('Oops!!','Something went wrong','warning');

@@ -35362,7 +35362,7 @@ Vue.component('line-chart', {
                     labels: BloodName,
                     datasets: [{
                         label: 'Blood Group Data',
-                        backgroundColor: '#FC2525',
+                        backgroundColor: ' #3490dc',
                         data: countusers
                     }]
                 }, { responsive: true, maintainAspectRatio: false });
@@ -99721,6 +99721,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -99750,7 +99753,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 district: '',
                 area: '',
                 bloodgroup: ''
-            })
+            }),
+            bloodgroups: {}
 
         };
     },
@@ -99867,17 +99871,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('api/usersearch?q=' + query).then(function (response) {
                 _this7.users = response.data;
             });
+        },
+        getBloodgroups: function getBloodgroups() {
+            var _this8 = this;
+
+            axios.get("api/bloodgroup").then(function (_ref3) {
+                var data = _ref3.data;
+                return _this8.bloodgroups = data;
+            });
         }
     },
     created: function created() {
-        var _this8 = this;
+        var _this9 = this;
 
         this.getResults();
+        this.getBloodgroups();
         Fire.$on('datauploaded', function () {
-            _this8.getResults();
+            _this9.getResults();
         });
         Fire.$on('searching', function () {
-            _this8.userSearch();
+            _this9.userSearch();
         });
     }
 });
@@ -99980,27 +99993,47 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.searchuser.bloodgroup,
-                    expression: "searchuser.bloodgroup"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Blood Group" },
-                domProps: { value: _vm.searchuser.bloodgroup },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.searchuser.bloodgroup,
+                      expression: "searchuser.bloodgroup"
                     }
-                    _vm.$set(_vm.searchuser, "bloodgroup", $event.target.value)
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "", id: "", placeholder: "Blood Group" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.searchuser,
+                        "bloodgroup",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
                   }
-                }
-              })
+                },
+                _vm._l(_vm.bloodgroups, function(bloodgroup) {
+                  return _c(
+                    "option",
+                    { key: bloodgroup.id, domProps: { value: bloodgroup.id } },
+                    [_vm._v(_vm._s(bloodgroup.name))]
+                  )
+                })
+              )
             ]),
             _vm._v(" "),
             _vm._m(0)
@@ -100067,7 +100100,7 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.blood))]),
+                  _c("td", [_vm._v(_vm._s(user.bloodgroup.name))]),
                   _vm._v(" "),
                   _vm.$gate.isUser()
                     ? _c("td", [
@@ -102175,6 +102208,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            uploadReady: true,
             events: {},
             form: new Form({
                 id: '',
@@ -102200,28 +102234,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.form.img = reader.result;
                 };
             } else {
-                var input = $("#imageInp");
-                input.replaceWith(input.val('').clone(true));
+
                 swal('Oops!!', 'File is too Large', 'warning');
             }
 
             reader.readAsDataURL(file);
         },
-        addEvent: function addEvent() {
+        clear: function clear() {
             var _this2 = this;
+
+            this.uploadReady = false;
+            this.$nextTick(function () {
+                _this2.uploadReady = true;
+            });
+        },
+        addEvent: function addEvent() {
+            var _this3 = this;
 
             this.$Progress.start();
             this.form.post('api/event').then(function () {
-                _this2.$Progress.finish();
+                _this3.$Progress.finish();
                 toast({
                     type: 'success',
                     title: 'Added Successfully'
                 });
-                _this2.form.reset();
-                var input = $("#imageInp");
-                input.replaceWith(input.val('').clone(true));
+                _this3.form.reset();
+                _this3.clear();
             }).catch(function () {
-                _this2.$Progress.fail();
+                _this3.$Progress.fail();
                 swal('Oops!!', 'Something went wrong', 'warning');
             });
         },
@@ -102489,12 +102529,14 @@ var render = function() {
                     _vm._v("File input")
                   ]),
                   _vm._v(" "),
-                  _c("input", {
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.form.errors.has("img") },
-                    attrs: { id: "imageInp", type: "file", name: "img" },
-                    on: { change: _vm.uploadImage }
-                  }),
+                  _vm.uploadReady
+                    ? _c("input", {
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.form.errors.has("img") },
+                        attrs: { id: "imageInp", type: "file", name: "img" },
+                        on: { change: _vm.uploadImage }
+                      })
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("has-error", { attrs: { form: _vm.form, field: "img" } })
                 ],
@@ -103712,6 +103754,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            uploadReady: true,
             gallerys: {},
             editMode: false,
             form: new Form({
@@ -103728,11 +103771,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        getGallerys: function getGallerys() {
+        clear: function clear() {
             var _this = this;
 
+            this.uploadReady = false;
+            this.$nextTick(function () {
+                _this.uploadReady = true;
+            });
+        },
+        getGallerys: function getGallerys() {
+            var _this2 = this;
+
             axios.get('api/gallery').then(function (data) {
-                _this.gallerys = data;
+                _this2.gallerys = data;
             });
         },
         editModal: function editModal(gallery) {
@@ -103745,37 +103796,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             $('#galleryModal').modal('show');
         },
         editGallery: function editGallery() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.$Progress.start();
             this.form.put('api/gallery/' + this.form.id).then(function () {
-                _this2.$Progress.finish();
+                _this3.$Progress.finish();
                 $('#galleryModal').modal('hide');
                 Fire.$emit('datauploaded');
                 toast({
                     type: 'success',
                     title: 'Updated Successfully'
                 });
-                _this2.form.reset();
-                var input = $("#imageInp");
-                input.replaceWith(input.val('').clone(true));
-            }).catch(function () {
-                _this2.$Progress.fail();
-                swal('Oops!!', 'Something went wrong', 'warning');
-            });
-        },
-        addGallery: function addGallery() {
-            var _this3 = this;
-
-            this.form.post('api/gallery').then(function () {
-                _this3.$Progress.start();
-                $('#galleryModal').modal('hide');
-                Fire.$emit('datauploaded');
                 _this3.form.reset();
-                toast({
-                    type: 'success',
-                    title: 'Updated Successfully'
-                });
+                _this3.clear();
                 var input = $("#imageInp");
                 input.replaceWith(input.val('').clone(true));
             }).catch(function () {
@@ -103783,18 +103816,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 swal('Oops!!', 'Something went wrong', 'warning');
             });
         },
-        imageUpload: function imageUpload(e) {
+        addGallery: function addGallery() {
             var _this4 = this;
+
+            this.form.post('api/gallery').then(function () {
+                _this4.$Progress.start();
+                $('#galleryModal').modal('hide');
+                Fire.$emit('datauploaded');
+                _this4.form.reset();
+                toast({
+                    type: 'success',
+                    title: 'Updated Successfully'
+                });
+                _this4.clear();
+            }).catch(function () {
+                _this4.$Progress.fail();
+                swal('Oops!!', 'Something went wrong', 'warning');
+            });
+        },
+        imageUpload: function imageUpload(e) {
+            var _this5 = this;
 
             var file = e.target.files[0];
             var reader = new FileReader();
             if (file['size'] < 5242880) {
                 reader.onloadend = function (file) {
-                    _this4.form.image = reader.result;
+                    _this5.form.image = reader.result;
                 };
             } else {
-                var input = $("#imageInp");
-                input.replaceWith(input.val('').clone(true));
+                this.clear();
                 swal('Oops!!', 'File is too Large', 'warning');
             }
 
@@ -103804,7 +103854,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return "img/gallery/" + photo;
         },
         deleteGallery: function deleteGallery(id) {
-            var _this5 = this;
+            var _this6 = this;
 
             swal({
                 title: 'Are you sure?',
@@ -103818,7 +103868,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 if (result.value) {
                     //send ajax request to server
-                    _this5.form.delete('api/gallery/' + id).then(function () {
+                    _this6.form.delete('api/gallery/' + id).then(function () {
                         //fire the event trigger
                         Fire.$emit('datauploaded');
                         swal('Deleted!', 'Your file has been deleted.', 'success');
@@ -103835,12 +103885,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        var _this6 = this;
+        var _this7 = this;
 
         this.checkuser();
         this.getGallerys();
         Fire.$on('datauploaded', function () {
-            _this6.getGallerys();
+            _this7.getGallerys();
         });
     }
 });
@@ -104105,18 +104155,20 @@ var render = function() {
                           [
                             _c("label", [_vm._v("Image")]),
                             _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.form.errors.has("image")
-                              },
-                              attrs: {
-                                id: "imageInp",
-                                type: "file",
-                                name: "image"
-                              },
-                              on: { change: _vm.imageUpload }
-                            }),
+                            _vm.uploadReady
+                              ? _c("input", {
+                                  staticClass: "form-control",
+                                  class: {
+                                    "is-invalid": _vm.form.errors.has("image")
+                                  },
+                                  attrs: {
+                                    id: "imageInp",
+                                    type: "file",
+                                    name: "image"
+                                  },
+                                  on: { change: _vm.imageUpload }
+                                })
+                              : _vm._e(),
                             _vm._v(" "),
                             _c("has-error", {
                               attrs: { form: _vm.form, field: "image" }
@@ -105410,6 +105462,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            uploadReady: true,
             bloods: {},
             editMode: false,
             form: new Form({
@@ -105432,18 +105485,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.form.image = reader.result;
                 };
             } else {
-                var input = $("#imageInp");
-                input.replaceWith(input.val('').clone(true));
+                this.clear();
                 swal('Oops!!', 'File is too Large', 'warning');
             }
 
             reader.readAsDataURL(file);
         },
-        getBloods: function getBloods() {
+        clear: function clear() {
             var _this2 = this;
 
+            this.uploadReady = false;
+            this.$nextTick(function () {
+                _this2.uploadReady = true;
+            });
+        },
+        getBloods: function getBloods() {
+            var _this3 = this;
+
             axios.get('api/bloods').then(function (data) {
-                _this2.bloods = data;
+                _this3.bloods = data;
             });
         },
         openaddModal: function openaddModal() {
@@ -105456,11 +105516,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.fill(blood);
         },
         addBlood: function addBlood() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.$Progress.start();
             this.form.post('api/bloods').then(function () {
-                _this3.$Progress.finish();
+                _this4.$Progress.finish();
                 $('#BloodModal').modal('hide');
                 Fire.$emit('datauploaded');
                 var input = $("#imageInp");
@@ -105469,18 +105529,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     type: 'success',
                     title: 'Added Successfully'
                 });
-                _this3.form.reset();
+                _this4.form.reset();
+                _this4.clear();
             }).catch(function () {
-                _this3.$Progress.fail();
+                _this4.$Progress.fail();
                 swal('Oops!!', 'Something went wrong', 'warning');
             });
         },
         editBlood: function editBlood() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.$Progress.start();
             this.form.put('api/bloods/' + this.form.id).then(function () {
-                _this4.$Progress.finish();
+                _this5.$Progress.finish();
                 $('#BloodModal').modal('hide');
                 var input = $("#imageInp");
                 input.replaceWith(input.val('').clone(true));
@@ -105489,9 +105550,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     type: 'success',
                     title: 'Updated Successfully'
                 });
-                _this4.form.reset();
+                _this5.form.reset();
+                _this5.clear();
             }).catch(function () {
-                _this4.$Progress.fail();
+                _this5.$Progress.fail();
                 swal('Oops!!', 'Something went wrong', 'warning');
             });
         },
@@ -105499,7 +105561,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return "img/bloods/" + file;
         },
         deleteBlood: function deleteBlood(id) {
-            var _this5 = this;
+            var _this6 = this;
 
             swal({
                 title: 'Are you sure?',
@@ -105513,7 +105575,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 if (result.value) {
                     //send ajax request to server
-                    _this5.form.delete('api/bloods/' + id).then(function () {
+                    _this6.form.delete('api/bloods/' + id).then(function () {
                         //fire the event trigger
                         Fire.$emit('datauploaded');
                         swal('Deleted!', 'Your file has been deleted.', 'success');
@@ -105530,12 +105592,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        var _this6 = this;
+        var _this7 = this;
 
         this.checkuser();
         this.getBloods();
         Fire.$on('datauploaded', function () {
-            _this6.getBloods();
+            _this7.getBloods();
         });
     }
 });
@@ -105748,14 +105810,16 @@ var render = function() {
                           [
                             _c("label", [_vm._v("Image")]),
                             _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.form.errors.has("image")
-                              },
-                              attrs: { type: "file", name: "image" },
-                              on: { change: _vm.uploadImage }
-                            }),
+                            _vm.uploadReady
+                              ? _c("input", {
+                                  staticClass: "form-control",
+                                  class: {
+                                    "is-invalid": _vm.form.errors.has("image")
+                                  },
+                                  attrs: { type: "file", name: "image" },
+                                  on: { change: _vm.uploadImage }
+                                })
+                              : _vm._e(),
                             _vm._v(" "),
                             _c("has-error", {
                               attrs: { form: _vm.form, field: "image" }
@@ -106852,6 +106916,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            uploadReady: true,
             changePhoto: true,
             form: new Form({
                 id: '',
@@ -106876,8 +106941,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        updateInfo: function updateInfo() {
+        clear: function clear() {
             var _this = this;
+
+            this.uploadReady = false;
+            this.$nextTick(function () {
+                _this.uploadReady = true;
+            });
+        },
+        updateInfo: function updateInfo() {
+            var _this2 = this;
 
             this.$Progress.start();
             if (this.form.password == '') {
@@ -106885,17 +106958,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             this.form.put('api/profile/update').then(function () {
 
-                _this.$Progress.finish();
-                _this.changePhoto = true;
+                _this2.$Progress.finish();
+                _this2.changePhoto = true;
                 toast({
                     type: 'success',
                     title: 'Profile Updated Successfully!!'
                 });
                 Fire.$emit('profileUpdated');
-                var input = $("#imageInp");
-                input.replaceWith(input.val('').clone(true));
+                _this2.clear();
             }).catch(function () {
-                _this.$Progress.fail();
+                _this2.$Progress.fail();
                 toast({
                     type: 'error',
                     title: 'Something Went Wrong!!'
@@ -106903,32 +106975,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         updatePhoto: function updatePhoto(e) {
-            var _this2 = this;
+            var _this3 = this;
 
             this.changePhoto = false;
             //grab the image file
             var file = e.target.files[0];
-            console.log(file);
+
             if (file['size'] < 5242880) {
                 var reader = new FileReader();
                 reader.onloadend = function (file) {
                     //after change what
                     //assign the result to form img
-                    _this2.form.img = reader.result;
+                    _this3.form.img = reader.result;
                 };
 
                 // function to change to bas64
                 reader.readAsDataURL(file);
             } else {
+                this.clear();
                 swal('Oops!!', 'Image size limit is 5MB', 'error');
             }
         },
         getUserdata: function getUserdata() {
-            var _this3 = this;
+            var _this4 = this;
 
             axios.get('api/profile').then(function (_ref) {
                 var data = _ref.data;
-                return _this3.form.fill(data);
+                return _this4.form.fill(data);
             });
         },
         getUserPhoto: function getUserPhoto() {
@@ -106937,32 +107010,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         submitCode: function submitCode() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.$Progress.start();
             this.codeform.put('api/profile/code').then(function () {
 
-                _this4.$Progress.finish();
+                _this5.$Progress.finish();
                 toast({
                     type: 'success',
                     title: 'Profile Updated Successfully!!'
                 });
             }).catch(function () {
-                _this4.$Progress.fail();
+                _this5.$Progress.fail();
                 toast({
                     type: 'error',
                     title: 'Code Incorrect or Already been used!!!'
                 });
-                _this4.codeform.reset();
+                _this5.codeform.reset();
             });
         }
     },
     created: function created() {
-        var _this5 = this;
+        var _this6 = this;
 
         this.getUserdata();
         Fire.$on('profileUpdated', function () {
-            _this5.getUserdata();
+            _this6.getUserdata();
         });
     }
 });
@@ -107609,25 +107682,27 @@ var render = function() {
                                 staticClass: "col-sm-4 control-label",
                                 attrs: { for: "inputPhoto" }
                               },
-                              [_vm._v("img")]
+                              [_vm._v("Profile Photo")]
                             ),
                             _vm._v(" "),
                             _c(
                               "div",
                               { staticClass: "col-sm-10" },
                               [
-                                _c("input", {
-                                  staticClass: "form-control",
-                                  class: {
-                                    "is-invalid": _vm.form.errors.has("img")
-                                  },
-                                  attrs: {
-                                    name: "img",
-                                    type: "file",
-                                    id: "inputPhoto"
-                                  },
-                                  on: { change: _vm.updatePhoto }
-                                }),
+                                _vm.uploadReady
+                                  ? _c("input", {
+                                      staticClass: "form-control",
+                                      class: {
+                                        "is-invalid": _vm.form.errors.has("img")
+                                      },
+                                      attrs: {
+                                        name: "img",
+                                        type: "file",
+                                        id: "inputPhoto"
+                                      },
+                                      on: { change: _vm.updatePhoto }
+                                    })
+                                  : _vm._e(),
                                 _vm._v(" "),
                                 _c("has-error", {
                                   attrs: { form: _vm.form, field: "img" }
@@ -110857,6 +110932,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
+            uploadReady: true,
             categories: {},
             events: {},
             form: new Form({
@@ -110874,47 +110950,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        uploadImage: function uploadImage(e) {
+        clear: function clear() {
             var _this = this;
+
+            this.uploadReady = false;
+            this.$nextTick(function () {
+                _this.uploadReady = true;
+            });
+        },
+        uploadImage: function uploadImage(e) {
+            var _this2 = this;
 
             var file = e.target.files[0];
             var reader = new FileReader();
             if (file['size'] < 5242880) {
                 reader.onloadend = function (file) {
-                    _this.form.image = reader.result;
+                    _this2.form.image = reader.result;
                 };
             } else {
-                var input = $("#imageInp");
-                input.replaceWith(input.val('').clone(true));
+                this.clear();
                 swal('Oops!!', 'File is too Large', 'warning');
             }
 
             reader.readAsDataURL(file);
         },
         addPost: function addPost() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.$Progress.start();
             this.form.post('api/post').then(function () {
-                _this2.$Progress.finish();
+                _this3.$Progress.finish();
                 toast({
                     type: 'success',
                     title: 'Added Successfully'
                 });
-                _this2.form.reset();
-                var input = $("#imageInp");
-                input.replaceWith(input.val('').clone(true));
+                _this3.form.reset();
+                _this3.clear();
             }).catch(function () {
-                _this2.$Progress.fail();
+                _this3.$Progress.fail();
                 swal('Oops!!', 'Something went wrong', 'warning');
             });
         },
         getCategories: function getCategories() {
-            var _this3 = this;
+            var _this4 = this;
 
             axios.get("api/post/category").then(function (_ref) {
                 var data = _ref.data;
-                return _this3.categories = data;
+                return _this4.categories = data;
             });
         },
         checkuser: function checkuser() {
