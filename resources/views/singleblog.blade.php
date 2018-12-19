@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=329667757622211&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 	 <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
             <div class="overlay"></div>
@@ -119,27 +126,28 @@
                     <div class="comments-area">
                         <h4></h4>
                         <div class="comment-list">
-                            @forelse($comments as $comment)
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="{{asset('img/users/'.$comment->user->img)}}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h5>
-                                            <a href="#">{{$comment->user->name}}</a>
-                                        </h5>
-                                        <p class="date">{{$comment->created_at}} </p>
-                                        <p class="comment">
-                                            {{$comment->content}}
-                                        </p>
-                                    </div>
-                                </div>
+                            {{--@forelse($comments as $comment)--}}
+                            {{--<div class="single-comment justify-content-between d-flex">--}}
+                                {{--<div class="user justify-content-between d-flex">--}}
+                                    {{--<div class="thumb">--}}
+                                        {{--<img src="{{asset('img/users/'.$comment->user->img)}}" alt="">--}}
+                                    {{--</div>--}}
+                                    {{--<div class="desc">--}}
+                                        {{--<h5>--}}
+                                            {{--<a href="#">{{$comment->user->name}}</a>--}}
+                                        {{--</h5>--}}
+                                        {{--<p class="date">{{$comment->created_at}} </p>--}}
+                                        {{--<p class="comment">--}}
+                                            {{--{{$comment->content}}--}}
+                                        {{--</p>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                            </div>
-                                @empty
-                                <p class="comment">No comments</p>
-                                @endforelse
+                            {{--</div>--}}
+                                {{--@empty--}}
+                                {{--<p class="comment">No comments</p>--}}
+                                {{--@endforelse--}}
+                            <div class="fb-comments" data-href="{{Request::url()}}" data-numposts="10"></div>
                         </div>
                     </div>
                 </div>
