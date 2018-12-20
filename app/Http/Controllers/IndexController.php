@@ -56,9 +56,20 @@ class IndexController extends Controller
         return view('demands')->with(compact('demands'));
     }
     public function blogs(){
-        $categories = Category::latest()->paginate(3);
-        $posts = Post::with('user:id,name')->withCount('comments')->latest()->paginate(5);   
-        return view('blog')->with(compact('categories','posts'));
+        $categories = Category::latest()
+                    ->paginate(3);
+        $categories_list = Category::select('id','name')
+                            ->withCount('posts')
+                            ->paginate(7);            
+        $posts = Post::with('user:id,name')
+                ->withCount('comments')
+                ->latest()
+                ->paginate(5);
+        $popular_posts = Post::select('id','image','title','created_at')
+                        ->orderByViews('asc', Period::pastDays(3))
+                        ->paginate(4);
+
+        return view('blog')->with(compact('categories','posts','categories_list','popular_posts'));
     }
     public function gallery()
     {

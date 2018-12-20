@@ -48,6 +48,22 @@ Route::get('/event-detail/{id}', 'IndexController@singleEvent')->name('event.sin
 Route::resource('/comments','CommentController');
 
 
-
-//Route::get('{path}',"HomeController@index")->where( 'path', '([A-z\d-\/_.]+)?' );
+Route::get('/dashboard','HomeController@index');
+Route::get('/users','HomeController@index');
+Route::get('/adminevents','HomeController@index');
+Route::get('/adminaddevent','HomeController@index');
+Route::get('/adminnotice','HomeController@index');
+Route::get('/adminnotice','HomeController@index');
+Route::get('/admindeveloper','HomeController@index');
+Route::get('/admingallery','HomeController@index');
+Route::get('/userdemands','HomeController@index');
+Route::get('/adminbloods','HomeController@index');
+Route::get('/userrequests','HomeController@index');
+Route::get('/userdonate','HomeController@index');
+Route::get('/userprofile','HomeController@index');
+Route::get('/adminbanner','HomeController@index');
+Route::get('/adminblog','HomeController@index');
+Route::get('/admincategory','HomeController@index');
+Route::get('/adminaddpost','HomeController@index');
+// Route::get('{path}',"HomeController@index")->where( 'path', '([A-z\d-\/_.]+)?' );
 

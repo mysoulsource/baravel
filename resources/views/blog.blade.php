@@ -141,42 +141,18 @@
                         </aside>
                         <aside class="single_sidebar_widget popular_post_widget">
                             <h3 class="widget_title">Popular Posts</h3>
+                            @forelse($popular_posts as $popular_post)
                             <div class="media post_item">
-                                <img src="img/blog/popular-post/post1.jpg" alt="post">
+                                <img src="{{asset('img/small/'.$popular_post->image)}}" alt="post">
                                 <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Space The Final Frontier</h3>
+                                    <a href="{{route('blog.single',$popular_post->id)}}">
+                                        <h3>{{$popular_post->title}}</h3>
                                     </a>
-                                    <p>02 Hours ago</p>
+                                    <p>{{$popular_post->created_at}}</p>
                                 </div>
                             </div>
-                            <div class="media post_item">
-                                <img src="img/blog/popular-post/post2.jpg" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>The Amazing Hubble</h3>
-                                    </a>
-                                    <p>02 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="img/blog/popular-post/post3.jpg" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Astronomy Or Astrology</h3>
-                                    </a>
-                                    <p>03 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img src="img/blog/popular-post/post4.jpg" alt="post">
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Asteroids telescope</h3>
-                                    </a>
-                                    <p>01 Hours ago</p>
-                                </div>
-                            </div>
+                            @empty
+                                @endforelse
                             <div class="br"></div>
                         </aside>
                         <aside class="single_sidebar_widget ads_widget">
@@ -188,48 +164,15 @@
                         <aside class="single_sidebar_widget post_category_widget">
                             <h4 class="widget_title">Post Catgories</h4>
                             <ul class="list cat-list">
+                                    @forelse($categories_list as $category_list)
                                 <li>
                                     <a href="#" class="d-flex justify-content-between">
-                                        <p>Technology</p>
-                                        <p>37</p>
+                                        <p>{{$category_list->name}}</p>
+                                        <p>{{$category_list->posts_count}}</p>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#" class="d-flex justify-content-between">
-                                        <p>Lifestyle</p>
-                                        <p>24</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex justify-content-between">
-                                        <p>Fashion</p>
-                                        <p>59</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex justify-content-between">
-                                        <p>Art</p>
-                                        <p>29</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex justify-content-between">
-                                        <p>Food</p>
-                                        <p>15</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex justify-content-between">
-                                        <p>Architecture</p>
-                                        <p>09</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex justify-content-between">
-                                        <p>Adventure</p>
-                                        <p>44</p>
-                                    </a>
-                                </li>
+                                 @empty
+                                @endforelse
                             </ul>
                             <div class="br"></div>
                         </aside>
@@ -256,9 +199,11 @@
                         <aside class="single-sidebar-widget tag_cloud_widget">
                             <h4 class="widget_title">Tag Clouds</h4>
                             <ul class="list">
+                            
                                 <li>
                                     <a href="#">Technology</a>
                                 </li>
+                               
                                 <li>
                                     <a href="#">Fashion</a>
                                 </li>

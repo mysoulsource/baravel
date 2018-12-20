@@ -26,36 +26,26 @@
                                 <li class="nav-item ">
                                     <a class="nav-link" href="{{route('events')}}">events</a>
                                 </li>
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="about.html">About</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="donation.html">donation</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="elements.html">Elements</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{route('blogs')}}">Blog</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="single-blog.html">Blog Details</a>
-                                        </li>
-                                    </ul>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">About</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
+                                    <a href="{{route('blogs')}}" class="nav-link">Blog</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="main_btn" href="donation.html">donate now</a>
+                                    <a class="nav-link" href="{{route('gallery')}}">Gallery</a>
+                                </li>
+                                 @auth
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                                 </li>
+                                  @else
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{route('login')}}">Login</a>
+                                 </li>
+                                 @endauth
+                                <li class="nav-item">
+                                    <a class="main_btn" href="{{route('register')}}">Register now</a>
                                 </li>
                             </ul>
                         </div>
