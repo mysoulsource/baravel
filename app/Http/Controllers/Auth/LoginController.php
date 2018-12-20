@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Blood;
 use App\Http\Controllers\Controller;
+use App\userdetail;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Socialite;
 use App\User;
 use Illuminate\Http\Request;
+use Image;
 
 class LoginController extends Controller
 {
@@ -49,10 +52,16 @@ class LoginController extends Controller
     public function handleProviderCallback($provider)
     {
         $user = Socialite::driver($provider)->user();
+
         $authUser = $this->findOrCreateUser($user, $provider);
         
         Auth::login($authUser, true);
         return $this->checkUserData($authUser);
+    }
+    public function saveAvatar($path){
+        $filename = date('mdYHis') . uniqid() . '.jpg';
+        Image::make($path)->save(public_path('img/profile/'.$filename));
+        return $filename;
     }
 
     public function findOrCreateUser($user, $provider)
@@ -61,44 +70,37 @@ class LoginController extends Controller
 
         if ($authUser) {
             return $authUser;
+        }else{
+
+            $path = $user->avatar;
+            $image = $this->saveAvatar($path);
+            $userId = User::updateOrCreate([
+                'name'     => $user->name,
+                'email'    => $user->email,
+                'provider' => $provider,
+                'provider_id' => $user->id,
+                'type'=>'Facebook',
+                'img'=>$image
+            ]);
+            userdetail::create([
+               'user_id'=> $userId->id,
+               'count'=> 0
+            ]);
+            return $userId;
         }
-        return User::updateOrCreate([
-            'name'     => $user->name,
-            'email'    => $user->email,
-            'provider' => $provider,
-            'provider_id' => $user->id,
-            'type'=>'Facebook'
-        ]);     
+
         
        
     }
     public function checkUserData($user){
         
         if($user->blood == null){
-            return redirect()->route('user.Data');
+            $bloodgroups = Blood::all();
+            return redirect()->route('user.Data')->with(compact('bloodgroups'));
         }else{
             return "Hello";
         }
     }
 
-    public function fillUserData(Request $request){
-        dd($request);
-        $user = Auth()->user();
-        $this->validate($request,[
-            'country'=>['required', 'string', 'max:255'],
-            'zone'=>['required', 'string', 'max:255'],
-            'district'=>['required', 'string', 'max:255'],
-            'area'=>['required', 'string', 'max:255'],
-            'age'=>['required', 'integer', 'max:255'],
-            'blood'=>['required', 'string', 'max:255'],
-        ]);
-        $user->update([
-            'country' => $request->input['country'],
-            'zone' => $request->input['zone'],
-            'district' => $request->input['district'],
-            'area' => $request->input['area'],
-            'blood' => $request->input['blood'],
-            'age' => $request->input['age']
-        ]);
-    }
+
 }

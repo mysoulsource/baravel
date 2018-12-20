@@ -37,7 +37,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a href="/dashboard" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="/userprofile" class="nav-link">Profile</a>
       </li>
     </ul>
 
@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <img src="{{asset('img/profile/'. Auth()->user()->img)}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-        <a href="#" class="d-block">{{Auth()->user()->name}}</a>
+        <a href="/userprofile" class="d-block">{{Auth()->user()->name}}</a>
         </div>
       </div>
 

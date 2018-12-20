@@ -22,9 +22,10 @@
                                 <div class="form-group">
                                         <select class="form-control  {{ $errors->has('blood') ? ' is-invalid' : '' }}" name="blood">
                                             <option class="hidden"  selected disabled>Please select your Blood Type</option>
-                                            <option>A+</option>
-                                            <option>A-</option>
-                                            <option>B+</option>
+                                            @forelse($bloodgroups as $bloodgroup)
+                                            <option value="{{$bloodgroup->id}}">{{$bloodgroup->name}}</option>
+                                            @empty
+                                            @endforelse
                                         </select>
                                         @if ($errors->has('blood'))
                                         <span class="invalid-feedback" role="alert">
@@ -74,9 +75,6 @@
                                         </span>
                                         @endif
                                 </div>
-
-                             
-
                                 <input type="submit" class="btnRegister"  value="Register"/>
                             </div>
                         </div>

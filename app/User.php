@@ -32,4 +32,7 @@ class User extends Authenticatable
     public function bloodgroup(){
         return $this->belongsTo('App\Blood','blood');
     }
+    public function userdetail(){
+        return $this->hasOne('App\userdetail');
+    }
 }

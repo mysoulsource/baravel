@@ -49,13 +49,17 @@ class UserController extends Controller
         return $users;
     }
 
-    public function profile(Request $request)
+    public function profile()
     {
-        return auth('api')->user();
+        $user = User::with('bloodgroup:id,name')
+                ->with('userdetail')
+                ->where('id','=',auth('api')->user()->id)
+                ->first();
+        return $user;
+
     }
 
     public function updateProfile(Request $request){
-
         ///for api authenticated users
         $user = auth('api')->user();
         //if user didnot uploaded a new image
@@ -81,7 +85,7 @@ class UserController extends Controller
             'email' =>'required|string|max:191|unique:users,email,'.$user->id,
             'password' =>'sometimes|string|max:191|min:6',
         ]);
-        dd($request);
+
         //if the password is not empty
         if(!empty($request->password)){
             //change it to hashed password

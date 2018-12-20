@@ -18,7 +18,7 @@
                     <div class="widget-user-header text-white"
                          style="background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%),url('./img/userbg.jpg'); background-size:cover; background-position:center center;height:250px;">
                         <h3 class="widget-user-username">{{ form.name }}</h3>
-                        <h5 class="widget-user-desc">Web Designer</h5>
+                        <h5 class="widget-user-desc">{{form.email}}</h5>
                     </div>
                     <div class="widget-user-image">
                         <img class="img-circle" v-if="changePhoto" :src="getUserPhoto()" alt="User Avatar">
@@ -27,24 +27,24 @@
                         <div class="row">
                             <div class="col-sm-4 border-right">
                                 <div class="description-block">
-                                    <h5 class="description-header">3,200</h5>
-                                    <span class="description-text">SALES</span>
+                                    <h5 class="description-header">{{form.userdetail.count}}</h5>
+                                    <span class="description-text">Donation Count</span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-4 border-right">
                                 <div class="description-block">
-                                    <h5 class="description-header">13,000</h5>
-                                    <span class="description-text">FOLLOWERS</span>
+                                    <h5 class="description-header">{{form.bloodgroup.name}}</h5>
+                                    <span class="description-text">Blood Group</span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-4">
                                 <div class="description-block">
-                                    <h5 class="description-header">35</h5>
-                                    <span class="description-text">PRODUCTS</span>
+                                    <h5 class="description-header">{{form.status | stringConv}}</h5>
+                                    <span class="description-text">Status</span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
@@ -221,7 +221,7 @@
                                                     <select v-model="form.info_status" type="text" name="info_status"
                                                             class="form-control" :class="{ 'is-invalid': form.errors.has('info_status') }">
                                                         <option value="1">Share It</option>
-                                                        <option value="2">Hide It</option>
+                                                        <option value="0">Hide It</option>
 
                                                     </select>
                                                     <has-error :form="form" field="info_status"></has-error>
@@ -275,9 +275,12 @@
                     status : '',
                     info_status : '',
                     email:'',
-                    password:''
+                    password:'',
+                    bloodgroup:'',
+                    userdetail:''
 
                 }),
+
                 codeform: new Form({
                     code:'',
                 })

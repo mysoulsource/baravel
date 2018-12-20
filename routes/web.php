@@ -46,9 +46,10 @@ Route::get('/event-detail/{id}', 'IndexController@singleEvent')->name('event.sin
 
 
 Route::resource('/comments','CommentController');
+Route::get('userData','HomeController@userData')->name('user.Data');
+Route::post('userData/fill','HomeController@fillUserData')->name('fill.data');
 
-
-Route::get('/dashboard','HomeController@index');	
+Route::get('/dashboard','HomeController@index')->name('dashboard');
 Route::get('/users','HomeController@index');
 Route::get('/adminevents','HomeController@index');
 Route::get('/adminaddevent','HomeController@index');
@@ -60,16 +61,13 @@ Route::get('/userdemands','HomeController@index');
 Route::get('/adminbloods','HomeController@index');
 Route::get('/userrequests','HomeController@index');
 Route::get('/userdonate','HomeController@index');
-Route::get('/userprofile','HomeController@index');
+Route::get('/userprofile','HomeController@index')->name('user.profile');
 Route::get('/adminbanner','HomeController@index');
 Route::get('/adminblog','HomeController@index');
 Route::get('/admincategory','HomeController@index');
 Route::get('/adminaddpost','HomeController@index');
 
-Route::get('userData',function(){
-	return view('auth.UserData');
-})->name('user.Data');
-Route::post('userData/fill','Auth\LoginController@fillUserData')->name('fill.data');
+
 // Route::get('{path}',"HomeController@index")->where( 'path', '([A-z\d-\/_.]+)?' );
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
