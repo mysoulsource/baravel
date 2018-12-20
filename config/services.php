@@ -43,6 +43,11 @@ return [
     'app_id'    => getenv('FACEBOOK_APP_ID'),
     'app_secret' => getenv('FACEBOOK_APP_SECRET'),
     'access_token'    => getenv('FACEBOOK_ACCESS_TOKEN'),
-    ]
+    ],
+     'facebook' => [
+        'client_id'     => env('FACEBOOK_APP_ID'),
+        'client_secret' => env('FACEBOOK_APP_SECRET'),
+        'redirect'      => env('FACEBOOK_URL'),
+    ],
 
 ];

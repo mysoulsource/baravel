@@ -25,7 +25,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'area'=>'Koteshwor',
         'phone'=>'9843581383',
         'age'=>'25',
-        'blood'=>'B+',
+        'blood'=>'1',
         'status'=>'1',
         'info_status'=>'1',
         'img'=>'profile.png',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Demand;
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $user = Auth()->user();
+        if($user->blood == null){
+            return redirect()->route('user.Data');
+        }else{
+           return view('dashboard');
+        }
+        
     }
 
 

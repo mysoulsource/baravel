@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
   <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
   <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c17de261c98570011922d1d&product=social-ab' async='async'></script>
+  @yield('links')
 </head>
 
 <body>
@@ -46,7 +47,7 @@
 <!-- <script src="vendors/counter-up/jquery.counterup.js"></script> -->
 <script src="{{asset('js/mail-script.js')}}"></script>
 <script src="{{asset('js/custom.js')}}"></script>
-
+@yield('scripts')
 </body>
 
 </html>

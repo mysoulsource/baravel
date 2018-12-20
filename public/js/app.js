@@ -99231,14 +99231,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getData: function getData() {
             var _this = this;
 
-            axios.get("api/getBloodGroup").then(function (_ref) {
+            axios.get("api/dashboard").then(function (_ref) {
                 var data = _ref.data;
                 return _this.data = data;
             });
         }
     },
     mounted: function mounted() {
-        // this.getData();
+        this.getData();
     }
 });
 

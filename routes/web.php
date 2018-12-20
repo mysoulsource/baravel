@@ -48,7 +48,7 @@ Route::get('/event-detail/{id}', 'IndexController@singleEvent')->name('event.sin
 Route::resource('/comments','CommentController');
 
 
-Route::get('/dashboard','HomeController@index');
+Route::get('/dashboard','HomeController@index');	
 Route::get('/users','HomeController@index');
 Route::get('/adminevents','HomeController@index');
 Route::get('/adminaddevent','HomeController@index');
@@ -65,5 +65,12 @@ Route::get('/adminbanner','HomeController@index');
 Route::get('/adminblog','HomeController@index');
 Route::get('/admincategory','HomeController@index');
 Route::get('/adminaddpost','HomeController@index');
+
+Route::get('userData',function(){
+	return view('auth.UserData');
+})->name('user.Data');
+Route::post('userData/fill','Auth\LoginController@fillUserData')->name('fill.data');
 // Route::get('{path}',"HomeController@index")->where( 'path', '([A-z\d-\/_.]+)?' );
+Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 

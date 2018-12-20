@@ -83,15 +83,16 @@
         },
         methods: {
             getData() {
-                axios.get("api/getBloodGroup")
+                axios.get("api/dashboard")
                     .then(({data}) => (this.data = data));
 
-            }
+            },
+            
 
 
         },
         mounted() {
-            // this.getData();
+            this.getData();
         }
     }
 </script>

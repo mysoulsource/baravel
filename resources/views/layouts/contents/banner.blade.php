@@ -1,4 +1,5 @@
 <!--================ Home Banner Area =================-->
+@if(!empty($banner))
 <style>
     .home_banner_area{
         background: url('{{asset('img/banners/'.$banner->img)}}');
@@ -14,6 +15,7 @@
     max-width: 470px;
     }
 </style>
+@endif
 <section class="home_banner_area">
     <div class="overlay"></div>
     <div class="banner_inner d-flex align-items-center">
