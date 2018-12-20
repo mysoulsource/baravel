@@ -87,8 +87,8 @@ class IndexController extends Controller
         views($post)->record();
         $count = views($post)->count();
         $popular_posts = Post::select('id','image','title','created_at')->orderByViews('asc', Period::pastDays(3))->paginate(4);
-        $comments = Comment::where('post_id','=',$id)->with('user:id,name,img')->get();
-        return view('singleblog')->with(compact('post','categories','comments','count','popular_posts'));
+//        $comments = Comment::where('post_id','=',$id)->with('user:id,name,img')->get();
+        return view('singleblog')->with(compact('post','categories','count','popular_posts'));
 
 
     }
