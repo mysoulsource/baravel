@@ -11,6 +11,7 @@ use Socialite;
 use App\User;
 use Illuminate\Http\Request;
 use Image;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -80,7 +81,8 @@ class LoginController extends Controller
                 'provider' => $provider,
                 'provider_id' => $user->id,
                 'type'=>'Facebook',
-                'img'=>$image
+                'img'=>$image,
+                'email_verified_at'=> Carbon::now()->toDateTimeString()
             ]);
             userdetail::create([
                'user_id'=> $userId->id,
@@ -96,9 +98,9 @@ class LoginController extends Controller
         
         if($user->blood == null){
             $bloodgroups = Blood::all();
-            return redirect()->route('user.Data')->with(compact('bloodgroups'));
+            return redirect()->route('user.Data')->with(compact('bloodgroups'))->with('verified',true);
         }else{
-            return "Hello";
+            return redirect($this->redirectTo)->with('verified', true);
         }
     }
 

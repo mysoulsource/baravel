@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<style>
+    .email-verify{
+        margin-top: 150px;
+        margin-bottom: 150px;
+    }
+</style>
+<div class="container email-verify">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

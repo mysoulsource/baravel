@@ -36,7 +36,7 @@ Route::get('/gallery', 'IndexController@gallery');
 Route::get('/blogs', 'IndexController@blogs')->name('blogs');
 Route::get('/blog-single/{id}', 'IndexController@singleBlog')->name('blog.single');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/demands', 'IndexController@demands')->name('demands');
@@ -48,6 +48,9 @@ Route::get('/event-detail/{id}', 'IndexController@singleEvent')->name('event.sin
 Route::resource('/comments','CommentController');
 Route::get('userData','HomeController@userData')->name('user.Data');
 Route::post('userData/fill','HomeController@fillUserData')->name('fill.data');
+
+Route::middleware(['verified'])->group(function () {
+
 
 Route::get('/dashboard','HomeController@index')->name('dashboard');
 Route::get('/users','HomeController@index');
@@ -67,7 +70,7 @@ Route::get('/adminblog','HomeController@index');
 Route::get('/admincategory','HomeController@index');
 Route::get('/adminaddpost','HomeController@index');
 
-
+});
 // Route::get('{path}',"HomeController@index")->where( 'path', '([A-z\d-\/_.]+)?' );
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');

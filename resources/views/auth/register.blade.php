@@ -54,9 +54,9 @@
                                 <div class="form-group">
                                         <select class="form-control  {{ $errors->has('blood') ? ' is-invalid' : '' }}" name="blood">
                                             <option class="hidden"  selected disabled>Please select your Blood Type</option>
-                                            <option>A+</option>
-                                            <option>A-</option>
-                                            <option>B+</option>
+                                            <option value="1">A+</option>
+                                            <option value="2">A-</option>
+                                            <option value="3">B+</option>
                                         </select>
                                         @if ($errors->has('blood'))
                                         <span class="invalid-feedback" role="alert">
