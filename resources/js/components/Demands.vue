@@ -1,45 +1,48 @@
 <template>
+        <div class="container-fluid">
+            <div class="row">
 
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Demands</h3>
-                    <div class="card-tools">
-                        <button class="btn btn-primary" @click="openaddModal">Add New</button>
-                  </div>
+                <div class="header pull-left">
+                    <h4 class="title">Demands</h4>
+                    <p class="category">List of demands you made</p>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover table-striped">
+                <div class="header pull-right">
+                    <button class="btn btn-primary" @click="openaddModal">Add New</button>
+                </div>
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Blood</th>
+                            <th>Date</th>
+                            <th>Urgency</th>
+                            <th>Accepted By</th>
+                            <th>Code</th>
+                            <th>Status</th>
+                            <th>Options</th>
+                        </thead>
                         <tbody>
-                            <tr>
-                                <td>Id</td>
-                                <td>Title</td>
-                                <td>Blood</td>
-                                <td>Date</td>
-                                <td>Urgency</td>
-                                <td>Accepted By</td>
-                                <td>Code</td>
-                                <td>Status</td>
-                                <td>Options</td>
-                            </tr>
                             <tr v-for="demand in demands.data" :key="demand.id">
                                 <td>{{demand.id}}</td>
                                 <td>{{demand.title}}</td>
                                 <td>{{demand.blood_name.name}}</td>
                                 <td>{{demand.date}}</td>
                                 <td>{{demand.urgency | urgencyStatus}}</td>
-                                <td>{{demand.user.name}}</td>
+                                <td>{{demand.accepted_by}}</td>
                                 <td>{{demand.code}}</td>
                                 <td><p class="demandstatus">{{demand.status | demandStatus}}</p></td>
                                 <td>
-                                    <a href="" @click.prevent="openeditModal(demand)"><i class="fas fa-pen"></i></a>
-                                    <a href="" @click.prevent="deleteDemand(demand.id)"><i class="fas fa-trash text-red"></i></a>
+                                    <a href="" data-toggle="modal"  data-target="#DemandModal" @click.prevent="openeditModal(demand)"><i class="fas fa-pen"></i></a>
+                                    <a href="" @click.prevent="deleteDemand(demand.id)"><i class="fa fa-trash text-red"></i></a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer">
+                <div class="footer">
                     <pagination :data="demands" @pagination-change-page="getDemands"></pagination>
                 </div>
 
@@ -62,7 +65,7 @@
                                         <div class="form-group">
                                                 <label>Title</label>
                                                 <input v-model="form.title" type="text" name="title"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('title') }">
                                                 <has-error :form="form" field="title"></has-error>
                                             </div>
                                         </div>
@@ -71,7 +74,7 @@
                                             <div class="form-group">
                                                 <label>Blood</label>
                                                     <select name="blood"
-                                                    class="form-control" v-model="form.blood" :class="{ 'is-invalid': form.errors.has('blood') }">
+                                                    class="form-control border-input" v-model="form.blood" :class="{ 'is-invalid': form.errors.has('blood') }">
                                                     <option value="" disabled>Select Blood Type</option>
                                                     <option v-for="blood in bloods.data" :key="blood.id" :value="blood.id">{{blood.name}}</option>
                                                     </select>
@@ -84,7 +87,7 @@
                                         <div class="form-group">
                                                 <label>Date</label>
                                                 <input v-model="form.date" type="date" name="date"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('date') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('date') }">
                                                 <has-error :form="form" field="date"></has-error>
                                             </div>
                                         </div>
@@ -93,7 +96,7 @@
                                             <div class="form-group">
                                                 <label>Urgency</label>
                                                     <select name="urgency"
-                                                    class="form-control" v-model="form.urgency" :class="{ 'is-invalid': form.errors.has('urgency') }">
+                                                    class="form-control border-input" v-model="form.urgency" :class="{ 'is-invalid': form.errors.has('urgency') }">
                                                     <option value="" disabled>Select urgency</option>
                                                     <option value="1">High</option>
                                                     <option value="2">Medium</option>
@@ -109,7 +112,7 @@
                                          <div class="form-group">
                                                 <label>Location</label>
                                                 <input v-model="form.location" type="text" name="location"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('location') }">
+                                                    class="form-control  border-input" :class="{ 'is-invalid': form.errors.has('location') }">
                                                 <has-error :form="form" field="location"></has-error>
                                             </div>
                                 </div>
@@ -119,7 +122,7 @@
                                     <div class="form-group">
                                                 <label>Detail</label>
                                                     <textarea v-model="form.detail" type="text" name="detail"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('detail') }"></textarea>
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('detail') }"></textarea>
                                                 <has-error :form="form" field="detail"></has-error>
                                     </div>
                                     </div>
@@ -136,6 +139,9 @@
                 </div>
 
             <!-- end -->
+        </div>
+
+            </div>
         </div>
 </template>
 <script>
@@ -264,5 +270,11 @@ export default {
             background: red;
             border-radius: 2px;
             text-align: center;
+    }
+    .card .header button{
+        margin:5px 0;
+    }
+    .card .footer{
+        padding: 0 20px;
     }
 </style>

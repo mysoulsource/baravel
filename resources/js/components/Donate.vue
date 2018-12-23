@@ -1,35 +1,39 @@
 
 <template>
+    <div class="container-fluid">
+        <div class="row">
+
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Donate</h3>
-                <div class="card-tools">
-                    <!--<button class="btn btn-primary"></button>-->
-                </div>
+            <div class="header">
+                <h4 class="title">Donate</h4>
+                <p class="category">List of request made to you</p>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
+            <div class="content table-responsive table-full-width">
+                <table class="table table-striped">
+
+                   <thead>
+                           <!--<th>Id</th>-->
+                           <th>Requested By</th>
+                           <th>Requested date</th>
+                           <th>Donation Date</th>
+                           <th>Urgency</th>
+                           <th>Message</th>
+                           <th>Options</th>
+                   </thead>
+
+
                     <tbody>
-                    <tr>
-                        <td>Id</td>
-                        <td>Requested By</td>
-                        <td>Requested date</td>
-                        <td>Donation Date</td>
-                        <td>Urgency</td>
-                        <td>Message</td>
-                        <td>Options</td>
-                    </tr>
                     <tr v-for="donate in donates.data" :key="donate.id">
-                        <td>{{donate.id}}</td>
+                        <!--<td>{{donate.id}}</td>-->
                         <td>{{donate.requested_by_name.name}}</td>
                         <td>{{donate.created_at}}</td>
                         <td>{{donate.date}}</td>
                         <td>{{donate.urgency}}</td>
                         <td>{{donate.message}}</td>
                         <td>
-                            <a href="#" @click="acceptRequest(donate.id)"><i class="fas fa-check-square text-green"></i></a>
-                            <a href="#" @click="declineRequest(donate.id)"><i class="fas fa-times-circle text-red"></i> </a>
+                            <a href="#" @click="acceptRequest(donate.id)"><i class="fa fa-check-square text-green"></i></a>
+                            <a href="#" @click="declineRequest(donate.id)"><i class="fa fa-times-circle text-red"></i> </a>
                         </td>
 
                     </tr>
@@ -39,6 +43,9 @@
             <div class="card-footer">
                 <pagination :data="donates" @pagination-change-page="getDonates"></pagination>
             </div>
+
+        </div>
+    </div>
 
         </div>
     </div>

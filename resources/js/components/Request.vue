@@ -3,12 +3,15 @@
 
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Your Requests</h3>
-                    <div class="card-tools">
-                        <button class="btn btn-primary" @click="deleteall()">Add New</button>
-                  </div>
+                <div class="header pull-left">
+                    <h4 class="title">Request</h4>
+                    <p class="category">List of request you made</p>
+                    <!--<button class="btn btn-danger" @click="deleteall()">Delete All</button>-->
                 </div>
+                <div class="header pull-right">
+                    <button class="btn btn-danger" @click="deleteall()">Delete All</button>
+                </div>
+
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover">
                         <tbody>
@@ -25,17 +28,17 @@
                                 <td>{{request.id}}</td>
                                 <td>{{request.requested_to_name.name}}</td>
                                 <td>{{request.date}}</td>
-                                <td>{{request.urgency}}</td>
+                                <td>{{request.urgency | urgencyStatus}}</td>
                                 <td>{{request.message}}</td>
                                 <td>{{request.code}}</td>
                                 <td>
-                                     <a href="#" @click.prevent="deleteRequest(request.id)"><i class="fas fa-trash text-red"></i></a>
+                                     <a href="#" @click.prevent="deleteRequest(request.id)"><i class="fa fa-trash text-red"></i></a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer">
+                <div class="footer">
                     <pagination :data="requests" @pagination-change-page="getRequests"></pagination>
                 </div>
 
@@ -132,3 +135,11 @@ export default {
 }
 </script>
 
+<style>
+    .card .header button{
+        margin:5px 0;
+    }
+    .card .footer{
+        padding: 0 20px;
+    }
+</style>

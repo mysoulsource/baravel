@@ -3,81 +3,77 @@
 </style>
 
 <template>
-    <div class="col-12">
-        <div class="search">
-            <form @submit.prevent="Advsearch" @keydown="form.onKeydown($event)">
-                <div class="row mb-3">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Zone" v-model="searchuser.zone">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="search">
+                    <form @submit.prevent="Advsearch" @keydown="form.onKeydown($event)">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control border-input" placeholder="Zone" v-model="searchuser.zone">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control border-input" placeholder="District"  v-model="searchuser.district">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control border-input" placeholder="Area"  v-model="searchuser.area">
+                            </div>
+                            <div class="col-md-2">
+                                <!-- <input type="text" class="form-control" placeholder="Blood Group"  v-model="searchuser.bloodgroup"> -->
+                                <select name=""  v-model="searchuser.bloodgroup" class="form-control border-input" placeholder="Blood Group">
+                                    <option :value="bloodgroup.id" v-for="bloodgroup in bloodgroups" :key="bloodgroup.id">{{bloodgroup.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="submit" class="btn btn-info" value="Advance Search">
+                            </div>
+                        </div>
+                    </form>
+
+                 </div>
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Users Table</h4>
+                        <p class="category">List of available Users</p>
                     </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="District"  v-model="searchuser.district">
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Area"  v-model="searchuser.area">
-                    </div>
-                    <div class="col">
-                        <!-- <input type="text" class="form-control" placeholder="Blood Group"  v-model="searchuser.bloodgroup"> -->
-                        <select name="" id="" v-model="searchuser.bloodgroup" class="form-control" placeholder="Blood Group">
-                            <option :value="bloodgroup.id" v-for="bloodgroup in bloodgroups" :key="bloodgroup.id">{{bloodgroup.name}}</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-info" value="Advance Search">
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-striped">
+                            <thead>
+                                <th v-if="$gate.isAdmin()">ID</th>
+                                <th>Name</th>
+                                <th v-if="$gate.isAdmin()">Email</th>
+                                <th  v-if="$gate.isAdmin()">Type</th>
+                                <th>Blood Type</th>
+                                <th v-if="$gate.isUser()">Zone</th>
+                                <th v-if="$gate.isUser()">District</th>
+                                <th v-if="$gate.isUser()">Area</th>
+                                <th v-if="$gate.isAdmin()">Created</th>
+                                <th>Options</th>
+                            </thead>
+                            <tbody>
+                            <tr v-for="user in users.data" :key="user.id">
+                                <td v-if="$gate.isAdmin()">{{user.id}}</td>
+                                <td>{{user.name | capitalize}}</td>
+                                <td v-if="$gate.isAdmin()">{{user.email}}</td>
+                                <td  v-if="$gate.isAdmin()">{{user.type | capitalize}}</td>
+                                <td>{{user.bloodgroup.name}}</td>
+                                <td v-if="$gate.isUser()">{{user.zone | capitalize}}</td>
+                                <td v-if="$gate.isUser()">{{user.district | capitalize}}</td>
+                                <td v-if="$gate.isUser()">{{user.area | capitalize}}</td>
+                                <td v-if="$gate.isAdmin()">{{user.created_at | dateChange}}</td>
+                                <td>
+                                    <a href="#" data-toggle="modal"  data-target="#requestModal" @click.prevent="requestblood(user.id)"><i class="fa fa-handshake-o"></i></a>
+                                    <a href="#" data-toggle="modal"  data-target="#userModal" @click.prevent="editModal(user)" v-if="$gate.isAdmin()"><i class="fa fa-pencil-square-o"></i></a>
+                                    <a href="#" @click.prevent="deleteUser(user.id)" v-if="$gate.isAdmin()"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="footer">
+                            <pagination :data="users" @pagination-change-page="getResults"></pagination>
+                        </div>
                     </div>
                 </div>
-            </form>
-
-        </div>
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Users Table</h3>
-
-                <div class="card-tools">
-                  <button class="btn btn-primary" @click="addModal">Add new</button>
-                </div>
-
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
-                  <tbody>
-                  <tr>
-                    <th v-if="$gate.isAdmin()">ID</th>
-                    <th>Name</th>
-                    <th v-if="$gate.isAdmin()">Email</th>
-                    <th  v-if="$gate.isAdmin()">Type</th>
-                    <th>Blood Type</th>
-                    <th v-if="$gate.isUser()">Zone</th>
-                    <th v-if="$gate.isUser()">District</th>
-                    <th v-if="$gate.isUser()">Area</th>
-                    <th v-if="$gate.isAdmin()">Created</th>
-                    <th>Options</th>
-                  </tr>
-                  <tr v-for="user in users.data" :key="user.id">
-                    <td v-if="$gate.isAdmin()">{{user.id}}</td>
-                    <td>{{user.name | capitalize}}</td>
-                    <td v-if="$gate.isAdmin()">{{user.email}}</td>
-                    <td  v-if="$gate.isAdmin()">{{user.type | capitalize}}</td>
-                    <td>{{user.bloodgroup.name}}</td>
-                    <td v-if="$gate.isUser()">{{user.zone | capitalize}}</td>
-                    <td v-if="$gate.isUser()">{{user.district | capitalize}}</td>
-                    <td v-if="$gate.isUser()">{{user.area | capitalize}}</td>
-                    <td v-if="$gate.isAdmin()">{{user.created_at | dateChange}}</td>
-                    <td>
-                        <a href="#" @click.prevent="requestblood(user.id)"><i class="fas fa-hands-helping"></i></a>
-                        <a href="#" @click.prevent="editModal(user)" v-if="$gate.isAdmin()"><i class="fas fa-edit"></i></a>
-                        <a href="#" @click.prevent="deleteUser(user.id)" v-if="$gate.isAdmin()"><i class="fas fa-trash text-red"></i></a>
-                    </td>
-                  </tr>
-
-                </tbody></table>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                  <pagination :data="users" @pagination-change-page="getResults"></pagination>
-              </div>
-            </div>
             <!-- /.card -->
 
             <!-- Modal -->
@@ -188,6 +184,7 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" v-show="!editmode" class="btn btn-primary">Save changes</button>
                             <button type="submit" v-show="editmode" class="btn btn-primary">Update changes</button>
+
                         </div>
                     </form>
                     </div>
@@ -196,7 +193,7 @@
 
 
                  <div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"  id="">Request form</h5>
@@ -252,8 +249,11 @@
                     </div>
                 </div>
                 </div>
+
             <!-- End of Modal -->
           </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -344,10 +344,11 @@
            addModal(){
                this.editmode = false,
                $('#userModal').modal('show');
+
            },
             editModal(user){
                this.editmode = true,
-               $('#userModal').modal('show');
+
                this.form.fill(user);
            },
            addUser(){
@@ -370,7 +371,8 @@
                })
            },
            requestblood(id){
-               $('#requestModal').modal('show');
+
+               $('#requestModal .fade').css('opacity','1');
                this.request.id = id;
 
            },
@@ -378,7 +380,7 @@
                this.$Progress.start();
                 this.request.post('api/request').then(()=>{
                      this.$Progress.finish();
-                      $('#requestModal').modal('hide');
+                    $('#requestModal').modal('hide');
                        toast({
                             type: 'success',
                             title: 'Requested Successfully'
@@ -414,3 +416,14 @@
        }
     }
 </script>
+<style scoped>
+    .search{
+        margin-bottom:10px;
+    }
+    .search input::placeholder {
+        color: #54504b;
+    }
+    .card .footer{
+        padding: 0 20px;
+    }
+</style>

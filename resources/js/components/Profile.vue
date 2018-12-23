@@ -10,248 +10,189 @@
 </style>
 
 <template>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <div class="card card-widget widget-user">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="widget-user-header text-white"
-                         style="background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%),url('./img/userbg.jpg'); background-size:cover; background-position:center center;height:250px;">
-                        <h3 class="widget-user-username">{{ form.name }}</h3>
-                        <h5 class="widget-user-desc">{{form.email}}</h5>
+            <div class="col-lg-4 col-md-5">
+                <div class="card card-user">
+                    <div class="image">
+                        <img src="img/background.jpg"  alt="..."/>
                     </div>
-                    <div class="widget-user-image">
-                        <img class="img-circle" v-if="changePhoto" :src="getUserPhoto()" alt="User Avatar">
+                    <div class="content">
+                        <div class="author">
+                            <img class="avatar border-white" v-if="changePhoto" :src="getUserPhoto()" alt="..."/>
+                            <h4 class="title">{{ form.name }}<br />
+                                <a href="#"><small>{{form.email}}</small></a>
+                            </h4>
+                        </div>
+                        <p class="description text-center">
+                            "I like the way you work it <br>
+                            No diggity <br>
+                            I wanna bag it up"
+                        </p>
                     </div>
-                    <div class="card-footer">
+                    <hr>
+                    <div class="text-center">
                         <div class="row">
-                            <div class="col-sm-4 border-right">
-                                <div class="description-block">
-                                    <h5 class="description-header">{{form.userdetail.count}}</h5>
-                                    <span class="description-text">Donation Count</span>
-                                </div>
-                                <!-- /.description-block -->
+                            <div class="col-md-3 col-md-offset-1">
+                                <h5>{{form.userdetail.count}}<br /><small>Donation Count</small></h5>
                             </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4 border-right">
-                                <div class="description-block">
-                                    <h5 class="description-header">{{form.bloodgroup.name}}</h5>
-                                    <span class="description-text">Blood Group</span>
-                                </div>
-                                <!-- /.description-block -->
+                            <div class="col-md-4">
+                                <h5>{{form.bloodgroup.name}}<br /><small>Blood Group</small></h5>
                             </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4">
-                                <div class="description-block">
-                                    <h5 class="description-header">{{form.status | stringConv}}</h5>
-                                    <span class="description-text">Status</span>
-                                </div>
-                                <!-- /.description-block -->
+                            <div class="col-md-3">
+                                <h5>{{form.status | stringConv}}<br /><small>Status</small></h5>
                             </div>
-                            <!-- /.col -->
                         </div>
-                        <!-- /.row -->
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Insert Code</h4>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <form @submit.prevent="submitCode" @keydown="form.onKeydown($event)">
+                            <div class="col-md-12">
+                                <div class="form-group">
+
+                                    <input type="text" class="form-control border-input" placeholder="Code">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info btn-fill btn-wd">Submit Code</button>
+                            </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row mt-5">
-            <div class="col-md-12">
+            <div class="col-lg-8 col-md-7">
                 <div class="card">
-                    <div class="card-header p-2">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link " href="#activity" data-toggle="tab">Activity</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#code" data-toggle="tab">Code</a></li>
-                            <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>
-                        </ul>
-                    </div><!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <div class="tab-pane" id="activity">
-
-                                <!-- /.post -->
-                            </div>
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="code">
-                                 <form @submit.prevent="submitCode" @keydown="form.onKeydown($event)" class="form-horizontal">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputCode" class="col-sm-4 control-label">Name</label>
-
-                                                <div class="col-sm-10">
-                                                    <input  v-model="codeform.code" type="text" name="code" class="form-control" id="inputCode" placeholder="Enter code here" :class="{ 'is-invalid': codeform.errors.has('code') }">
-                                                    <has-error :form="codeform" field="name"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                            </div>
-                            <!-- /.tab-pane -->
-
-                            <div class=" active tab-pane" id="settings">
-                                <form @submit.prevent="updateInfo" @keydown="form.onKeydown($event)" class="form-horizontal">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputName" class="col-sm-4 control-label">Name</label>
-
-                                                <div class="col-sm-10">
-                                                    <input  v-model="form.name" type="text" name="name" class="form-control" id="inputName" placeholder="Name" :class="{ 'is-invalid': form.errors.has('name') }">
-                                                    <has-error :form="form" field="name"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputEmail" class="col-sm-4 control-label">Email</label>
-
-                                                <div class="col-sm-10">
-                                                    <input type="email"  v-model="form.email" disabled name="email" class="form-control" id="inputEmail" placeholder="Email" :class="{ 'is-invalid': form.errors.has('email') }">
-                                                    <has-error :form="form" field="email"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputCountry" class="col-sm-4 control-label">Country</label>
-
-                                                <div class="col-sm-10">
-                                                    <input type="text"  v-model="form.country"  name="country" class="form-control" id="inputCountry" placeholder="Country" :class="{ 'is-invalid': form.errors.has('country') }">
-                                                    <has-error :form="form" field="country"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputZone" class="col-sm-4 control-label">Zone</label>
-
-                                                <div class="col-sm-10">
-                                                    <input type="text"  v-model="form.zone"  name="zone" class="form-control" id="inputZone" placeholder="Zone" :class="{ 'is-invalid': form.errors.has('zone') }">
-                                                    <has-error :form="form" field="zone"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputDistrict" class="col-sm-4 control-label">District</label>
-
-                                                <div class="col-sm-10">
-                                                    <input type="text"  v-model="form.district"  name="district" class="form-control" id="inputDistrict" placeholder="district" :class="{ 'is-invalid': form.errors.has('district') }">
-                                                    <has-error :form="form" field="district"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputArea" class="col-sm-4 control-label">Area</label>
-
-                                                <div class="col-sm-10">
-                                                    <input type="text"  v-model="form.area"  name="area" class="form-control" id="inputArea" placeholder="Area" :class="{ 'is-invalid': form.errors.has('area') }">
-                                                    <has-error :form="form" field="area"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputPhone" class="col-sm-4 control-label">Phone</label>
-
-                                                <div class="col-sm-10">
-                                                    <input type="text"  v-model="form.phone"  name="phone" class="form-control" id="inputPhone" placeholder="Phone" :class="{ 'is-invalid': form.errors.has('phone') }">
-                                                    <has-error :form="form" field="phone"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputUrl" class="col-sm-4 control-label">Facebook Url</label>
-
-                                                <div class="col-sm-10">
-                                                    <input type="text"  v-model="form.f_url"  name="f_url" class="form-control" id="inputUrl" placeholder="Facebook Url" :class="{ 'is-invalid': form.errors.has('f_url') }">
-                                                    <has-error :form="form" field="f_url"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputPhoto" class="col-sm-4 control-label">Profile Photo</label>
-
-                                                <div class="col-sm-10">
-                                                    <input name="img" v-if="uploadReady" @change="updatePhoto" type="file" class="form-control" id="inputPhoto" :class="{ 'is-invalid': form.errors.has('img') }">
-                                                    <has-error :form="form" field="img"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Status</label>
-                                                    <select v-model="form.status" type="text" name="status"
-                                                            class="form-control" :class="{ 'is-invalid': form.errors.has('status') }">
-                                                        <option value="1">Active</option>
-                                                        <option value="2">Inactive</option>
-
-                                                    </select>
-                                                    <has-error :form="form" field="status"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Share Info</label>
-                                                    <select v-model="form.info_status" type="text" name="info_status"
-                                                            class="form-control" :class="{ 'is-invalid': form.errors.has('info_status') }">
-                                                        <option value="1">Share It</option>
-                                                        <option value="0">Hide It</option>
-
-                                                    </select>
-                                                    <has-error :form="form" field="info_status"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputPassword" class="col-sm-4 control-label">Password</label>
-
-                                                <div class="col-sm-10">
-                                                    <input name="password" type="password" v-model="form.password" class="form-control" id="inputPassword" placeholder="Password" :class="{ 'is-invalid': form.errors.has('password') }">
-                                                    <has-error :form="form" field="password"></has-error>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="header">
+                        <h4 class="title">Edit Profile</h4>
+                    </div>
+                    <div class="content">
+                        <form @submit.prevent="updateInfo" @keydown="form.onKeydown($event)">
+                            <div class="row">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
+                                        <label>Name</label>
+                                        <input  v-model="form.name" type="text" name="name" class="form-control border-input" id="inputName" placeholder="Name" :class="{ 'is-invalid': form.errors.has('name') }">
+                                        <has-error :form="form" field="name"></has-error>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email"  v-model="form.email" disabled name="email" class="form-control border-input" id="inputEmail" placeholder="Email" :class="{ 'is-invalid': form.errors.has('email') }">
+                                        <has-error :form="form" field="email"></has-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        <input type="text"  v-model="form.phone"  name="phone" class="form-control border-input" id="inputPhone" placeholder="Phone" :class="{ 'is-invalid': form.errors.has('phone') }">
+                                        <has-error :form="form" field="phone"></has-error>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- /.tab-pane -->
-                        </div>
-                        <!-- /.tab-content -->
-                    </div><!-- /.card-body -->
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Zone</label>
+                                        <input type="text"  v-model="form.zone"  name="zone" class="form-control border-input" id="inputZone" placeholder="Zone" :class="{ 'is-invalid': form.errors.has('zone') }">
+                                        <has-error :form="form" field="zone"></has-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>District</label>
+                                        <input type="text"  v-model="form.district"  name="district" class="form-control border-input" id="inputDistrict" placeholder="district" :class="{ 'is-invalid': form.errors.has('district') }">
+                                        <has-error :form="form" field="district"></has-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Area</label>
+                                        <input type="text"  v-model="form.area"  name="area" class="form-control border-input" id="inputArea" placeholder="Area" :class="{ 'is-invalid': form.errors.has('area') }">
+                                        <has-error :form="form" field="area"></has-error>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Country</label>
+                                        <input type="text"  v-model="form.country"  name="country" class="form-control border-input" id="inputCountry" placeholder="Country" :class="{ 'is-invalid': form.errors.has('country') }">
+                                        <has-error :form="form" field="country"></has-error>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Image</label>
+                                        <input name="img" v-if="uploadReady" @change="updatePhoto" type="file" class="form-control border-input" id="inputPhoto" :class="{ 'is-invalid': form.errors.has('img') }">
+                                        <has-error :form="form" field="img"></has-error>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input name="password" type="password" v-model="form.password" class="form-control border-input" id="inputPassword" placeholder="Password" :class="{ 'is-invalid': form.errors.has('password') }">
+                                        <has-error :form="form" field="password"></has-error>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select v-model="form.status" type="text" name="status"
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('status') }">
+                                            <option value="1">Active</option>
+                                            <option value="2">Inactive</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Share Info</label>
+                                        <select v-model="form.info_status" type="text" name="info_status"
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('info_status') }">
+                                            <option value="1">Share It</option>
+                                            <option value="0">Hide It</option>
+
+                                        </select>
+                                        <has-error :form="form" field="info_status"></has-error>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-4">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label>About Me</label>-->
+
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-info btn-fill btn-wd">Update Profile</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 </template>

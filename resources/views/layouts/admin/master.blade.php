@@ -1,338 +1,296 @@
-
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/apple-icon.png')}}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{asset('img/favicon.png')}}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="token"   id="token" value="{{ auth()->check() ? auth()->user()->id : 'null' }}">
-    <link rel="stylesheet" href="{{asset('/css/app.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/btn.css')}}">
-  <title>Baravel</title>
 
-  <!-- Font Awesome Icons -->
-  <style>
-    .nav-sidebar > .nav-item .nav-icon {
-      color: #3490dc;
-    }
-    .badge-success{
-      background-color: #3490dc;
-    }
-  </style>
+  <title>Paper Dashboard by Creative Tim</title>
+
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="{{asset('css/animate.min.css')}}" rel="stylesheet"/>
+
+    <!--  Paper Dashboard core CSS    -->
+    <link href="{{asset('css/paper-dashboard.css')}}" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+   
+
+
+    <!--  Fonts and icons     -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <link href="{{asset('css/themify-icons.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/demo.css')}}">
+    <style>
+        .modal-backdrop{
+         z-index:0;
+        }
+        .text-red{
+            color:red;
+        }
+        .content .card .header{
+            margin-bottom: 15px;
+        }
+        .content .card .footer{
+            padding: 0 20px;
+        }
+    </style>
 </head>
-<body class="hold-transition sidebar-mini">
+<body>
+
 <div class="wrapper" id="app">
-  <nav class="main-header navbar navbar-expand border-bottom navbar-dark bg-primary">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="/dashboard" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="/userprofile" class="nav-link">Profile</a>
-      </li>
-    </ul>
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
 
-    <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" v-model="search" @keyup="searchfun">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit" @click ="searchfun">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+    <!--
+    Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+    Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+  -->
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i class="fa fa-th-large"></i></a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="{{asset('/img/logo.png')}}" alt="Baravel Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">Baravel</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-        <img src="{{asset('img/profile/'. Auth()->user()->img)}}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-        <a href="/userprofile" class="d-block">{{Auth()->user()->name}}</a>
-        </div>
-      </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-           <li class="nav-item">
-            <a href="/users" class="nav-link text-red">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-               Users
-                <span class="right badge badge-success">{{$users}}</span>
-              </p>
-            </a>
-          </li>
-         
-          <li class="nav-item">
-            <a href="{{url('/users')}}" class="nav-link">
-              <i class="nav-icon fas fa-life-ring"></i>
-              <p>
-               Demands
-                <span class="right badge badge-success">{{$demands}}</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/userrequests" class="nav-link">
-              <i class="nav-icon fas fa-hands-helping"></i>
-              <p>
-                Requests
-                <span class="right badge badge-success">{{$requests}}</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/userdonate" class="nav-link">
-              <i class="nav-icon fas fa-hand-holding-heart"></i>
-              <p>
-                Donate
-                <span class="right badge badge-success">{{$donates}}</span>
-              </p>
-            </a>
-          </li>
-           @can('isAdmin')
-           <li class="nav-item">
-            <a href="/admindeveloper" class="nav-link">
-              <i class="nav-icon fas fa-stream"></i>
-              <p>
-               Developer
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/adminnotice" class="nav-link">
-              <i class="nav-icon fas fa-flag-checkered"></i>
-              <p>
-               Notice
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/adminbloods" class="nav-link">
-              <i class="nav-icon fas fa-list-alt"></i>
-              <p>
-               Bloods
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/admingallery" class="nav-link">
-              <i class="nav-icon fas fa-images"></i>
-              <p>
-               Gallery
-                <span class="right badge badge-success">{{$gallery}}</span>
-              </p>
-            </a>
-          </li>
-           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-calendar-check"></i>
-              <p>
-               Events
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/events/admin" class="nav-link active">
-                  <i class="fas fa-calendar-week nav-icon"></i>
-                  <p>All Events <span class="right badge badge-success">{{$events}}</span></p>
+      <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="http://www.creative-tim.com" class="simple-text">
+                    Creative Tim
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="/adminaddevent" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Add new</p>
-                </a>
-              </li>
+            </div>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href="/dashboard">
+                        <i class="ti-panel"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/userprofile">
+                        <i class="ti-user"></i>
+                        <p>User Profile</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/users">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Users List</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/userrequests">
+                        <i class="ti-bookmark"></i>
+                        <p>Requests</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/userdemands">
+                        <i class="ti-pin-alt"></i>
+                        <p>Demands</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/userdonate">
+                        <i class="ti-pulse"></i>
+                        <p>Donate</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="notifications.html">
+                        <i class="ti-bell"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+            </ul>
+      </div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Dashboard</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="ti-panel"></i>
+                <p>Stats</p>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="ti-bell"></i>
+                                    <p class="notification">5</p>
+                  <p>Notifications</p>
+                  <b class="caret"></b>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Notification 1</a></li>
+                                <li><a href="#">Notification 2</a></li>
+                                <li><a href="#">Notification 3</a></li>
+                                <li><a href="#">Notification 4</a></li>
+                                <li><a href="#">Another notification</a></li>
+                              </ul>
+                        </li>
+            <li>
+                            <a href="#">
+                <i class="ti-settings"></i>
+                <p>Settings</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <router-view></router-view>
+        </div>
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+
+                        <li>
+                            <a href="http://www.creative-tim.com">
+                                Creative Tim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://blog.creative-tim.com">
+                               Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.creative-tim.com/license">
+                                Licenses
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright pull-right">
+
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <div class="fixed-plugin">
+        <div class="dropdown show-dropdown">
+            <a href="#" data-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-cog fa-2x"> </i>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="header-title">Sidebar Background</li>
+                <li class="adjustments-line text-center">
+                    <a href="javascript:void(0)" class="switch-trigger background-color">
+                        <span class="badge filter badge-white active" data-color="white"></span>
+                        <span class="badge filter badge-black" data-color="black"></span>
+                    </a>
+                </li>
+
+                <li class="header-title">Sidebar Active Color</li>
+                <li class="adjustments-line text-center">
+                    <a href="javascript:void(0)" class="switch-trigger active-color">
+                        <span class="badge filter badge-primary" data-color="primary"></span>
+                        <span class="badge filter badge-info" data-color="info"></span>
+                        <span class="badge filter badge-success" data-color="success"></span>
+                        <span class="badge filter badge-warning" data-color="warning"></span>
+                        <span class="badge filter badge-danger active" data-color="danger"></span>
+                    </a>
+                </li>
+
+                <li class="button-container">
+                    <div class="">
+                        <a href="http://www.creative-tim.com/product/paper-dashboard" target="_blank" class="btn btn-info btn-block btn-fill">Download for Free</a>
+                    </div>
+                </li>
+
+                <li class="header-title">Want More Components?</li>
+                <li class="button-container">
+                    <div class="">
+                        <a href="http://www.creative-tim.com/product/paper-dashboard-pro?ref=pd-free-upgrade-live" target="_blank" class="btn btn-danger btn-block btn-fill">Get PRO Version!</a>
+                    </div>
+                </li>
+
+                <li class="header-title">Thank you for sharing!</li>
+
+                <li class="button-container">
+                    <button id="twitter" class="btn btn-social btn-twitter btn-round sharrre"><i class="fa fa-twitter"></i> </button>
+                    <button id="facebook" class="btn btn-social btn-facebook btn-round sharrre"><i class="fa fa-facebook-square"></i></button>
+                </li>
 
             </ul>
-          </li>
-           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-clipboard"></i>
-              <p>
-                Blogs
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/adminblog" class="nav-link active">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>All Blogs  <span class="right badge badge-success">{{$posts}}</span></p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admincategory" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>All category <span class="right badge badge-success">{{$category}}</span></p>
-                </a>
-              </li>
-
-            </ul>
-          </li>
-          @endcan
-          <li class="nav-item">
-            <a  class="nav-link" href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
-              <i class="nav-icon fas fa-power-off"></i>
-              <p>
-               Logout
-              </p>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-              </form>
-            </a>
-          </li>
-         
-         
-          {{-- <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-th"></i>
-              <p>
-                Simple Link
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li> --}}
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark"></h1>
-          </div><!-- /.col -->
-          {{-- <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#"></a></li>
-              <li class="breadcrumb-item active"></li>
-            </ol>
-          </div><!-- /.col --> --}}
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content">
-        <div class="container-fluid">
-           @yield('content')
         </div>
     </div>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar">
-    <!-- Control sidebar content goes here -->
-
-      <div class="card card-widget widget-user-2">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-warning">
-          <div class="widget-user-image">
-            <img class="img-circle elevation-2" src="{{asset('img/profile/'. Auth()->user()->img)}}" alt="User Avatar">
-          </div>
-          <!-- /.widget-user-image -->
-          <h6 class="widget-user-username">{{auth()->user()->name}}</h6>
-          <h6 class="widget-user-desc">{{auth()->user()->email}}</h6>
-        </div>
-        <div class="card-footer p-0">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                Blood Group <span class="float-right badge bg-primary">{{ $bloodname }}</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                Points <span class="float-right badge bg-info">{{$point}}</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-               Status<span class="float-right badge "><button v-bind:class="{ active: isActiveStatus }" @click="changeStatus" type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
-                  <div class="handle"></div>
-                </button></span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                Information <span class="float-right badge"><button v-bind:class="{active : infoStatus}" @click="changeInfoStatus" type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
-                    <div class="handle"></div></button></span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-  </aside>
-  <!-- /.control-sidebar -->
-
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Anything you want
     </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2018 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
 </div>
-<!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
-<script>
+
+</body>
+
+    <!--   Core JS Files   -->
+    <script src="{{asset('js/jquery.min.js')}}" type="text/javascript"></script>
+  <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
+
+  <!--  Checkbox, Radio & Switch Plugins -->
+  <script src="{{asset('js/bootstrap-checkbox-radio.js')}}"></script>
+
+  <!--  Charts Plugin -->
+  <script src="{{asset('js/chartist.min.js')}}"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src="{{asset('js/bootstrap-notify.js')}}"></script>
+
+    <!--  Google Maps Plugin    -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
+    <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+  <script src="{{asset('js/paper-dashboard.js')}}"></script>
+
+  <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+  <script src="{{asset('js/demo.js')}}"></script>
+
+  <script type="text/javascript">
+      // $(document).ready(function(){
+      //
+      //     demo.initChartist();
+      //
+      //     $.notify({
+      //         icon: 'ti-gift',
+      //         message: "Welcome to <b>Paper Dashboard</b> - a beautiful Bootstrap freebie for your next project."
+      //
+      //       },{
+      //           type: 'success',
+      //           timer: 4000
+      //       });
+      //
+      // });
+  </script>
+  <script>
    @auth
     window.authuser = @json(auth()->user());
   @endauth
 </script>
 <script src="{{asset('/js/app.js')}}"></script>
-</body>
+
+
 </html>
