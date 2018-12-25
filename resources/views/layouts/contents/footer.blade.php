@@ -4,9 +4,9 @@
         <div class="row">
             <div class="col-lg-5  col-md-6 col-sm-6">
                 <div class="single-footer-widget">
-                    <h6 class="footer_title">About Me</h6>
+                    <h6 class="footer_title">About Us</h6>
                     <p>
-                        Do you want to be even more successful? Learn to love learning and growth. The more effort you put into improving your skills,
+                        Donors Nepal is a free platform for blood donation.
                     </p>
                 </div>
             </div>
@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved to Donors Nepal | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </p>
             </div>

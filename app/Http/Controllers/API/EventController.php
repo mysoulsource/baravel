@@ -54,6 +54,7 @@ class EventController extends Controller
             'img'=>'required',
             'date'=>'required|max:191',
             'status'=>'required|max:191',
+            'location'=>'required|max:191'
         ]);
         //create event
         Events::create([
@@ -63,6 +64,7 @@ class EventController extends Controller
             'img' =>$request->input('img'),
             'date' =>$request->input('date'),
             'status' =>$request->input('status'),
+            'location'=>$request->input('location')
         ]);
     }
 
@@ -82,6 +84,7 @@ class EventController extends Controller
                     'detail'=>'required|string|max:500',
                     'date'=>'required|max:191',
                     'status'=>'required|max:191',
+                    'location'=>'required|max:191'
                 ]);
                 //update the event
                 $event->update([
@@ -90,6 +93,7 @@ class EventController extends Controller
                     'detail' =>$request->input('detail'),
                     'date' =>$request->input('date'),
                     'status' =>$request->input('status'),
+                    'location'=>$request->input('location')
                 ]);
         }
     }

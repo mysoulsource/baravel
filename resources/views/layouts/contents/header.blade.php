@@ -4,7 +4,7 @@
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <a class="navbar-brand logo_h" href="index.html">
-                    <img src="img/logo.png" alt="">
+                    <img src="img/logo.png" alt="" style="max-width: 175px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@
                                     <a class="nav-link" href="index.html">home</a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="{{route('demands')}}">causes</a>
+                                    <a class="nav-link" href="{{route('demands')}}">Demands</a>
                                 </li>
                                 <li class="nav-item ">
                                     <a class="nav-link" href="{{route('events')}}">events</a>

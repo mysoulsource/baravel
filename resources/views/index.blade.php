@@ -85,110 +85,110 @@
 <!--================ Ens Our Major Cause section =================-->
 
 <!--================ Start Make Donation Area =================-->
-<section class="make_donation section_gap">
-    <div class="container">
-        <div class="row justify-content-start section-title-wrap">
-            <div class="col-lg-12">
-                <h1>Make a Donation Today</h1>
-                <p>
-                    Las Vegas has more than 100,000 hotel rooms to choose from. There is something for every budget, and enough.
-                </p>
-            </div>
-        </div>
+{{--<section class="make_donation section_gap">--}}
+    {{--<div class="container">--}}
+        {{--<div class="row justify-content-start section-title-wrap">--}}
+            {{--<div class="col-lg-12">--}}
+                {{--<h1>Make a Donation Today</h1>--}}
+                {{--<p>--}}
+                    {{--Las Vegas has more than 100,000 hotel rooms to choose from. There is something for every budget, and enough.--}}
+                {{--</p>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
-        <div class="donate_now_wrapper">
-            <form>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="donate_box mb-30">
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" name="donation" id="ten_doller">
-                                <label class="form-check-label d-flex justify-content-between" for="ten_doller">
-                                    <div class="label_text">
-                                        $10.00
-                                    </div>
-                                    <div class="label_text">
-                                        USD
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+        {{--<div class="donate_now_wrapper">--}}
+            {{--<form>--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-lg-4">--}}
+                        {{--<div class="donate_box mb-30">--}}
+                            {{--<div class="form-check">--}}
+                                {{--<input type="radio" class="form-check-input" name="donation" id="ten_doller">--}}
+                                {{--<label class="form-check-label d-flex justify-content-between" for="ten_doller">--}}
+                                    {{--<div class="label_text">--}}
+                                        {{--$10.00--}}
+                                    {{--</div>--}}
+                                    {{--<div class="label_text">--}}
+                                        {{--USD--}}
+                                    {{--</div>--}}
+                                {{--</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="col-lg-4">
-                        <div class="donate_box mb-30">
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" name="donation" id="fifty_doller">
-                                <label class="form-check-label d-flex justify-content-between" for="fifty_doller">
-                                    <div class="label_text">
-                                        $50.00
-                                    </div>
-                                    <div class="label_text">
-                                        USD
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div class="col-lg-4">--}}
+                        {{--<div class="donate_box mb-30">--}}
+                            {{--<div class="form-check">--}}
+                                {{--<input type="radio" class="form-check-input" name="donation" id="fifty_doller">--}}
+                                {{--<label class="form-check-label d-flex justify-content-between" for="fifty_doller">--}}
+                                    {{--<div class="label_text">--}}
+                                        {{--$50.00--}}
+                                    {{--</div>--}}
+                                    {{--<div class="label_text">--}}
+                                        {{--USD--}}
+                                    {{--</div>--}}
+                                {{--</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="col-lg-4">
-                        <div class="donate_box mb-30">
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" name="donation" id="hundred_doller">
-                                <label class="form-check-label d-flex justify-content-between" for="hundred_doller">
-                                    <div class="label_text">
-                                        $100.00
-                                    </div>
-                                    <div class="label_text">
-                                        USD
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div class="col-lg-4">--}}
+                        {{--<div class="donate_box mb-30">--}}
+                            {{--<div class="form-check">--}}
+                                {{--<input type="radio" class="form-check-input" name="donation" id="hundred_doller">--}}
+                                {{--<label class="form-check-label d-flex justify-content-between" for="hundred_doller">--}}
+                                    {{--<div class="label_text">--}}
+                                        {{--$100.00--}}
+                                    {{--</div>--}}
+                                    {{--<div class="label_text">--}}
+                                        {{--USD--}}
+                                    {{--</div>--}}
+                                {{--</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="col-lg-4">
-                        <div class="donate_box">
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" name="donation" id="two_fifty__doller">
-                                <label class="form-check-label d-flex justify-content-between" for="two_fifty__doller">
-                                    <div class="label_text">
-                                        $250.00
-                                    </div>
-                                    <div class="label_text">
-                                        USD
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div class="col-lg-4">--}}
+                        {{--<div class="donate_box">--}}
+                            {{--<div class="form-check">--}}
+                                {{--<input type="radio" class="form-check-input" name="donation" id="two_fifty__doller">--}}
+                                {{--<label class="form-check-label d-flex justify-content-between" for="two_fifty__doller">--}}
+                                    {{--<div class="label_text">--}}
+                                        {{--$250.00--}}
+                                    {{--</div>--}}
+                                    {{--<div class="label_text">--}}
+                                        {{--USD--}}
+                                    {{--</div>--}}
+                                {{--</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="col-lg-4">
-                        <div class="donate_box">
-                            <div class="form-group">
-                                <input type="text" placeholder="Others" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Others'" class="form-control">
-                                <span class="fs-14">USD</span>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div class="col-lg-4">--}}
+                        {{--<div class="donate_box">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<input type="text" placeholder="Others" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Others'" class="form-control">--}}
+                                {{--<span class="fs-14">USD</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="col-lg-4">
-                        <div class="donate_box">
-                            <button type="submit" class="main_btn w-100">donate now</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</section>
+                    {{--<div class="col-lg-4">--}}
+                        {{--<div class="donate_box">--}}
+                            {{--<button type="submit" class="main_btn w-100">donate now</button>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</form>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</section>--}}
 <!--================ End Make Donation Area =================-->
 
     <section class="recent_event section_gap_custom">
         <div class="container">
             <div class="row justify-content-center section-title-wrap">
                 <div class="col-lg-12">
-                    <h1>Support a campaign or fundraiser</h1>
+                    <h1>Support a Events</h1>
                     <p>
                         The French Revolution constituted for the conscience of the dominant aristocratic class a fall from innocence the natural
                         chain of events.

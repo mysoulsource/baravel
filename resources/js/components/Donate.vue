@@ -29,7 +29,7 @@
                         <td>{{donate.requested_by_name.name}}</td>
                         <td>{{donate.created_at}}</td>
                         <td>{{donate.date}}</td>
-                        <td>{{donate.urgency}}</td>
+                        <td>{{donate.urgency | urgencyStatus}}</td>
                         <td>{{donate.message}}</td>
                         <td>
                             <a href="#" @click="acceptRequest(donate.id)"><i class="fa fa-check-square text-green"></i></a>

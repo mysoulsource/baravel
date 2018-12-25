@@ -13,7 +13,7 @@
                              <div class="form-group">
                                 <label>Title</label>
                                 <input v-model="form.title" type="text" name="title"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('title') }" >
+                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('title') }" >
                                 <has-error :form="form" field="title"></has-error>
                             </div>
                         </div>
@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label>Organizer</label>
                                 <input v-model="form.organizer" type="text" name="organizer"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('organizer') }" >
+                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('organizer') }" >
                                 <has-error :form="form" field="organizer"></has-error>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                               <div class="form-group">
                                 <label>Date</label>
                                 <input v-model="form.date" type="date" name="date"
-                                    class="form-control" :class="{ 'is-invalid': form.errors.has('date') }">
+                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('date') }">
                                 <has-error :form="form" field="date"></has-error>
                             </div>
                     </div>
@@ -40,31 +40,38 @@
                                   <div class="form-group">
                                     <label>Detail</label>
                                         <textarea v-model="form.detail" type="text" name="detail"
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('detail') }" cols="10" rows="5">  </textarea>
+                                        class="form-control border-input" :class="{ 'is-invalid': form.errors.has('detail') }" cols="10" rows="5">  </textarea>
                                         <has-error :form="form" field="detail"></has-error>
                                     </div>
                         </div>
                     </div>
 
                 <div class="row">
-
-                    <div class="col-md-6">
-                    <div class="form-group">
-                        <label>status</label>
-                            <select v-model="form.status" type="text" name="status"
-                            class="form-control" :class="{ 'is-invalid': form.errors.has('status') }" >
-                            <option value="1">Active</option>
-                            <option value="2">Inactive</option>
-                            </select>
-                            <has-error :form="form" field="status"></has-error>
-                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input v-model="form.location" type="text" name="location"
+                                   class="form-control border-input" :class="{ 'is-invalid': form.errors.has('location') }">
+                            <has-error :form="form" field="location"></has-error>
+                        </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>status</label>
+                                <select v-model="form.status" type="text" name="status"
+                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('status') }" >
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                                </select>
+                                <has-error :form="form" field="status"></has-error>
+                         </div>
+                    </div>
+                    <div class="col-md-4">
                          <div class="form-group">
-                    <label for="imageInp">File input</label>
-                    <input id="imageInp" v-if="uploadReady" type="file" @change="uploadImage" name="img" class="form-control" :class="{ 'is-invalid': form.errors.has('img') }">
-                    <has-error :form="form" field="img"></has-error>
-                  </div>
+                        <label for="imageInp">File input</label>
+                        <input id="imageInp" v-if="uploadReady" type="file" @change="uploadImage" name="img" class="form-control border-input" :class="{ 'is-invalid': form.errors.has('img') }">
+                        <has-error :form="form" field="img"></has-error>
+                      </div>
                     </div>
                 </div>
                 </div>
@@ -91,6 +98,7 @@
                     img : '',
                     date : '',
                     status: '',
+                    location:''
 
                 }),
            }

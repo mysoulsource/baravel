@@ -94,7 +94,7 @@
                                         <div class="form-group">
                                                 <label>Name</label>
                                                 <input v-model="form.name" type="text" name="name"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('name') }">
                                                 <has-error :form="form" field="name"></has-error>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@
                                             <div class="form-group">
                                                 <label>Email</label>
                                                 <input v-model="form.email" type="text" name="email"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('email') }">
                                                 <has-error :form="form" field="email"></has-error>
                                             </div>
                                         </div>
@@ -114,7 +114,7 @@
                                     <label>Blood</label>
 
                                             <select v-model="form.blood" type="text" name="blood"
-                                            class="form-control" :class="{ 'is-invalid': form.errors.has('blood') }">
+                                            class="form-control border-input" :class="{ 'is-invalid': form.errors.has('blood') }">
                                                 <option class="hidden"  selected disabled>Please select your Blood Type</option>
                                                     <option value="A+">A+</option>
                                                     <option value="A-">A-</option>
@@ -128,7 +128,7 @@
                                             <label>Blood</label>
 
                                                 <select v-model="form.type" type="text" name="type"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('type') }">
                                                     <option class="hidden"  selected disabled>User Type</option>
                                                         <option value="admin">Admin</option>
                                                         <option value="user">Simple User</option>
@@ -145,7 +145,7 @@
                                         <div class="form-group">
                                             <label>Country</label>
                                             <input v-model="form.country" type="text" name="country"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('country') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('country') }">
                                             <has-error :form="form" field="country"></has-error>
                                         </div>
                                 </div>
@@ -153,7 +153,7 @@
                                            <div class="form-group">
                                                 <label>Zone</label>
                                                 <input v-model="form.zone" type="text" name="zone"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('zone') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('zone') }">
                                                 <has-error :form="form" field="zone"></has-error>
                                             </div>
                                 </div>
@@ -164,7 +164,7 @@
                                          <div class="form-group">
                                             <label>District</label>
                                             <input v-model="form.district" type="text" name="district"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('district') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('district') }">
                                             <has-error :form="form" field="district"></has-error>
                                         </div>
                                 </div>
@@ -172,7 +172,7 @@
                                         <div class="form-group">
                                             <label>Area</label>
                                             <input v-model="form.district" type="text" name="area"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('area') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('area') }">
                                             <has-error :form="form" field="area"></has-error>
                                         </div>
                                 </div>
@@ -208,7 +208,7 @@
                                         <div class="form-group">
                                                 <label>Date</label>
                                                 <input v-model="request.date" type="date" name="date"
-                                                    class="form-control" :class="{ 'is-invalid': request.errors.has('date') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': request.errors.has('date') }">
                                                 <has-error :form="request" field="date"></has-error>
                                             </div>
                                         </div>
@@ -217,7 +217,7 @@
                                             <div class="form-group">
                                                 <label>Urgency</label>
                                                     <select name="urgency"
-                                                    class="form-control" v-model="request.urgency" :class="{ 'is-invalid': request.errors.has('urgency') }">
+                                                    class="form-control border-input" v-model="request.urgency" :class="{ 'is-invalid': request.errors.has('urgency') }">
                                                     <option value="" disabled>Select urgency</option>
                                                     <option value="1">High</option>
                                                     <option value="2">Medium</option>
@@ -232,7 +232,7 @@
                                     <div class="form-group">
                                                 <label>Message</label>
                                                     <textarea v-model="request.message" type="text" name="message"
-                                                    class="form-control" :class="{ 'is-invalid': request.errors.has('message') }"></textarea>
+                                                    class="form-control border-input" :class="{ 'is-invalid': request.errors.has('message') }"></textarea>
                                                 <has-error :form="request" field="message"></has-error>
                                     </div>
                                     </div>
