@@ -9,22 +9,27 @@
 
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Blog Categories</h3>
-                    <div class="card-tools">
-                        <button class="btn btn-primary" @click="openaddModal">Add New</button>
-                  </div>
+
+                <div class="header pull-left">
+                    <h4 class="title">Category</h4>
+                    <p class="category">List of Blogs Category</p>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover">
+                <div class="header pull-right">
+                    <button class="btn btn-primary" @click="openaddModal">Add New</button>
+                </div>
+
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+
+
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Created By</th>
+                                <th>Created At</th>
+                        </thead>
                         <tbody>
-                            <tr>
-                                <td>Id</td>
-                                <td>Name</td>
-                                <td>Image</td>
-                                <td>Created By</td>
-                                <td>Created At</td>
-                            </tr>
                             <tr v-for="category in categories.data" :key="category.id">
                                 <td>{{category.id}}</td>
                                 <td>{{category.name}}</td>
@@ -32,8 +37,8 @@
                                 <td>{{category.user.name}}</td>
                                 <td>{{category.created_at}}</td>
                                 <td>
-                                    <a href="" @click.prevent="openeditModal(category)"><i class="fas fa-edit"></i></a>
-                                    <a href="" @click.prevent="deleteCategory(category.id)"><i class="fas fa-trash text-red"></i></a>
+                                    <a href="" @click.prevent="openeditModal(category)"><i class="fa fa-edit"></i></a>
+                                    <a href="" @click.prevent="deleteCategory(category.id)"><i class="fa fa-trash text-red"></i></a>
                                 </td>
 
                             </tr>
@@ -63,7 +68,7 @@
                                         <div class="form-group">
                                                 <label>Name</label>
                                                 <input v-model="form.name" type="text" name="name"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('name') }">
                                                 <has-error :form="form" field="name"></has-error>
                                             </div>
                                         </div>
@@ -72,7 +77,7 @@
                                             <div class="form-group">
                                                 <label>Image</label>
                                                 <input  type="file" name="image"
-                                                    class="form-control" @change="uploadImage" :class="{ 'is-invalid': form.errors.has('image') }">
+                                                    class="form-control border-input" @change="uploadImage" :class="{ 'is-invalid': form.errors.has('image') }">
                                                 <has-error :form="form" field="image"></has-error>
                                             </div>
                                         </div>

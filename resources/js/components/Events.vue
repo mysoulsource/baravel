@@ -8,27 +8,31 @@
 <template>
     <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Users Table</h3>
-
-                <div class="card-tools">
-                  <button class="btn btn-primary"><a href="/addevent">Add new</a></button>
-                </div>
-              </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
-                  <tbody>
-                  <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Organizer</th>
-                    <th>Date</th>
-                    <th>Image</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                    <th>Options</th>
-                  </tr>
+                <div class="header pull-left">
+                    <h4 class="title">Events</h4>
+                    <p class="category">List of all events</p>
+                </div>
+                <div class="header pull-right">
+                    <button class="btn btn-primary"><a href="/adminaddevent">Add new</a></button>
+                </div>
+
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+
+                              <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Organizer</th>
+                                <th>Date</th>
+                                <th>Image</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Options</th>
+                              </tr>
+                        </thead>
+                        <tbody>
                   <tr v-for="event in events.data" :key="event.id">
                     <td>{{event.id}}</td>
                     <td>{{event.title | capitalize}}</td>
@@ -38,9 +42,9 @@
                     <td>{{event.status | stringConv}}</td>
                     <td>{{event.created_at | dateChange}}</td>
                     <td>
-                        <a href="#" @click.prevent="imageModal(event)"><i class="fas fa-image text-teal"></i></a>
-                        <a href="#" @click.prevent="editModal(event)"><i class="fas fa-edit"></i></a>
-                        <a href="#" @click.prevent="deleteEvent(event.id)"><i class="fas fa-trash text-red"></i></a>
+                        <a href="#" @click.prevent="imageModal(event)"><i class="fa fa-image text-teal"></i></a>
+                        <a href="#" @click.prevent="editModal(event)"><i class="fa fa-edit"></i></a>
+                        <a href="#" @click.prevent="deleteEvent(event.id)"><i class="fa fa-trash text-red"></i></a>
                     </td>
                   </tr>
 
@@ -67,7 +71,7 @@
                                         <div class="form-group">
                                                 <label>Title</label>
                                                 <input v-model="form.title" type="text" name="name"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('title') }">
                                                 <has-error :form="form" field="title"></has-error>
                                             </div>
                                         </div>
@@ -76,7 +80,7 @@
                                             <div class="form-group">
                                                 <label>Organizer</label>
                                                 <input v-model="form.organizer" type="text" name="email"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('organizer') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('organizer') }">
                                                 <has-error :form="form" field="organizer"></has-error>
                                             </div>
                                         </div>
@@ -86,7 +90,7 @@
                                          <div class="form-group">
                                         <label>status</label>
                                             <select v-model="form.status" type="text" name="status"
-                                            class="form-control" :class="{ 'is-invalid': form.errors.has('status') }" >
+                                            class="form-control border-input" :class="{ 'is-invalid': form.errors.has('status') }" >
                                             <option value="1">Active</option>
                                             <option value="2">Inactive</option>
                                             </select>
@@ -97,7 +101,7 @@
                                           <div class="form-group">
                                             <label>Date</label>
                                             <input v-model="form.date" type="date" name="date"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('date') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('date') }">
                                             <has-error :form="form" field="date"></has-error>
                                         </div>
                                     </div>
@@ -109,7 +113,7 @@
                                   <div class="form-group">
                                     <label>Detail</label>
                                         <textarea v-model="form.detail" type="text" name="detail"
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('detail') }" cols="10" rows="5">  </textarea>
+                                        class="form-control border-input" :class="{ 'is-invalid': form.errors.has('detail') }" cols="10" rows="5">  </textarea>
                                         <has-error :form="form" field="detail"></has-error>
                                     </div>
                         </div>
@@ -140,7 +144,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                     <label for="exampleInputFile">File input</label>
-                                    <input id="imageInp" type="file" @change="uploadImage" name="img" class="form-control" :class="{ 'is-invalid': form.errors.has('img') }">
+                                    <input id="imageInp" type="file" @change="uploadImage" name="img" class="form-control border-input" :class="{ 'is-invalid': form.errors.has('img') }">
                                     <has-error :form="form" field="img"></has-error>
                                 </div>
                             </div>

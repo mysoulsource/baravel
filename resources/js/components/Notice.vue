@@ -8,27 +8,26 @@
 <template>
     <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Users Table</h3>
-
-                <div class="card-tools">
-                  <!-- <button class="btn btn-primary" @click="addModal">Add new</button> -->
+                <div class="header">
+                    <h4 class="title">Notice</h4>
+                    <p class="category">Active Notice</p>
                 </div>
-              </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
-                  <tbody>
-                  <tr>
-                    <th>ID</th>
-                    <th>Title</th>
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
 
-                    <th>Image</th>
-                    <th>Updated_by</th>
-                    <th>Updated_at</th>
-                    <th>Status</th>
-                    <th>Options</th>
-                  </tr>
+
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Image</th>
+                                <th>Updated_by</th>
+                                <th>Updated_at</th>
+                                <th>Status</th>
+                                <th>Options</th>
+
+                        </thead>
+                        <tbody>
                   <tr v-for="notice in notices" :key="notice.id">
                     <td>{{notice.id}}</td>
                     <td>{{notice.title | capitalize}}</td>
@@ -37,8 +36,8 @@
                     <td>{{notice.updated_at | dateChange}}</td>
                     <td>{{notice.status | stringConv}}</td>
                     <td>
-                        <a href="#" @click.prevent="editModal(notice)"><i class="fas fa-edit"></i></a>
-                        <a href="#" @click.prevent="imageModal(notice)"><i class="fas fa-image text-teal"></i></a>
+                        <a href="#" @click.prevent="editModal(notice)"><i class="fa fa-edit"></i></a>
+                        <a href="#" @click.prevent="imageModal(notice)"><i class="fa fa-image text-teal"></i></a>
                     </td>
                   </tr>
 
@@ -63,7 +62,7 @@
                                         <div class="form-group">
                                                 <label>Title</label>
                                                 <input v-model="form.title" type="text" name="title"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('title') }">
                                                 <has-error :form="form" field="title"></has-error>
                                             </div>
                                         </div>
@@ -71,7 +70,7 @@
                                          <div class="form-group">
                                         <label>status</label>
                                             <select v-model="form.status" type="text" name="status"
-                                            class="form-control" :class="{ 'is-invalid': form.errors.has('status') }" >
+                                            class="form-control border-input" :class="{ 'is-invalid': form.errors.has('status') }" >
                                             <option value="1">Active</option>
                                             <option value="2">Inactive</option>
                                             </select>
@@ -86,7 +85,7 @@
                                         <div class="form-group">
                                         <label>Detail</label>
                                             <textarea v-model="form.detail" type="text" name="detail"
-                                            class="form-control" :class="{ 'is-invalid': form.errors.has('detail') }" cols="10" rows="5">  </textarea>
+                                            class="form-control border-input" :class="{ 'is-invalid': form.errors.has('detail') }" cols="10" rows="5">  </textarea>
                                             <has-error :form="form" field="detail"></has-error>
                                         </div>
                                     </div>
@@ -116,7 +115,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                     <label for="">File input</label>
-                                    <input id="imageInp" type="file" @change="uploadImage" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                    <input id="imageInp" type="file" @change="uploadImage" name="image" class="form-control border-input" :class="{ 'is-invalid': form.errors.has('image') }">
                                     <has-error :form="form" field="image"></has-error>
                                 </div>
                             </div>

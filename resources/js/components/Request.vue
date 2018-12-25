@@ -6,24 +6,26 @@
                 <div class="header pull-left">
                     <h4 class="title">Request</h4>
                     <p class="category">List of request you made</p>
-                    <!--<button class="btn btn-danger" @click="deleteall()">Delete All</button>-->
                 </div>
                 <div class="header pull-right">
                     <button class="btn btn-danger" @click="deleteall()">Delete All</button>
                 </div>
 
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover">
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+
+
+                                <th>Id</th>
+                                <th>Requested To</th>
+                                <th>Date</th>
+                                <th>Urgency</th>
+                                <th>Message</th>
+                                <th>Code</th>
+                                <th>Options</th>
+
+                        </thead>
                         <tbody>
-                            <tr>
-                                <td>Id</td>
-                                <td>Requested To</td>
-                                <td>Date</td>
-                                <td>Urgency</td>
-                                <td>Message</td>
-                                <td>Code</td>
-                                <td>Options</td>
-                            </tr>
                             <tr v-for="request in requests.data" :key="request.id">
                                 <td>{{request.id}}</td>
                                 <td>{{request.requested_to_name.name}}</td>

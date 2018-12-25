@@ -8,36 +8,38 @@
 <template>
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Banner Images</h3>
-
-                <div class="card-tools">
-                    <button class="btn btn-primary" @click="addModal">Add New</button>
-                </div>
+            <div class="header pull-left">
+                <h4 class="title">Banner</h4>
+                <p class="category">Active Banner</p>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
+            <div class="header pull-right">
+                <button class="btn btn-primary" @click="addModal">Add New</button>
+            </div>
+
+            <div class="content table-responsive table-full-width">
+                <table class="table table-striped">
+                    <thead>
+
+
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Sub Title</th>
+                            <th>image</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                            <th>Options</th>
+                    </thead>
                     <tbody>
-                        <tr>
-                            <td>Id</td>
-                            <td>Title</td>
-                            <td>Sub Title</td>
-                            <td>image</td>
-                            <td>Status</td>
-                            <td>Created At</td>
-                            <td>Options</td>
-                        </tr>
                         <tr v-for="banner in banners.data" :key="banner.id">
                             <td>{{banner.id}}</td>
                             <td>{{banner.title}}</td>
                             <td>{{banner.sub_title}}</td>
                             <td><img :src="getPhoto(banner.img)" class="gallery_image img-responsive" alt=""></td>
-                            <td>{{banner.uploaded_by}}</td>
-                            <td>{{banner.status}}</td>
+                            <td>{{banner.status | }}</td>
                             <td>{{banner.created_at}}</td>
                             <td>
-                               <a href="#" @click.prevent="editModal(banner)"><i class="fas fa-edit"></i></a>
-                               <a href="#" @click.prevent="deleteBanner(banner.id)"><i class="fas fa-trash text-red"></i></a>
+                               <a href="#" @click.prevent="editModal(banner)"><i class="fa fa-edit"></i></a>
+                               <a href="#" @click.prevent="deleteBanner(banner.id)"><i class="fa fa-trash text-red"></i></a>
 
                             </td>
                         </tr>
@@ -63,7 +65,7 @@
                                         <div class="form-group">
                                             <label>Title</label>
                                             <input v-model="form.title" type="text" name="title"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('title') }">
                                             <has-error :form="form" field="title"></has-error>
                                         </div>
                                 </div>
@@ -71,7 +73,7 @@
                                            <div class="form-group">
                                                 <label>Sub Title</label>
                                                 <input v-model="form.sub_title" type="text" name="sub_title"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('sub_title') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('sub_title') }">
                                                 <has-error :form="form" field="sub_title"></has-error>
                                             </div>
                                 </div>
@@ -81,7 +83,7 @@
                                         <div class="form-group">
                                             <label>Image</label>
                                             <input id="imageInp" type="file" @change="imageUpload" name="img"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('img') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('img') }">
                                             <has-error :form="form" field="img"></has-error>
                                         </div>
                                 </div>
@@ -89,7 +91,7 @@
                                            <div class="form-group">
                                              <label>Status</label>
                                             <select v-model="form.status" type="text" name="status"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('status') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('status') }">
                                             <option value="1">Active</option>
                                             <option value="2">Inactive</option>
 

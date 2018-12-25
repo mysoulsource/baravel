@@ -8,26 +8,30 @@
 <template>
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Gallery Images</h3>
+            <div class="header pull-left">
+                <h4 class="title">Gallery</h4>
+                <p class="category">List Gallery</p>
 
-                <div class="card-tools">
-                    <button class="btn btn-primary" @click="addModal">Add New</button>
-                </div>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
+            <div class="header pull-right">
+                <button class="btn btn-primary" @click="addModal">Add New</button>
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-striped">
+                    <thead>
+
+
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Source</th>
+                            <th>image</th>
+                            <th>Uploaded By</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                            <th>Options</th>
+
+                    </thead>
                     <tbody>
-                        <tr>
-                            <td>Id</td>
-                            <td>Title</td>
-                            <td>Source</td>
-                            <td>image</td>
-                            <td>Uploaded By</td>
-                            <td>Status</td>
-                            <td>Created At</td>
-                            <td>Options</td>
-                        </tr>
                         <tr v-for="gallery in gallerys.data" :key="gallery.id">
                             <td>{{gallery.id}}</td>
                             <td>{{gallery.title}}</td>
@@ -37,8 +41,8 @@
                             <td>{{gallery.status}}</td>
                             <td>{{gallery.created_at}}</td>
                             <td>
-                               <a href="#" @click.prevent="editModal(gallery)"><i class="fas fa-edit"></i></a>
-                               <a href="#" @click.prevent="deleteGallery(gallery.id)"><i class="fas fa-trash text-red"></i></a>
+                               <a href="#" @click.prevent="editModal(gallery)"><i class="fa fa-edit"></i></a>
+                               <a href="#" @click.prevent="deleteGallery(gallery.id)"><i class="fa fa-trash text-red"></i></a>
 
                             </td>
                         </tr>
@@ -64,7 +68,7 @@
                                         <div class="form-group">
                                             <label>Title</label>
                                             <input v-model="form.title" type="text" name="title"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('title') }">
                                             <has-error :form="form" field="title"></has-error>
                                         </div>
                                 </div>
@@ -72,7 +76,7 @@
                                            <div class="form-group">
                                                 <label>Source</label>
                                                 <input v-model="form.source" type="text" name="source"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('source') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('source') }">
                                                 <has-error :form="form" field="source"></has-error>
                                             </div>
                                 </div>
@@ -82,7 +86,7 @@
                                         <div class="form-group">
                                             <label>Image</label>
                                             <input id="imageInp" type="file" v-if="uploadReady" @change="imageUpload" name="image"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('image') }">
                                             <has-error :form="form" field="image"></has-error>
                                         </div>
                                 </div>
@@ -90,7 +94,7 @@
                                            <div class="form-group">
                                              <label>Status</label>
                                             <select v-model="form.status" type="text" name="status"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('status') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('status') }">
                                             <option value="1">Active</option>
                                             <option value="2">Inactive</option>
 

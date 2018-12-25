@@ -79,7 +79,7 @@
                 </li>
                 <li>
                     <a href="/users">
-                        <i class="ti-view-list-alt"></i>
+                        <i class="fa fa-users"></i>
                         <p>Users List</p>
                     </a>
                 </li>
@@ -101,12 +101,68 @@
                         <p>Donate</p>
                     </a>
                 </li>
+                @can('isAdmin')
                 <li>
-                    <a href="notifications.html">
-                        <i class="ti-bell"></i>
-                        <p>Notifications</p>
+                    <a href="/admindeveloper">
+                        <i class="fa fa-cogs"></i>
+                        <p>Developer</p>
                     </a>
                 </li>
+                    <li>
+                        <a href="/adminnotice">
+                            <i class="fa fa-exclamation"></i>
+                            <p>Notice</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminbloods">
+                            <i class="fa fa-heart-o"></i>
+                            <p>Blood Group</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admingallery">
+                            <i class="fa fa-camera"></i>
+                            <p>Gallery</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminevents">
+                            <i class="fa fa-calendar"></i>
+                            <p>All Events</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminaddevent">
+                            <i class="fa fa-plus-square"></i>
+                            <p>Add Event</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminblog">
+                            <i class="fa fa-th"></i>
+                            <p>Blog</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminaddpost">
+                            <i class="fa fa-plus-square"></i>
+                            <p>Add post</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admincategory">
+                            <i class="fa fa-list"></i>
+                            <p>Blog Category</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminbanner">
+                            <i class="fa fa-picture-o"></i>
+                            <p>Banner</p>
+                        </a>
+                    </li>
+                @endcan
             </ul>
       </div>
     </div>

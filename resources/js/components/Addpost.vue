@@ -13,7 +13,7 @@
                              <div class="form-group">
                                 <label>Title</label>
                                 <input v-model="form.title" type="text" name="title"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('title') }" >
+                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('title') }" >
                                 <has-error :form="form" field="title"></has-error>
                             </div>
                         </div>
@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label>Category</label>
                                 <select v-model="form.category_id" type="text" name="category_id"
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('category_id') }" >
+                                        class="form-control border-input" :class="{ 'is-invalid': form.errors.has('category_id') }" >
                                     <option v-for="category in categories" :key="category.id" :value="category.id">{{category.name}}</option>
                                 </select>
                                 <has-error :form="form" field="status"></has-error>
@@ -31,7 +31,7 @@
                               <div class="form-group">
                                 <label>Publish On</label>
                                   <input v-model="form.published_on" type="date" name="published_on"
-                                         class="form-control" :class="{ 'is-invalid': form.errors.has('published_on') }">
+                                         class="form-control border-input" :class="{ 'is-invalid': form.errors.has('published_on') }">
                                   <has-error :form="form" field="published_on"></has-error>
                             </div>
                     </div>
@@ -54,7 +54,7 @@
                             <label>Tags</label>
 
                             <input v-model="form.tags" type="text" name="tags"
-                                   class="form-control" :class="{ 'is-invalid': form.errors.has('tags') }">
+                                   class="form-control border-input" :class="{ 'is-invalid': form.errors.has('tags') }">
                             <has-error :form="form" field="tags"></has-error>
                          </div>
                         </div>
@@ -63,14 +63,14 @@
                             <label>Slug</label>
 
                             <input v-model="form.slug" type="text" name="slug"
-                                   class="form-control" :class="{ 'is-invalid': form.errors.has('slug') }">
+                                   class="form-control border-input" :class="{ 'is-invalid': form.errors.has('slug') }">
                             <has-error :form="form" field="slug"></has-error>
                         </div>
                     </div>
                     <div class="col-md-4">
                          <div class="form-group">
                     <label for="imageInp">File input</label>
-                    <input id="imageInp" type="file" @change="uploadImage" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                    <input id="imageInp" type="file" @change="uploadImage" name="image" class="form-control border-input" :class="{ 'is-invalid': form.errors.has('image') }">
                     <has-error :form="form" field="image"></has-error>
                   </div>
                     </div>

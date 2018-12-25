@@ -8,30 +8,35 @@
 <template>
     <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Blogs Table</h3>
 
-                <div class="card-tools">
-                  <button class="btn btn-primary"><a href="/addpost">Add new</a></button>
-                </div>
-              </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
-                  <tbody>
-                  <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <!--<th>Tags</th>-->
-                    <!--<th>Slugs</th>-->
-                    <th>Published</th>
-                    <th>Image</th>
-                    <th>Created By</th>
-                    <!--<th>Created On</th>-->
-                    <th>Options</th>
-                  </tr>
-                  <tr v-for="post in posts.data" :key="post.id">
+                <div class="header pull-left">
+                    <h4 class="title">Blogs</h4>
+                    <p class="category">List of all posts</p>
+                </div>
+                <div class="header pull-right">
+                    <button class="btn btn-primary"><a href="/adminaddpost">Add new</a></button>
+                </div>
+
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+
+
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <!--<th>Tags</th>-->
+                            <!--<th>Slugs</th>-->
+                            <th>Published</th>
+                            <th>Image</th>
+                            <th>Created By</th>
+                            <!--<th>Created On</th>-->
+                            <th>Options</th>
+
+                        </thead>
+                        <tbody>
+                    <tr v-for="post in posts.data" :key="post.id">
                     <td>{{post.id}}</td>
                     <td>{{post.title}}</td>
                     <td>{{post.category.name}}</td>
@@ -44,11 +49,11 @@
                     <td>{{post.user.name}}</td>
                     <!--<td>{{post.created_at | dateChange}}</td>-->
                     <td>
-                        <a href="#" @click.prevent="publish(post.id)"><i class="fas fa-eye text-teal"></i></a>
-                        <a href="#" @click.prevent="imageModal(post)"><i class="fas fa-image text-teal"></i></a>
-                        <a href="#" @click.prevent="editModal(post)"><i class="fas fa-edit"></i></a>
-                        <a href="#" @click.prevent="openContent(post.content,post.id)"><i class="fas fa-edit"></i></a>
-                        <a href="#" @click.prevent="deletePost(post.id)"><i class="fas fa-trash text-red"></i></a>
+                        <a href="#" @click.prevent="publish(post.id)"><i class="fa fa-eye text-teal"></i></a>
+                        <a href="#" @click.prevent="imageModal(post)"><i class="fa fa-image text-teal"></i></a>
+                        <a href="#" @click.prevent="editModal(post)"><i class="fa fa-edit"></i></a>
+                        <a href="#" @click.prevent="openContent(post.content,post.id)"><i class="fa fa-edit"></i></a>
+                        <a href="#" @click.prevent="deletePost(post.id)"><i class="fa fa-trash text-red"></i></a>
                     </td>
                   </tr>
 
@@ -78,7 +83,7 @@
                                         <div class="form-group">
                                                 <label>Title</label>
                                                 <input v-model="form.title" type="text" name="name"
-                                                    class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                                    class="form-control border-input" :class="{ 'is-invalid': form.errors.has('title') }">
                                                 <has-error :form="form" field="title"></has-error>
                                             </div>
                                         </div>
@@ -87,7 +92,7 @@
                                             <div class="form-group">
                                                 <label>Category</label>
                                               <select v-model="form.category_id" type="text" name="category_id"
-                                            class="form-control" :class="{ 'is-invalid': form.errors.has('category_id') }" >
+                                            class="form-control border-input" :class="{ 'is-invalid': form.errors.has('category_id') }" >
                                      <option v-for="category in categories" :key="category.id" :value="category.id" :selected="form.category_id">{{category.name}}</option>
                                             </select>
                                             <has-error :form="form" field="category_id"></has-error>
@@ -99,7 +104,7 @@
                                          <div class="form-group">
                                         <label>Tags</label>
                                             <input v-model="form.tags" type="text" name="tags"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('tags') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('tags') }">
                                             <has-error :form="form" field="tags"></has-error>
                                         </div>
                                     </div>
@@ -107,7 +112,7 @@
                                           <div class="form-group">
                                             <label>Publish On</label>
                                             <input v-model="form.published_on" type="date" name="published_on"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('published_on') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('published_on') }">
                                             <has-error :form="form" field="published_on"></has-error>
                                         </div>
                                     </div>
@@ -119,7 +124,7 @@
                                   <div class="form-group">
                                    <label>Slugs</label>
                                             <input v-model="form.slug" type="text" name="slug"
-                                                class="form-control" :class="{ 'is-invalid': form.errors.has('slug') }">
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('slug') }">
                                             <has-error :form="form" field="slug"></has-error>
                                         </div>
                         </div>
@@ -150,7 +155,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                     <label for="imageInp">File input</label>
-                                    <input id="imageInp" type="file" @change="uploadImage" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                    <input id="imageInp" type="file" @change="uploadImage" name="image" class="form-control border-input" :class="{ 'is-invalid': form.errors.has('image') }">
                                     <has-error :form="form" field="image"></has-error>
                                 </div>
                             </div>
@@ -363,6 +368,7 @@
                this.$Progress.start();
                axios.get("api/post/publish/" + id)
                    .then(()=>{
+                       Fire.$emit('datauploaded');
                        toast({
                            type:'success',
                            title:'Updated Successfully'

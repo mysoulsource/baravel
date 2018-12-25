@@ -9,11 +9,13 @@
 
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Bloods</h3>
-                    <div class="card-tools">
-                        <button class="btn btn-primary" @click="openaddModal">Add New</button>
-                  </div>
+                <div class="header pull-left">
+                    <h4 class="title">Blood Groups</h4>
+                    <p class="category">List of Blood groups</p>
+
+                </div>
+                <div class="header pull-right">
+                    <button class="btn btn-primary" @click="openaddModal">Add New</button>
                 </div>
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover">
