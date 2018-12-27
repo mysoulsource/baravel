@@ -26,6 +26,9 @@ class EventController extends Controller
         if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
              $events = Events::latest()->paginate(10);
               return $events;
+        }else{
+            $events = Events::latest()->where('user_id','=',auth('api')->user()->id)->paginate(10);
+            return $events;
         }
        
     }
@@ -35,7 +38,8 @@ class EventController extends Controller
     {
 
        
-        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')) {
+
         //if request has image .generate name and make image and upload
         if($request->img){
             $name = time().'.' .explode('/', explode(':',substr($request->img,0,strpos($request->img,';')))[1])[1];
@@ -53,7 +57,7 @@ class EventController extends Controller
             'detail'=>'required|string|max:500',
             'img'=>'required',
             'date'=>'required|max:191',
-            'status'=>'required|max:191',
+            // 'status'=>'required|max:191',
             'location'=>'required|max:191'
         ]);
         //create event
@@ -63,8 +67,9 @@ class EventController extends Controller
             'detail' =>$request->input('detail'),
             'img' =>$request->input('img'),
             'date' =>$request->input('date'),
-            'status' =>$request->input('status'),
-            'location'=>$request->input('location')
+            'status' =>0,
+            'location'=>$request->input('location'),
+            'user_id'=>auth('api')->user()->id,
         ]);
     }
 
@@ -74,7 +79,7 @@ class EventController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')) {
                 //find the event
                 $event = Events::findOrFail($id);
                 //validate the event
@@ -83,7 +88,6 @@ class EventController extends Controller
                     'organizer'=>'required|string|max:191',
                     'detail'=>'required|string|max:500',
                     'date'=>'required|max:191',
-                    'status'=>'required|max:191',
                     'location'=>'required|max:191'
                 ]);
                 //update the event

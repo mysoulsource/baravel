@@ -86,7 +86,7 @@
                                         </div>
                             </div>
                             <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4" v-if="$gate.isAdminOrAuthor()">
                                          <div class="form-group">
                                         <label>status</label>
                                             <select v-model="form.status" type="text" name="status"
@@ -97,12 +97,20 @@
                                             <has-error :form="form" field="status"></has-error>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                           <div class="form-group">
                                             <label>Date</label>
                                             <input v-model="form.date" type="date" name="date"
                                                 class="form-control border-input" :class="{ 'is-invalid': form.errors.has('date') }">
                                             <has-error :form="form" field="date"></has-error>
+                                        </div>
+                                    </div>
+                                       <div class="col-md-4">
+                                          <div class="form-group">
+                                            <label>Location</label>
+                                            <input v-model="form.location" type="text" name="location"
+                                                class="form-control border-input" :class="{ 'is-invalid': form.errors.has('location') }">
+                                            <has-error :form="form" field="location"></has-error>
                                         </div>
                                     </div>
 
@@ -178,6 +186,7 @@
                     date : '',
                     status: '',
                     created_at:'',
+                    location:''
                 }),
            }
        },
@@ -283,7 +292,7 @@
             }
        },
        created(){
-          this.checkuser();
+          // this.checkuser();
            this.getEvents();
            Fire.$on('datauploaded',()=>{
                this.getEvents();

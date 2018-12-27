@@ -84631,6 +84631,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -84645,7 +84653,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 img: '',
                 date: '',
                 status: '',
-                created_at: ''
+                created_at: '',
+                location: ''
             })
         };
     },
@@ -84757,7 +84766,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this6 = this;
 
-        this.checkuser();
+        // this.checkuser();
         this.getEvents();
         Fire.$on('datauploaded', function () {
             _this6.getEvents();
@@ -84987,70 +84996,76 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-6" }, [
-                        _c(
-                          "div",
-                          { staticClass: "form-group" },
-                          [
-                            _c("label", [_vm._v("status")]),
-                            _vm._v(" "),
+                      _vm.$gate.isAdminOrAuthor()
+                        ? _c("div", { staticClass: "col-md-4" }, [
                             _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.status,
-                                    expression: "form.status"
-                                  }
-                                ],
-                                staticClass: "form-control border-input",
-                                class: {
-                                  "is-invalid": _vm.form.errors.has("status")
-                                },
-                                attrs: { type: "text", name: "status" },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.$set(
-                                      _vm.form,
-                                      "status",
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    )
-                                  }
-                                }
-                              },
+                              "div",
+                              { staticClass: "form-group" },
                               [
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("Active")
-                                ]),
+                                _c("label", [_vm._v("status")]),
                                 _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("Inactive")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("has-error", {
-                              attrs: { form: _vm.form, field: "status" }
-                            })
-                          ],
-                          1
-                        )
-                      ]),
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.form.status,
+                                        expression: "form.status"
+                                      }
+                                    ],
+                                    staticClass: "form-control border-input",
+                                    class: {
+                                      "is-invalid": _vm.form.errors.has(
+                                        "status"
+                                      )
+                                    },
+                                    attrs: { type: "text", name: "status" },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.form,
+                                          "status",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("option", { attrs: { value: "1" } }, [
+                                      _vm._v("Active")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("option", { attrs: { value: "2" } }, [
+                                      _vm._v("Inactive")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("has-error", {
+                                  attrs: { form: _vm.form, field: "status" }
+                                })
+                              ],
+                              1
+                            )
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
                         _c(
                           "div",
                           { staticClass: "form-group" },
@@ -85088,6 +85103,50 @@ var render = function() {
                             _vm._v(" "),
                             _c("has-error", {
                               attrs: { form: _vm.form, field: "date" }
+                            })
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("label", [_vm._v("Location")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.location,
+                                  expression: "form.location"
+                                }
+                              ],
+                              staticClass: "form-control border-input",
+                              class: {
+                                "is-invalid": _vm.form.errors.has("location")
+                              },
+                              attrs: { type: "text", name: "location" },
+                              domProps: { value: _vm.form.location },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "location",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("has-error", {
+                              attrs: { form: _vm.form, field: "location" }
                             })
                           ],
                           1
@@ -85560,7 +85619,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 detail: '',
                 img: '',
                 date: '',
-                status: '',
                 location: ''
 
             })
@@ -85608,15 +85666,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this3.$Progress.fail();
                 swal('Oops!!', 'Something went wrong', 'warning');
             });
-        },
-        checkuser: function checkuser() {
-            if (!this.$gate.isAdminOrAuthor()) {
-                this.$router.push("empty");
-            }
         }
     },
     created: function created() {
-        this.checkuser();
+        // this.checkuser();
     }
 });
 
@@ -85836,66 +85889,6 @@ var render = function() {
                   _vm._v(" "),
                   _c("has-error", {
                     attrs: { form: _vm.form, field: "location" }
-                  })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", [_vm._v("status")]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.status,
-                          expression: "form.status"
-                        }
-                      ],
-                      staticClass: "form-control border-input",
-                      class: { "is-invalid": _vm.form.errors.has("status") },
-                      attrs: { type: "text", name: "status" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.form,
-                            "status",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "1" } }, [
-                        _vm._v("Active")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "2" } }, [
-                        _vm._v("Inactive")
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("has-error", {
-                    attrs: { form: _vm.form, field: "status" }
                   })
                 ],
                 1

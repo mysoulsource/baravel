@@ -55,7 +55,7 @@
                             <has-error :form="form" field="location"></has-error>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                 <!--    <div class="col-md-4">
                         <div class="form-group">
                             <label>status</label>
                                 <select v-model="form.status" type="text" name="status"
@@ -65,7 +65,7 @@
                                 </select>
                                 <has-error :form="form" field="status"></has-error>
                          </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-4">
                          <div class="form-group">
                         <label for="imageInp">File input</label>
@@ -97,7 +97,6 @@
                     detail: '',
                     img : '',
                     date : '',
-                    status: '',
                     location:''
 
                 }),
@@ -141,14 +140,14 @@
                    swal('Oops!!','Something went wrong','warning');
                });
            },
-            checkuser(){
-                if(!this.$gate.isAdminOrAuthor()){
-                this.$router.push("empty")
-                }  
-            }
+            // checkuser(){
+            //     if(!this.$gate.isAdminOrAuthor()){
+            //     this.$router.push("empty")
+            //     }  
+            // }
        },
        created(){
-          this.checkuser();
+          // this.checkuser();
        }
     }
 </script>
