@@ -211,6 +211,15 @@ const app = new Vue({
             window.Echo.private('AlertRequest.' + this.user)
                 .listen('.RequestStatus',(request)=>{
                     this.donate = request;
+                    Push.create("You Have a new request!", {
+                            body: request.requested_by + 'requested for blood ' + request.on,
+                            icon: '/icon.png',
+                            timeout: 5000,
+                            onClick: function () {
+                                window.focus();
+                                this.close();
+                            }
+                        });
                     swal({
                         title: 'Blood Request Notification',
                         text: request.requested_by + ' Requested for Blood on ' + request.on ,
@@ -240,6 +249,15 @@ const app = new Vue({
             window.Echo.private('DemandAlert.' + this.user)
                 .listen('.DemandStatus',(demand)=>{
                    let text =   demand.accepted + ' accepted your request on ' + demand.on ;
+                    Push.create("Demand Accepted", {
+                            body: text,
+                            icon: '/icon.png',
+                            timeout: 4000,
+                            onClick: function () {
+                                window.focus();
+                                this.close();
+                            }
+                        });
                     swal(
                         'Accepted!',
                             text,

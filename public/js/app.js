@@ -22500,6 +22500,15 @@ var app = new Vue({
             //pusher notification for request alert
             window.Echo.private('AlertRequest.' + this.user).listen('.RequestStatus', function (request) {
                 _this2.donate = request;
+                Push.create("You Have a new request!", {
+                    body: request.requested_by + 'requested for blood ' + request.on,
+                    icon: '/icon.png',
+                    timeout: 5000,
+                    onClick: function onClick() {
+                        window.focus();
+                        this.close();
+                    }
+                });
                 swal({
                     title: 'Blood Request Notification',
                     text: request.requested_by + ' Requested for Blood on ' + request.on,
@@ -22524,6 +22533,15 @@ var app = new Vue({
             //pusher notification for the status of demand
             window.Echo.private('DemandAlert.' + this.user).listen('.DemandStatus', function (demand) {
                 var text = demand.accepted + ' accepted your request on ' + demand.on;
+                Push.create("Demand Accepted", {
+                    body: text,
+                    icon: '/icon.png',
+                    timeout: 4000,
+                    onClick: function onClick() {
+                        window.focus();
+                        this.close();
+                    }
+                });
                 swal('Accepted!', text, 'success');
             });
             //pusher notification for the request response

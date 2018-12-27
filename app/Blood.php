@@ -12,7 +12,7 @@ class Blood extends Model
 
     //relation to demands
     public function Demands(){
-        return $this->hasMany('App\Demand');
+        return $this->hasMany('App\Demand','blood');
     }
     public function users(){
         return $this->hasMany('App\User','blood');

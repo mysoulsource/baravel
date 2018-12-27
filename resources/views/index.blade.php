@@ -73,6 +73,7 @@
                             <p class="card-text">{{$demand->detail}}
                             </p>
                             <a href="#" class="main_btn2">Aceept</a>
+                            <a href="{{route('single.demand',$demand->id)}}" class="main_btn3">View Details</a>
                         </div>
                     </div>
                 </div>

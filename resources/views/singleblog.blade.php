@@ -17,7 +17,7 @@
                     <h2>Blogs</h2>
                     <div class="page_link">
                         <a href="{{route('home')}}">Home</a>
-                        <a href="{{route('blogs')}}">Home</a>
+                        <a href="{{route('blogs')}}">Blog</a>
                         <a href="#">Blog Details</a>
                     </div>
                 </div>

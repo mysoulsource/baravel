@@ -19,8 +19,38 @@
   <!-- main css -->
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
   <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="token"   id="token" value="{{ auth()->check() ? auth()->user()->id : 'null' }}">
   <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c17de261c98570011922d1d&product=social-ab' async='async'></script>
   @yield('links')
+  <style>
+     .main_btn3{
+            display: inline-block;
+            background: #222222;
+            padding: 0px 30px;
+            color: #fff;
+            font-family: "Roboto", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 48px;
+            border: 1px solid #222222;
+            border-radius: 0px;
+            outline: none !important;
+            box-shadow: none !important;
+            text-align: center;
+            cursor: pointer;
+            transition: all 300ms linear 0s;
+            border-radius: 5px;
+            text-transform: capitalize;
+            margin-top: 30px;
+            float: right;
+        }
+        .main_btn3:hover {
+          background: #e51d2b;
+          color: #ffffff;
+          border: 1px solid #e51d2b;
+       }
+  </style>
 </head>
 
 <body>
@@ -29,7 +59,9 @@
 <!--================Header Menu Area =================-->
 @include('layouts.contents.header')
 <!--================ End Footer Area  =================-->
+<div  id="app">
 @yield('content')
+</div>
 @include('layouts.contents.footer')
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -47,6 +79,9 @@
 <!-- <script src="vendors/counter-up/jquery.counterup.js"></script> -->
 <script src="{{asset('js/mail-script.js')}}"></script>
 <script src="{{asset('js/custom.js')}}"></script>
+<script src="{{asset('js/push.js')}}"></script>
+<script src="{{asset('js/serviceWorker.min.js')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
 @yield('scripts')
 </body>
 

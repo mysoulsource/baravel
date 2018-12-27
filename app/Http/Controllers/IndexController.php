@@ -11,6 +11,7 @@ use App\events;
 use App\Category;
 use App\Post;
 use App\User;
+use App\Blood;
 use CyrildeWit\EloquentViewable\Support\Period;
 
 class IndexController extends Controller
@@ -90,6 +91,17 @@ class IndexController extends Controller
 //        $comments = Comment::where('post_id','=',$id)->with('user:id,name,img')->get();
         return view('singleblog')->with(compact('post','categories','count','popular_posts'));
 
+
+    }
+    public function singledemand($id){
+        $demand = Demand::with('user:id,name,country,f_url,img')->with('bloodName:id,name,image')->where('id','=',$id)->first();
+        $bloodgroups = Blood::with('demands')->inRandomOrder()->paginate(3);
+        $urgentDemands = Demand::where('urgency','=',1)
+                        ->where('status','=',0)
+                        ->paginate(4);
+        $demandsCounts = Blood::withCount('demands')->get();
+                
+        return view('singledemand')->with(compact('demand','bloodgroups','demandsCounts','urgentDemands'));
 
     }
 }

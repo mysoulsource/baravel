@@ -45,6 +45,7 @@
         .content .card .footer{
             padding: 0 20px;
         }
+
     </style>
 </head>
 <body>
@@ -348,6 +349,8 @@
   @endauth
 </script>
 <script src="{{asset('/js/app.js')}}"></script>
+<script src="{{asset('js/push.js')}}"></script>
+<script src="{{asset('js/serviceWorker.min.js')}}"></script>
 
 
 </html>
