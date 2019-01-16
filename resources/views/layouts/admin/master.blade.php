@@ -32,6 +32,7 @@
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
     <link href="{{asset('css/themify-icons.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/demo.css')}}">
+    <link rel="stylesheet" href="{{asset('css/control-siderbar.css')}}">
     <style>
         .modal-backdrop{
          z-index:0;
@@ -45,7 +46,6 @@
         .content .card .footer{
             padding: 0 20px;
         }
-
     </style>
 </head>
 <body>
@@ -60,23 +60,23 @@
 
       <div class="sidebar-wrapper">
             <div class="logo">
-                <a href="/dashboard" class="simple-text">
+                <router-link to="/dashboard" class="simple-text">
                     Donors Nepal
-                </a>
+                </router-link>
             </div>
 
             <ul class="nav">
                 <li class="active">
-                    <a href="/dashboard">
+                    <router-link to="/dashboard">
                         <i class="ti-panel"></i>
                         <p>Dashboard</p>
-                    </a>
+                    </router-link>
                 </li>
                 <li>
-                    <a href="/userprofile">
+                    <router-link to="/userprofile">
                         <i class="ti-user"></i>
                         <p>User Profile</p>
-                    </a>
+                    </router-link>
                 </li>
                 <li>
                     <a href="/users">
@@ -156,6 +156,12 @@
                         <a href="/admincategory">
                             <i class="fa fa-list"></i>
                             <p>Blog Category</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminbanner">
+                            <i class="fa fa-picture-o"></i>
+                            <p>Banner</p>
                         </a>
                     </li>
                     <li>
@@ -300,7 +306,51 @@
         </div>
     </div>
     </div>
+
+<aside class="control-sidebar">
+    <!-- Control sidebar content goes here -->
+
+    <div class="card card-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-warning">
+            <div class="widget-user-image">
+                <img class="img-circle elevation-2" src="{{asset('img/profile/'. Auth()->user()->img)}}" alt="User Avatar">
+            </div>
+            <!-- /.widget-user-image -->
+            <h6 class="widget-user-username">{{auth()->user()->name}}</h6>
+            <h6 class="widget-user-desc">{{auth()->user()->email}}</h6>
+        </div>
+        <div class="card-footer p-0">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Blood Group <span class="float-right badge bg-primary">{{ $bloodname }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Points <span class="float-right badge bg-info">{{$point}}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Status<span class="float-right badge "><button v-bind:class="{ active: isActiveStatus }" @click="changeStatus" type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                  <div class="handle"></div>
+                </button></span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Information <span class="float-right badge"><button v-bind:class="{active : infoStatus}" @click="changeInfoStatus" type="button" class="btn btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    <div class="handle"></div></button></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>
 </div>
+
 
 
 </body>

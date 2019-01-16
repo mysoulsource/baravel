@@ -156,7 +156,7 @@ Vue.component('line-chart', {
 //routes
  Vue.prototype.$gate = new Gate(window.authuser);
 let routes = [
-    { path: '/dashboard', component: require('./components/Dashboard.vue') },
+    { path: '/dashboard', component: require('./components/Dashboard.vue')},
     { path: '/users', component: require('./components/Users.vue') },
     { path: '/adminevents', component: require('./components/Events.vue') },
     { path: '/adminaddevent', component: require('./components/Addevent.vue') },

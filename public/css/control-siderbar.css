@@ -1,0 +1,296 @@
+.control-sidebar{
+    position: absolute;
+    top: 7.5rem;
+    right: 0px;
+    z-index: 830;
+    width: 250px;
+    bottom: 0;
+    -webkit-transition: right 0.3s ease-in-out;
+    transition: right 0.3s ease-in-out;
+}
+.control-sidebar .card{
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+.control-sidebar .widget-user-2 .widget-user-header {
+    padding: 1rem;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+.control-sidebar .widget-user-2 .widget-user-image > img {
+    width: 65px;
+    height: auto;
+    float: left;
+}
+.control-sidebar .widget-user-2 .widget-user-username, .widget-user-2 .widget-user-desc {
+    margin-left: 75px;
+}
+
+.control-sidebar .widget-user-2 .widget-user-username {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 25px;
+    font-weight: 300;
+}
+.control-sidebar .widget-user-desc {
+    margin-left: 75px;
+}
+
+.control-sidebar .widget-user-2 .widget-user-desc {
+    margin-top: 0;
+}
+.control-sidebar .card-footer:last-child {
+    border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px);
+}
+
+.control-sidebar .card-footer:last-child {
+    border-radius: 0 0 calc(0.25rem - 0) calc(0.25rem - 0);
+}
+.control-sidebar .p-0 {
+    padding: 0 !important;
+}
+.control-sidebar .card-footer {
+    padding: 0.75rem 1.25rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+.control-sidebar .flex-column {
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+}
+
+.control-sidebar .nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.control-sidebar .card .nav.flex-column > li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    margin: 0;
+}
+.control-sidebar .nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+}
+
+.control-sidebar .nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+}
+.control-sidebar a {
+    color: #3490dc;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+.control-sidebar .float-right {
+    float: right !important;
+}
+
+.control-sidebar .bg-primary {
+    background-color: #3490dc !important;
+}
+.control-sidebar .btn-toggle {
+    margin: 0 4rem;
+    padding: 0;
+    position: relative;
+    border: none;
+    height: 1.5rem;
+    width: 3rem;
+    border-radius: 1.5rem;
+    color: #6b7381;
+    background: #0045bd;
+}
+.control-sidebar .btn-toggle:focus,
+.control-sidebar .btn-toggle.focus,
+.control-sidebar .btn-toggle:focus.active,
+.control-sidebar .btn-toggle.focus.active {
+    outline: none;
+}
+.control-sidebar .btn-toggle:before,
+.control-sidebar .btn-toggle:after {
+    line-height: 1.5rem;
+    width: 4rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: absolute;
+    bottom: 0;
+    transition: opacity 0.25s;
+}
+.control-sidebar .btn-toggle:before {
+    content: 'Off';
+    left: -4rem;
+}
+.control-sidebar .btn-toggle:after {
+    content: 'On';
+    right: -4rem;
+    opacity: 0.5;
+}
+.control-sidebar .btn-toggle > .handle {
+    position: absolute;
+    top: 0.1875rem;
+    left: 0.1875rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 1.125rem;
+    background: #fff;
+    transition: left 0.25s;
+}
+.control-sidebar .btn-toggle.active {
+    transition: background-color 0.25s;
+}
+.control-sidebar .btn-toggle.active > .handle {
+    left: 1.6875rem;
+    transition: left 0.25s;
+}
+.control-sidebar .btn-toggle.active:before {
+    opacity: 0.5;
+}
+.control-sidebar .btn-toggle.active:after {
+    opacity: 1;
+}
+.control-sidebar .btn-toggle.btn-sm:before,
+.control-sidebar .btn-toggle.btn-sm:after {
+    line-height: -0.5rem;
+    color: #fff;
+    letter-spacing: 0.75px;
+    left: 0.4125rem;
+    width: 2.325rem;
+}
+.control-sidebar .btn-toggle.btn-sm:before {
+    text-align: right;
+}
+.control-sidebar .btn-toggle.btn-sm:after {
+    text-align: left;
+    opacity: 0;
+}
+.control-sidebar .btn-toggle.btn-sm.active:before {
+    opacity: 0;
+}
+.control-sidebar .btn-toggle.btn-sm.active:after {
+    opacity: 1;
+}
+.control-sidebar btn-toggle.btn-lg.btn-sm:before,
+.control-sidebar .btn-toggle.btn-lg.btn-sm:after {
+    line-height: 0.5rem;
+    color: #fff;
+    letter-spacing: 0.75px;
+    left: 0.6875rem;
+    width: 3.875rem;
+}
+.control-sidebar .btn-toggle.btn-lg.btn-sm:before {
+    text-align: right;
+}
+.control-sidebar .btn-toggle.btn-lg.btn-sm:after {
+    text-align: left;
+    opacity: 0;
+}
+.control-sidebar .btn-toggle.btn-lg.btn-sm.active:before {
+    opacity: 0;
+}
+.control-sidebar .btn-toggle.btn-lg.btn-sm.active:after {
+    opacity: 1;
+}
+.control-sidebar .btn-toggle.btn-sm {
+    margin:0 -.5rem;
+    padding: 0;
+    position: relative;
+    border: none;
+    height: 1.5rem;
+    width: 3rem;
+    border-radius: 1.5rem;
+}
+.control-sidebar .btn-toggle.btn-sm:focus,
+.control-sidebar .btn-toggle.btn-sm.focus,
+.control-sidebar .btn-toggle.btn-sm:focus.active,
+.control-sidebar .btn-toggle.btn-sm.focus.active {
+    outline: none;
+}
+.control-sidebar .btn-toggle.btn-sm:before,
+.control-sidebar .btn-toggle.btn-sm:after {
+    line-height: 1.5rem;
+    width: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: absolute;
+    bottom: 0;
+    transition: opacity 0.25s;
+}
+.control-sidebar .btn-toggle.btn-sm:before {
+    content: 'Off';
+    left: -0.5rem;
+}
+.control-sidebar .btn-toggle.btn-sm:after {
+    content: 'On';
+    right: -0.5rem;
+    opacity: 0.5;
+}
+.control-sidebar .btn-toggle.btn-sm > .handle {
+    position: absolute;
+    top: 0.1875rem;
+    left: 0.1875rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 1.125rem;
+    background: #fff;
+    transition: left 0.25s;
+}
+.control-sidebar .btn-toggle.btn-sm.active {
+    transition: background-color 0.25s;
+}
+.control-sidebar .btn-toggle.btn-sm.active > .handle {
+    left: 1.6875rem;
+    transition: left 0.25s;
+}
+.control-sidebar .btn-toggle.btn-sm.active:before {
+    opacity: 0.5;
+}
+.control-sidebar .btn-toggle.btn-sm.active:after {
+    opacity: 1;
+}
+.control-sidebar .btn-toggle.btn-sm.btn-sm:before,
+.control-sidebar .btn-toggle.btn-sm.btn-sm:after {
+    line-height: -0.5rem;
+    color: #fff;
+    letter-spacing: 0.75px;
+    left: 0.4125rem;
+    width: 2.325rem;
+}
+.control-sidebar .btn-toggle.btn-sm.btn-sm:before {
+    text-align: right;
+}
+.control-sidebar.btn-toggle.btn-sm.btn-sm:after {
+    text-align: left;
+    opacity: 0;
+}
+.control-sidebar .btn-toggle.btn-sm.btn-sm.active:before {
+    opacity: 0;
+}
+.control-sidebar .btn-toggle.btn-sm.btn-sm.active:after {
+    opacity: 1;
+}
